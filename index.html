@@ -109,16 +109,160 @@
         .sidebar-expanded { width: 16rem; }
         .sidebar-collapsed { width: 5rem; align-items: center; }
         .hide-text { display: none; }
+
+        /* ========================================== */
+        /* ESTILOS ESPECÍFICOS DO MODO PRÁTICA        */
+        /* ========================================== */
+        .duo-button {
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 0 0 #e5e7eb;
+        }
+        .duo-button:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 0 #e5e7eb;
+        }
+        .duo-button-blue {
+            box-shadow: 0 4px 0 0 #1899d6;
+            background-color: #1cb0f6;
+            color: white;
+            border: none;
+        }
+        .duo-button-blue:active:not(:disabled) {
+            box-shadow: 0 0 0 0 #1899d6;
+        }
+        .duo-button-green {
+            box-shadow: 0 4px 0 0 #58a700;
+            background-color: #58cc02;
+            color: white;
+            border: none;
+        }
+        .duo-button-green:active:not(:disabled) {
+            box-shadow: 0 0 0 0 #58a700;
+        }
+        .duo-button-red {
+            box-shadow: 0 4px 0 0 #ea2b2b;
+            background-color: #ff4b4b;
+            color: white;
+            border: none;
+        }
+        .duo-button-red:active:not(:disabled) {
+            box-shadow: 0 0 0 0 #ea2b2b;
+        }
+        
+        .duo-card {
+            box-shadow: 0 4px 0 0 #e5e7eb;
+            transition: all 0.2s;
+        }
+        .duo-card.selected {
+            border-color: #84d8ff;
+            background-color: #ddf4ff;
+            color: #1899d6;
+            box-shadow: 0 4px 0 0 #84d8ff;
+        }
+        .duo-card.matched {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            border-color: #e5e7eb;
+            box-shadow: none;
+            transform: translateY(4px);
+            pointer-events: none;
+        }
+        .duo-card.error {
+            border-color: #ff4b4b;
+            background-color: #ffdfe0;
+            color: #ea2b2b;
+            animation: shake 0.4s;
+        }
+
+        .word-block {
+            box-shadow: 0 2px 0 0 #e5e7eb;
+            cursor: pointer;
+            user-select: none;
+        }
+        .word-block.used {
+            background-color: #e5e7eb;
+            color: #e5e7eb;
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+        .drop-zone {
+            min-height: 3rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .slide-up {
+            animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
     </style>
 </head>
 <body class="min-h-screen text-slate-800">
     <div id="app" class="flex items-center justify-center min-h-[100dvh] w-full relative">
-        <!-- O conteúdo será injetado aqui via JS -->
+        <!-- O conteúdo principal será injetado aqui via JS -->
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODO PRÁTICA (ESTILO DUOLINGO) MODAL       -->
+    <!-- ========================================== -->
+    <div id="practiceModal" class="fixed inset-0 bg-white z-[100] hidden flex-col font-sans">
+        <!-- Header: Barra de Progresso -->
+        <div class="flex items-center p-4 md:px-8 max-w-4xl mx-auto w-full">
+            <button onclick="closePractice()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold p-2">✕</button>
+            <div class="flex-1 mx-4 bg-gray-200 h-4 rounded-full overflow-hidden">
+                <div id="practiceProgress" class="bg-green-500 h-full w-0 transition-all duration-500 rounded-full"></div>
+            </div>
+            <div class="text-red-500 font-bold text-xl flex items-center gap-1">
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span id="heartsCount">3</span>
+            </div>
+        </div>
+
+        <!-- Área Central: A Atividade -->
+        <div class="flex-1 overflow-y-auto px-4 py-8 flex flex-col items-center max-w-3xl mx-auto w-full custom-scrollbar">
+            <h2 id="activityTitle" class="text-2xl font-bold text-gray-800 mb-8 self-start w-full">Carregando...</h2>
+            
+            <!-- Container Dinâmico -->
+            <div id="activityContainer" class="w-full flex flex-col items-center gap-6">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+        </div>
+
+        <!-- Rodapé: Botões de Ação e Feedback -->
+        <div id="practiceFooter" class="border-t-2 border-gray-200 p-4 md:p-6 bg-white relative z-10 transition-colors duration-300">
+            <div class="max-w-4xl mx-auto flex justify-between items-center gap-4">
+                
+                <!-- Feedback Área (Escondida por padrão) -->
+                <div id="feedbackArea" class="hidden absolute left-0 bottom-full w-full p-4 md:px-8 py-6 flex flex-col slide-up">
+                    <div class="max-w-4xl mx-auto w-full flex items-center gap-4">
+                        <div id="feedbackIcon" class="w-16 h-16 rounded-full flex items-center justify-center text-3xl bg-white shadow-sm"></div>
+                        <div>
+                            <h3 id="feedbackTitle" class="text-2xl font-bold">Correto!</h3>
+                            <p id="feedbackText" class="text-lg opacity-90 mt-1 hidden"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btnSkip" onclick="skipActivity()" class="duo-button text-gray-400 font-bold uppercase tracking-wider py-3 px-6 rounded-xl border-2 border-gray-200 hover:bg-gray-50 flex-shrink-0">Pular</button>
+                <button id="btnCheck" onclick="checkAnswer()" class="duo-button bg-gray-200 text-gray-400 font-bold uppercase tracking-wider py-3 px-8 rounded-xl w-full md:w-auto md:min-w-[150px] cursor-not-allowed">Verificar</button>
+            </div>
+        </div>
     </div>
 
     <script>
         // ==========================================
-        // DADOS DO CURSO (Maciçamente enriquecido e com os verbos 100% separados)
+        // DADOS DO CURSO (Mantidos integralmente com conjugações)
         // ==========================================
         const courseData = [
             {
@@ -215,7 +359,7 @@
                                 { fr: "l'émission", pt: "o programa" },
                                 { fr: "le jeu-concours", pt: "o concurso (sorteio)" },
                                 { fr: "le tirage au sort", pt: "o sorteio" },
-                                { fr: "le bulletin de participation", pt: "o formulário de participação" },
+                                { fr: "le bulletin de participation", pt: "o formulário de participation" },
                                 { fr: "le rêve", pt: "o sonho" },
                                 { fr: "la passion", pt: "a paixão" },
                                 { fr: "la Tunisie / l'Italie / le Sénégal / le Canada", pt: "a Tunísia / a Itália / o Senegal / o Canadá" },
@@ -566,7 +710,7 @@
                             grammar: [
                                 { title: "C'est vs Il est", rules: ["C’EST + Déterminant + Nom: C'est un grand acteur. C'est mon ami.", "IL EST + Adjectif ou Profession (sans article): Il est grand. Il est médecin."] },
                                 { title: "Pronoms toniques", rules: ["Moi, je suis balance. (Eu, eu sou libra.)", "Toi aussi, tu es artiste? (Você também é artista?)", "Lui, il aime aller à la plage. Elle aussi, elle est photographe.", "Nous, nous allons. Vous aussi, vous faites...", "Eux, ils adorent les chiens. Elles, elles visitent..."] },
-                                { title: "Exprimer des ressemblances", rules: ["Ils se ressemblent comme deux gouttes d’eau. (Eles se parecem como duas gotas d’água.)", "Elle ressemble à son père. (Ela se parece com o pai.)", "Il a le sourire de sa mère. (Ele tem o sorriso da mãe.)"] }
+                                { title: "Exprimer des ressemblances", rules: ["Ils se ressemblent comme deux gouttes d’eau. (Eles se parecem comme duas gotas d’água.)", "Elle ressemble à son père. (Ela se parece com o pai.)", "Il a le sourire de sa mère. (Ele tem o sorriso da mãe.)"] }
                             ]
                         }
                     },
@@ -753,7 +897,7 @@
                                 { fr: "d'accord", pt: "de acordo" }
                             ],
                             grammar: [
-                                { title: "Le Futur Proche", rules: ["Structure: verbe aller au présent + verbe à l’infinitif.", "Exemples : je vais faire un gâteau (eu vou fazer um bolo).", "tu vas venir (você vai vir). on va danser (a gente vai dançar).", "Négation: je ne vais pas rester très longtemps."] },
+                                { title: "Le Futur Proche", rules: ["Structure: verbe aller au présent + verbe à l’infinitif.", "Exemples : je vais faire un gâteau (eu vou fazer un bolo).", "tu vas venir (você vai vir). on va danser (a gente vai dançar).", "Négation: je ne vais pas rester très longtemps."] },
                                 { title: "L’impératif", rules: ["Utilisé pour inviter, donner des instructions, ordonner.", "Formé avec les formes du présent sans le pronom. (Ex: tu viens → viens.)", "Négation: ne + verbe + pas. (Ex: n’oublie pas.)"] },
                                 { title: "Expressions d’invitation", rules: ["Tu veux sortir ? On peut aller en boîte ?", "Réponses: Oui, d’accord / Ok, ça marche / Je veux bien.", "Refus: C’est impossible pour moi / Je ne suis pas libre / Désolé(e), je ne peux pas."] }
                             ]
@@ -772,7 +916,7 @@
                                 { fr: "venir (venu)", pt: "vir (Usa Être)", conjugation: ["je viens", "tu viens", "il vient", "nous venons", "vous venez", "ils viennent"] },
                                 { fr: "sortir (sorti)", pt: "sair (Usa Être)", conjugation: ["je sors", "tu sors", "il sort", "nous sortons", "vous sortez", "ils sortent"] },
                                 { fr: "partir (parti)", pt: "partir (Usa Être)", conjugation: ["je pars", "tu pars", "il part", "nous partons", "vous partez", "ils partent"] },
-                                { fr: "emmener (emmené)", pt: "levar (pessoas) (Usa Avoir)", conjugation: ["j'emmène", "tu emmènes", "il emmène", "nous emmenons", "vous emmenez", "ils emmènent"] },
+                                { fr: "emmener (emmené)", pt: "levar (pessoas) (Usa Avoir)", conjugation: ["j'emmène", "tu emmènes", "il emmène", "nous emmenons", "vous emmenez", "ils emmèdenent"] },
                                 { fr: "ranger (rangé)", pt: "arrumar (Usa Avoir)", conjugation: ["je range", "tu ranges", "il range", "nous rangeons", "vous rangez", "ils rangent"] },
                                 { fr: "bronzer (bronzé)", pt: "bronzear-se (Usa Être)", conjugation: ["je bronze", "tu bronzes", "il bronze", "nous bronzons", "vous bronzez", "ils bronzent"] },
                                 { fr: "se détendre (détendu)", pt: "relaxar-se (Usa Être)", conjugation: ["je me détends", "tu te détends", "il se détend", "nous nous détendons", "vous vous détendez", "ils se détendent"] }
@@ -1150,7 +1294,6 @@
         let speechVoices = [];
         const synth = window.speechSynthesis;
 
-        // Tenta carregar as vozes assim que o navegador disponibilizar
         if (synth.onvoiceschanged !== undefined) {
             synth.onvoiceschanged = () => {
                 speechVoices = synth.getVoices();
@@ -1163,15 +1306,11 @@
                 event.preventDefault();
             }
 
-            // MUDANÇA IMPORTANTE PARA O ÁUDIO LER DE FORMA MAIS NATURAL:
-            // 1. Remove texto entre parênteses "()" para não ler a tradução ou dicas.
-            // 2. Transforma barras "/", travessões "-" e reticências "..." em PONTOS FINAIS "."
-            // O ponto final força a API de SpeechSynthesis a fazer uma pausa natural na fala.
             let cleanText = text
-                .replace(/\([^)]*\)/g, ' ') // Remove conteúdo entre parênteses
-                .replace(/\//g, '. ')       // Substitui barras por ponto (causa pausa)
-                .replace(/ - /g, '. ')      // Substitui traços isolados por ponto
-                .replace(/\.\.\./g, '. ')   // Substitui reticências por ponto
+                .replace(/\([^)]*\)/g, ' ') 
+                .replace(/\//g, '. ')       
+                .replace(/ - /g, '. ')      
+                .replace(/\.\.\./g, '. ')   
                 .trim();
 
             if (!synth) {
@@ -1179,16 +1318,13 @@
                 return;
             }
 
-            synth.cancel(); // Para qualquer fala em andamento
+            synth.cancel(); 
 
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'fr-FR';
-            
-            // Ajustes para soar muito mais natural
-            utterance.rate = 0.85; // Ligeiramente mais lento
-            utterance.pitch = 1.0; // Tom neutro/natural
+            utterance.rate = 0.85; 
+            utterance.pitch = 1.0; 
 
-            // Busca vozes francesas
             if (speechVoices.length === 0) {
                 speechVoices = synth.getVoices();
             }
@@ -1196,13 +1332,11 @@
             const frVoices = speechVoices.filter(v => v.lang.startsWith('fr'));
             
             if (frVoices.length > 0) {
-                // Algoritmo de busca pelas vozes de melhor qualidade
                 const bestVoice = frVoices.find(v => v.name.match(/Natural|Premium|Google français|Thomas|Audrey|Aurélie|Alice|Microsoft Hortense|Microsoft Paul/i));
-                
                 if (bestVoice) {
                     utterance.voice = bestVoice;
                 } else {
-                    utterance.voice = frVoices[0]; // Fallback para a voz padrão
+                    utterance.voice = frVoices[0]; 
                 }
             }
 
@@ -1210,10 +1344,10 @@
         };
 
         // ==========================================
-        // GERENCIAMENTO DE ESTADO E RENDERIZAÇÃO
+        // GERENCIAMENTO DE ESTADO E RENDERIZAÇÃO DA UI
         // ==========================================
         const state = {
-            currentView: 'home', // 'home', 'folder', 'app'
+            currentView: 'home', 
             activeDossierIdx: null,
             activeLessonIdx: null,
             activeTab: 'verbs',
@@ -1276,7 +1410,7 @@
         };
 
         // ==========================================
-        // TEMPLATES DE RENDERIZAÇÃO HTML
+        // TEMPLATES DE RENDERIZAÇÃO HTML (ESTUDO)
         // ==========================================
 
         const renderHomeTemplate = () => {
@@ -1365,7 +1499,7 @@
                         let escapedText = r.replace(/'/g, "\\'").replace(/"/g, '&quot;');
                         return `
                             <li class="flex items-start gap-3 text-slate-700 font-medium group/item">
-                                <button onclick="playAudio('${escapedText}', event)" class="mt-0.5 p-1 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition shrink-0" title="Écouter la phrase">
+                                <button onclick="window.playAudio('${escapedText}', event)" class="mt-0.5 p-1 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition shrink-0" title="Écouter la phrase">
                                     <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
                                 </button>
                                 <span class="leading-relaxed mt-0.5">${r}</span>
@@ -1383,7 +1517,7 @@
                                     <i data-lucide="book-text" class="text-teal-600 w-5 h-5"></i>
                                     ${rule.title}
                                 </h3>
-                                <button onclick="playAudio('${fullRuleText}', event)" class="p-2 rounded-full bg-white/50 text-teal-600 hover:bg-teal-100/50 transition border border-white/50 shadow-sm" title="Écouter la règle entière">
+                                <button onclick="window.playAudio('${fullRuleText}', event)" class="p-2 rounded-full bg-white/50 text-teal-600 hover:bg-teal-100/50 transition border border-white/50 shadow-sm" title="Écouter la règle entière">
                                     <i data-lucide="volume-2" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -1406,7 +1540,7 @@
                     let conjItems = item.conjugation.map(conj => {
                         let escapedConj = conj.replace(/'/g, "\\'").replace(/"/g, '&quot;');
                         return `
-                            <div class="bg-white/40 px-2 py-1.5 rounded-md flex justify-between items-center group/btn cursor-pointer" onclick="playAudio('${escapedConj}', event)">
+                            <div class="bg-white/40 px-2 py-1.5 rounded-md flex justify-between items-center group/btn cursor-pointer" onclick="window.playAudio('${escapedConj}', event)">
                                 <span class="truncate">${conj}</span>
                                 <i data-lucide="volume-2" class="w-3 h-3 opacity-0 group-hover/btn:opacity-100 transition-opacity text-[#0066cc]"></i>
                             </div>
@@ -1419,7 +1553,7 @@
                                 Voir la conjugaison
                             </button>
                             <div id="${conjId}" class="mt-0 pt-0 border-t-0 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px] md:text-xs text-slate-700 font-mono transition-all duration-300 overflow-hidden max-h-0 opacity-0 border-white/40">
-                                <div class="col-span-2 h-3"></div> <!-- spacer -->
+                                <div class="col-span-2 h-3"></div>
                                 ${conjItems}
                             </div>
                         </div>
@@ -1431,7 +1565,7 @@
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <h4 class="text-lg md:text-xl font-extrabold text-[#1d1d1f] leading-tight pr-2">${item.fr}</h4>
-                                <button onclick="playAudio('${escapedFr}', event)" class="p-2 rounded-full bg-white/60 text-[#0066cc] hover:bg-[#0066cc] hover:text-white transition-colors shadow-sm shrink-0 border border-white">
+                                <button onclick="window.playAudio('${escapedFr}', event)" class="p-2 rounded-full bg-white/60 text-[#0066cc] hover:bg-[#0066cc] hover:text-white transition-colors shadow-sm shrink-0 border border-white">
                                     <i data-lucide="volume-2" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -1465,11 +1599,6 @@
                 const activeClass = isActive ? 'active' : 'text-slate-600';
                 const opacityClass = isActive ? '' : 'opacity-70';
                 
-                // Exibe texto sempre no mobile, ou se expandido no desktop
-                const textVisibility = state.isSidebarExpanded 
-                    ? 'block' 
-                    : 'hidden md:hidden block'; // hidden em md, block em mobile
-                
                 return `
                     <button onclick="setTab('${tab.id}')" title="${!state.isSidebarExpanded ? tab.label : ''}"
                         class="mode-tab shrink-0 flex items-center justify-center md:justify-start gap-3 rounded-xl transition-all
@@ -1485,10 +1614,10 @@
                 <div class="flex flex-col h-[100dvh] w-full p-0 md:p-6 relative z-30 animate-fade-in">
                     <div class="flex flex-col w-full h-full glass-panel md:rounded-[2.5rem] overflow-hidden relative shadow-2xl border-white/50">
                         
-                        <!-- HEADER -->
-                        <div class="flex items-center justify-between p-4 md:p-6 bg-white/40 backdrop-blur-3xl border-b border-white/50 z-20 shrink-0">
+                        <!-- HEADER COM BOTÃO PRATIQUER -->
+                        <div class="flex items-center justify-between p-4 md:p-6 bg-white/40 backdrop-blur-3xl border-b border-white/50 z-20 shrink-0 gap-4">
                             <div class="flex items-center gap-3 md:gap-4">
-                                <button onclick="goFolder()" class="p-2 md:p-2.5 rounded-xl glass-btn text-slate-700" title="Retour aux leçons">
+                                <button onclick="goFolder()" class="p-2 md:p-2.5 rounded-xl glass-btn text-slate-700 bg-white/50 hover:bg-white transition" title="Retour aux leçons">
                                     <i data-lucide="chevron-left" class="w-5 h-5 md:w-6 md:h-6"></i>
                                 </button>
                                 <div>
@@ -1496,9 +1625,17 @@
                                     <h1 class="text-lg md:text-2xl font-extrabold text-[#1d1d1f] tracking-tight truncate max-w-[200px] sm:max-w-xs md:max-w-md">${lesson.title}</h1>
                                 </div>
                             </div>
-                            <span class="hidden md:inline-block px-4 py-1.5 bg-white/60 text-[#0066cc] text-sm font-bold rounded-full shadow-sm border border-white/80">
-                                ${lesson.name}
-                            </span>
+                            
+                            <div class="flex items-center gap-3">
+                                <span class="hidden lg:inline-block px-4 py-1.5 bg-white/60 text-[#0066cc] text-sm font-bold rounded-full shadow-sm border border-white/80">
+                                    ${lesson.name}
+                                </span>
+                                <!-- BOTÃO PRATICAR -->
+                                <button onclick="startPractice(${state.activeDossierIdx}, ${state.activeLessonIdx})" class="duo-button duo-button-blue px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 hover:brightness-110 shrink-0 ml-auto md:ml-0">
+                                    <i data-lucide="gamepad-2" class="w-4 h-4 text-white"></i>
+                                    <span class="text-white hidden md:inline-block">Pratiquer</span>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- CONTENT AREA -->
@@ -1509,7 +1646,6 @@
                                 transition-all duration-300 ease-in-out flex md:flex-col custom-scrollbar z-10
                                 overflow-x-auto md:overflow-x-hidden md:overflow-y-auto ${sidebarClasses}">
                                 
-                                <!-- Toggle Button Desktop -->
                                 <div class="hidden md:flex w-full justify-end mb-4">
                                     <button onclick="toggleSidebar()" class="p-2 rounded-lg text-slate-500 hover:bg-white/50 hover:text-slate-800 transition-colors" title="Toggle Menu">
                                         <i data-lucide="${toggleIcon}" class="w-5 h-5"></i>
@@ -1529,9 +1665,6 @@
             `;
         };
 
-        // ==========================================
-        // RENDER LOOP
-        // ==========================================
         const render = () => {
             const app = document.getElementById('app');
             
@@ -1543,11 +1676,491 @@
                 app.innerHTML = renderAppTemplate();
             }
             
-            // Inicializa os ícones do Lucide após atualizar o DOM
             lucide.createIcons();
         };
 
-        // Inicialização
+
+        // ==========================================
+        // LÓGICA DO MODO PRÁTICA (GERADOR DINÂMICO)
+        // ==========================================
+        
+        let practiceState = {
+            active: false,
+            activities: [],
+            currentIndex: 0,
+            hearts: 3,
+            currentType: null,
+            matchSelection: [], 
+            translateSelection: [], 
+            listenSelection: null, 
+            isChecking: false
+        };
+
+        const curatedActivities = {
+            "0-0": [ // Dossier 1 - Leçon 1 (Index 0-0)
+                { type: "translate", phrase: "Je m'appelle Thomas.", pt: ["Eu", "me", "chamo", "Thomas."], pool: ["Eu", "sou", "me", "chamo", "Thomas.", "Você", "homem"] },
+                { type: "listen", phrase: "Bonjour, comment allez-vous ?", pt: "Bom dia, como vai você?", options: ["Bonjour, comment allez-vous ?", "Bonsoir, comment tu t'appelles ?", "Salut, je suis français."] }
+            ],
+            "0-1": [ // Dossier 1 - Leçon 2
+                { type: "translate", phrase: "J'habite au Brésil.", pt: ["Eu", "moro", "no", "Brasil."], pool: ["Eu", "moro", "no", "na", "Brasil.", "França.", "vivo"] },
+                { type: "listen", phrase: "Elle est espagnole.", pt: "Ela é espanhola.", options: ["Il est espagnol.", "Elle est espagnole.", "Je suis espagnole."] }
+            ]
+        };
+
+        // Gerador Automático de Joguinhos Baseado na Lição
+        function generateActivitiesForLesson(dossierIdx, lessonIdx) {
+            const dossier = courseData[dossierIdx];
+            const lesson = dossier.lessons[lessonIdx];
+            const content = lesson.content;
+            let generated = [];
+
+            // 1. Adiciona atividades curadas, se existirem (fallback)
+            const curadaKey = `${dossierIdx}-${lessonIdx}`;
+            if (curatedActivities[curadaKey]) {
+                generated = generated.concat(curatedActivities[curadaKey]);
+            }
+
+            // Puxar vocabulário da lição
+            let allVocab = [];
+            if(content.nouns) allVocab.push(...content.nouns);
+            if(content.adjectives) allVocab.push(...content.adjectives);
+            if(content.adverbs) allVocab.push(...content.adverbs);
+            
+            // Embaralha o vocabulário
+            allVocab = allVocab.sort(() => 0.5 - Math.random());
+
+            // 2. MATCHING (Gerar 2 telas de combinar pares, se houver palavras suficientes)
+            if (allVocab.length >= 4) {
+                generated.push({ type: "match", pairs: allVocab.slice(0, 4) });
+            }
+            if (allVocab.length >= 8) {
+                generated.push({ type: "match", pairs: allVocab.slice(4, 8) });
+            }
+
+            // 3. TRANSLATE (Blocos de arrastar usando vocabulário da lição)
+            const itemsToTranslate = allVocab.slice(0, 4); 
+            itemsToTranslate.forEach(item => {
+                let cleanPt = item.pt.replace(/\([^)]*\)/g, '').trim(); // Remove ()
+                let ptWords = cleanPt.split(" ").filter(w => w.length > 0);
+                let pool = [...ptWords];
+                
+                // Adicionar palavras falsas (distractors) para enganar
+                let distractors = allVocab
+                    .filter(x => x.fr !== item.fr)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 3)
+                    .map(x => x.pt.replace(/\([^)]*\)/g, '').trim().split(" ")[0]);
+                
+                pool.push(...distractors);
+                pool = pool.sort(() => 0.5 - Math.random());
+                
+                generated.push({
+                    type: "translate",
+                    phrase: item.fr,
+                    pt: ptWords,
+                    pool: pool
+                });
+            });
+
+            // 4. LISTEN (Exercício de escutar e selecionar)
+            const itemsToListen = allVocab.slice(4, 8); 
+            itemsToListen.forEach(item => {
+                if (!item) return;
+                let options = [item.fr];
+                
+                // Puxar 2 palavras incorretas para as opções
+                let dists = allVocab
+                    .filter(x => x.fr !== item.fr)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 2);
+                dists.forEach(d => options.push(d.fr));
+                options = options.sort(() => 0.5 - Math.random());
+                
+                generated.push({
+                    type: "listen",
+                    phrase: item.fr,
+                    pt: item.pt,
+                    options: options
+                });
+            });
+
+            // Mistura todos os exercícios gerados para essa lição
+            return generated.sort(() => 0.5 - Math.random()); 
+        }
+
+        function startPractice(dossierIdx, lessonIdx) {
+            practiceState.activities = generateActivitiesForLesson(dossierIdx, lessonIdx);
+            
+            if (practiceState.activities.length === 0) {
+                alert("Nenhuma atividade disponível para esta lição.");
+                return;
+            }
+
+            practiceState.active = true;
+            practiceState.currentIndex = 0;
+            practiceState.hearts = 3;
+            document.getElementById('heartsCount').innerText = practiceState.hearts;
+            document.getElementById('practiceProgress').style.width = '0%';
+            
+            document.getElementById('practiceModal').classList.remove('hidden');
+            document.getElementById('practiceModal').classList.add('flex');
+            
+            loadActivity();
+        }
+
+        function closePractice() {
+            if(confirm("Tem certeza que deseja sair? O seu progresso será perdido.")) {
+                document.getElementById('practiceModal').classList.add('hidden');
+                document.getElementById('practiceModal').classList.remove('flex');
+                practiceState.active = false;
+            }
+        }
+
+        function updateProgress() {
+            const percent = (practiceState.currentIndex / practiceState.activities.length) * 100;
+            document.getElementById('practiceProgress').style.width = `${percent}%`;
+        }
+
+        function loadActivity() {
+            if (practiceState.currentIndex >= practiceState.activities.length) {
+                showVictory();
+                return;
+            }
+
+            practiceState.isChecking = false;
+            updateProgress();
+            resetFooter();
+
+            const activity = practiceState.activities[practiceState.currentIndex];
+            practiceState.currentType = activity.type;
+            
+            const container = document.getElementById('activityContainer');
+            const title = document.getElementById('activityTitle');
+            container.innerHTML = '';
+
+            if (activity.type === 'match') {
+                title.innerText = "Combinar os cartões";
+                renderMatch(activity, container);
+            } else if (activity.type === 'translate') {
+                title.innerText = "Traduza esta frase";
+                renderTranslate(activity, container);
+            } else if (activity.type === 'listen') {
+                title.innerText = "O que você ouve?";
+                renderListen(activity, container);
+            }
+        }
+
+        function renderMatch(activity, container) {
+            practiceState.matchSelection = [];
+            const grid = document.createElement('div');
+            grid.className = 'grid grid-cols-2 gap-3 md:gap-4 w-full max-w-lg';
+            
+            let cards = [];
+            activity.pairs.forEach((pair, index) => {
+                cards.push({ id: `fr-${index}`, text: pair.fr, lang: 'fr', pairId: index });
+                let cleanPt = pair.pt.replace(/\([^)]*\)/g, '').trim();
+                cards.push({ id: `pt-${index}`, text: cleanPt, lang: 'pt', pairId: index });
+            });
+            
+            cards.sort(() => 0.5 - Math.random()); 
+
+            cards.forEach(card => {
+                const btn = document.createElement('button');
+                btn.className = 'duo-card border-2 border-gray-200 rounded-xl p-3 md:p-4 text-center text-sm md:text-lg font-bold text-gray-700 hover:bg-gray-50 h-20 md:h-24 flex items-center justify-center break-words';
+                btn.innerText = card.text;
+                btn.onclick = () => handleMatchClick(btn, card);
+                grid.appendChild(btn);
+            });
+            container.appendChild(grid);
+            enableCheckButton(false); 
+        }
+
+        function handleMatchClick(btnElement, cardData) {
+            if (practiceState.isChecking || btnElement.classList.contains('matched') || btnElement.classList.contains('selected')) return;
+
+            btnElement.classList.add('selected');
+            if (cardData.lang === 'fr') window.playAudio(cardData.text, null);
+
+            practiceState.matchSelection.push({ el: btnElement, data: cardData });
+
+            if (practiceState.matchSelection.length === 2) {
+                practiceState.isChecking = true;
+                const [first, second] = practiceState.matchSelection;
+
+                if (first.data.pairId === second.data.pairId && first.data.lang !== second.data.lang) {
+                    setTimeout(() => {
+                        first.el.classList.remove('selected');
+                        second.el.classList.remove('selected');
+                        first.el.classList.add('matched');
+                        second.el.classList.add('matched');
+                        
+                        const remaining = document.querySelectorAll('.duo-card:not(.matched)');
+                        if (remaining.length === 0) {
+                            showFeedback(true);
+                        } else {
+                            practiceState.isChecking = false;
+                        }
+                    }, 500);
+                } else {
+                    first.el.classList.remove('selected');
+                    second.el.classList.remove('selected');
+                    first.el.classList.add('error');
+                    second.el.classList.add('error');
+                    
+                    loseHeart();
+                    
+                    setTimeout(() => {
+                        first.el.classList.remove('error');
+                        second.el.classList.remove('error');
+                        practiceState.isChecking = false;
+                    }, 800);
+                }
+                practiceState.matchSelection = [];
+            }
+        }
+
+        function renderTranslate(activity, container) {
+            practiceState.translateSelection = [];
+            
+            const phraseBox = document.createElement('div');
+            phraseBox.className = 'w-full p-4 md:p-6 border-2 border-gray-200 rounded-2xl flex items-center gap-4 mb-8';
+            phraseBox.innerHTML = `
+                <div class="flex-1 text-lg md:text-xl font-bold text-gray-800">${activity.phrase}</div>
+                <button onclick="window.playAudio('${activity.phrase.replace(/'/g, "\\'")}', event)" class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center hover:bg-blue-100 transition shrink-0">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                </button>
+            `;
+            container.appendChild(phraseBox);
+
+            const dropZone = document.createElement('div');
+            dropZone.id = 'dropZone';
+            dropZone.className = 'drop-zone flex flex-wrap gap-2 w-full mb-8 pb-2';
+            container.appendChild(dropZone);
+
+            const poolZone = document.createElement('div');
+            poolZone.className = 'flex flex-wrap justify-center gap-2 w-full max-w-2xl';
+            
+            activity.pool.forEach((word, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'word-block border-2 border-gray-200 rounded-xl py-2 px-4 text-base md:text-lg font-bold text-gray-700 hover:bg-gray-50';
+                btn.innerText = word;
+                btn.id = `word-${index}`;
+                
+                btn.onclick = () => {
+                    if(practiceState.isChecking) return;
+                    if (btn.parentElement === poolZone) {
+                        const clone = btn.cloneNode(true);
+                        clone.id = `clone-${index}`;
+                        clone.onclick = () => {
+                            if(practiceState.isChecking) return;
+                            clone.remove();
+                            btn.classList.remove('used', 'opacity-0');
+                            updateTranslateCheckButton();
+                        };
+                        dropZone.appendChild(clone);
+                        btn.classList.add('used', 'opacity-0');
+                    }
+                    updateTranslateCheckButton();
+                };
+                poolZone.appendChild(btn);
+            });
+            container.appendChild(poolZone);
+            updateTranslateCheckButton();
+        }
+
+        function updateTranslateCheckButton() {
+            const dropZone = document.getElementById('dropZone');
+            const hasWords = dropZone.children.length > 0;
+            enableCheckButton(hasWords);
+        }
+
+        function renderListen(activity, container) {
+            practiceState.listenSelection = null;
+            
+            const audioBtnContainer = document.createElement('div');
+            audioBtnContainer.className = 'flex justify-center w-full mb-8';
+            audioBtnContainer.innerHTML = `
+                <button onclick="window.playAudio('${activity.phrase.replace(/'/g, "\\'")}', event)" class="duo-button duo-button-blue w-24 h-24 rounded-2xl flex items-center justify-center shadow-lg">
+                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                </button>
+            `;
+            container.appendChild(audioBtnContainer);
+
+            const optionsGroup = document.createElement('div');
+            optionsGroup.className = 'flex flex-col gap-3 w-full max-w-lg';
+            
+            activity.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'duo-card w-full text-left p-4 border-2 border-gray-200 rounded-xl text-base md:text-lg text-gray-700 font-bold flex items-center gap-3';
+                btn.innerHTML = `<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex-shrink-0 flex items-center justify-center"></div> ${opt}`;
+                
+                btn.onclick = () => {
+                    if(practiceState.isChecking) return;
+                    Array.from(optionsGroup.children).forEach(child => {
+                        child.classList.remove('selected');
+                        child.querySelector('div').classList.remove('bg-blue-500', 'border-blue-500');
+                        child.querySelector('div').classList.add('border-gray-300');
+                    });
+                    btn.classList.add('selected');
+                    const radio = btn.querySelector('div');
+                    radio.classList.remove('border-gray-300');
+                    radio.classList.add('bg-blue-500', 'border-blue-500');
+                    
+                    practiceState.listenSelection = opt;
+                    enableCheckButton(true);
+                };
+                optionsGroup.appendChild(btn);
+            });
+            container.appendChild(optionsGroup);
+            
+            setTimeout(() => window.playAudio(activity.phrase, null), 300);
+        }
+
+        function enableCheckButton(enable) {
+            const btn = document.getElementById('btnCheck');
+            if (enable) {
+                btn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+                btn.classList.add('duo-button-green');
+                btn.disabled = false;
+            } else {
+                btn.classList.add('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+                btn.classList.remove('duo-button-green');
+                btn.disabled = true;
+            }
+        }
+
+        function checkAnswer() {
+            if (practiceState.isChecking) {
+                practiceState.currentIndex++;
+                loadActivity();
+                return;
+            }
+
+            const activity = practiceState.activities[practiceState.currentIndex];
+            let isCorrect = false;
+            let correctAnswerText = "";
+
+            if (activity.type === 'translate') {
+                const dropZone = document.getElementById('dropZone');
+                const userWords = Array.from(dropZone.children).map(btn => btn.innerText);
+                isCorrect = userWords.join(" ") === activity.pt.join(" ");
+                correctAnswerText = activity.pt.join(" ");
+            } else if (activity.type === 'listen') {
+                isCorrect = practiceState.listenSelection === activity.phrase;
+                correctAnswerText = activity.phrase; 
+            }
+
+            practiceState.isChecking = true;
+            showFeedback(isCorrect, correctAnswerText);
+        }
+
+        function skipActivity() {
+            if (practiceState.isChecking) return;
+            showFeedback(false, practiceState.activities[practiceState.currentIndex].pt || practiceState.activities[practiceState.currentIndex].phrase);
+        }
+
+        function loseHeart() {
+            practiceState.hearts--;
+            document.getElementById('heartsCount').innerText = practiceState.hearts;
+            if (practiceState.hearts <= 0) {
+                setTimeout(() => {
+                    alert("Vous n'avez plus de vies ! (Você ficou sem vidas! Tente novamente).");
+                    closePractice();
+                }, 500);
+            }
+        }
+
+        function showFeedback(isCorrect, correctText = "") {
+            const footer = document.getElementById('practiceFooter');
+            const feedbackArea = document.getElementById('feedbackArea');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackText = document.getElementById('feedbackText');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const btnCheck = document.getElementById('btnCheck');
+            const btnSkip = document.getElementById('btnSkip');
+
+            feedbackArea.classList.remove('hidden');
+            btnSkip.classList.add('hidden');
+            
+            btnCheck.innerText = "Continuar";
+            btnCheck.classList.remove('duo-button-green', 'bg-gray-200');
+
+            if (isCorrect) {
+                footer.classList.add('bg-[#d7ffb8]'); 
+                feedbackArea.classList.add('bg-[#d7ffb8]', 'text-[#58a700]');
+                feedbackArea.classList.remove('bg-[#ffdfe0]', 'text-[#ea2b2b]');
+                
+                feedbackIcon.innerHTML = '✓';
+                feedbackIcon.classList.add('text-[#58a700]');
+                feedbackIcon.classList.remove('text-[#ea2b2b]');
+                
+                feedbackTitle.innerText = ["Excellent !", "Incroyable !", "Très bien !"][Math.floor(Math.random() * 3)];
+                feedbackText.classList.add('hidden');
+                
+                btnCheck.classList.add('duo-button-green');
+                
+            } else {
+                if(!practiceState.matchSelection.length) loseHeart();
+
+                footer.classList.add('bg-[#ffdfe0]'); 
+                feedbackArea.classList.add('bg-[#ffdfe0]', 'text-[#ea2b2b]');
+                feedbackArea.classList.remove('bg-[#d7ffb8]', 'text-[#58a700]');
+                
+                feedbackIcon.innerHTML = '✕';
+                feedbackIcon.classList.add('text-[#ea2b2b]');
+                feedbackIcon.classList.remove('text-[#58a700]');
+                
+                feedbackTitle.innerText = "Réponse correcte :";
+                feedbackText.innerText = correctText;
+                feedbackText.classList.remove('hidden');
+                
+                btnCheck.classList.add('duo-button-red');
+            }
+        }
+
+        function resetFooter() {
+            const footer = document.getElementById('practiceFooter');
+            const feedbackArea = document.getElementById('feedbackArea');
+            const btnCheck = document.getElementById('btnCheck');
+            const btnSkip = document.getElementById('btnSkip');
+
+            footer.classList.remove('bg-[#d7ffb8]', 'bg-[#ffdfe0]');
+            feedbackArea.classList.add('hidden');
+            btnSkip.classList.remove('hidden');
+            
+            btnCheck.innerText = "Verificar";
+            btnCheck.classList.remove('duo-button-red', 'duo-button-green');
+            enableCheckButton(false);
+        }
+
+        function showVictory() {
+            const container = document.getElementById('activityContainer');
+            document.getElementById('activityTitle').innerText = "";
+            document.getElementById('practiceProgress').style.width = '100%';
+            
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center animate-bounce mt-12">
+                    <div class="w-32 h-32 bg-yellow-400 rounded-full flex items-center justify-center text-6xl shadow-xl border-4 border-yellow-500 mb-6">
+                        👑
+                    </div>
+                    <h2 class="text-3xl font-bold text-yellow-500 mb-2">Leçon Terminée !</h2>
+                    <p class="text-gray-500 text-lg font-bold">Vous avez gagné +10 XP</p>
+                </div>
+            `;
+            
+            const btnCheck = document.getElementById('btnCheck');
+            btnCheck.innerText = "Concluir";
+            btnCheck.classList.add('duo-button-green');
+            btnCheck.classList.remove('bg-gray-200', 'cursor-not-allowed', 'text-gray-400');
+            btnCheck.disabled = false;
+            
+            btnCheck.onclick = () => {
+                closePractice();
+                btnCheck.onclick = checkAnswer;
+            };
+        }
+
+        // STARTUP
         document.addEventListener('DOMContentLoaded', render);
     </script>
 </body>
