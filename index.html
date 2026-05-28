@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Français - App d'Étude</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f5f5f7;
+            background-image: 
+                radial-gradient(at 20% 0%, hsla(190, 100%, 85%, 0.9) 0px, transparent 50%),
+                radial-gradient(at 80% 10%, hsla(210, 100%, 88%, 0.8) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, hsla(160, 100%, 82%, 0.9) 0px, transparent 50%),
+                radial-gradient(at 10% 90%, hsla(250, 100%, 90%, 0.8) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, hsla(280, 100%, 92%, 0.6) 0px, transparent 60%);
+            background-size: 200% 200%;
+            animation: tahoeShift 25s ease-in-out infinite alternate;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        @keyframes tahoeShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .app-icon {
+            border-radius: 22.5%;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.9), inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .app-icon:active { transform: scale(0.95); }
+        .glass-folder-icon {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.3) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .folder-overlay {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(50px) saturate(200%);
+        }
+        .folder-container {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 40px; padding: 5%;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .lesson-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2));
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px; padding: 24px; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,1);
+        }
+        .lesson-card:hover { 
+            transform: translateY(-4px) scale(1.02); 
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4)); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255,255,255,1); 
+        }
+
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 100%);
+            backdrop-filter: blur(48px) saturate(200%);
+        }
+        .glass-inner {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.2) 100%);
+            backdrop-filter: blur(24px) saturate(180%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+            transition: all 0.3s;
+        }
+        .glass-inner:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+        }
+
+        .mode-tab { transition: all 0.3s ease; border: 1px solid transparent; }
+        .mode-tab:hover { background: rgba(255,255,255,0.4); }
+        .mode-tab.active { 
+            background: rgba(255, 255, 255, 0.8); color: #0066cc; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255,255,255,1); 
+            border: 1px solid rgba(255, 255, 255, 0.9); 
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.15); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.25); }
+
+        .sidebar-expanded { width: 16rem; }
+        .sidebar-collapsed { width: 5rem; align-items: center; }
+        .hide-text { display: none; }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800">
+    <div id="app" class="flex items-center justify-center min-h-[100dvh] w-full relative">
+        <!-- O conteúdo será injetado aqui via JS -->
+    </div>
+
+    <script>
+        // ==========================================
+        // DADOS DO CURSO (EXTENSAMENTE REVISADO E ENRIQUECIDO)
+        // ==========================================
+        const courseData = [
+            {
+                id: 1, title: "Dossier 1", subtitle: "L'Identité & Rencontres", colors: ["bg-teal-500/80", "bg-blue-500/80", "bg-purple-500/80", "bg-rose-500/80"],
+                lessons: [
+                    {
+                        title: "Leçon 1", name: "Les Présentations et Contacts",
+                        content: {
+                            verbs: [
+                                { fr: "être", pt: "ser / estar", conjugation: ["je suis", "tu es", "il/elle/on est", "nous sommes", "vous êtes", "ils/elles sont"] },
+                                { fr: "avoir", pt: "ter", conjugation: ["j'ai", "tu as", "il/elle/on a", "nous avons", "vous avez", "ils/elles ont"] },
+                                { fr: "s'appeler", pt: "chamar-se", conjugation: ["je m'appelle", "tu t'appelles", "il s'appelle", "nous nous appelons", "vous vous appelez", "ils s'appellent"] },
+                                { fr: "saluer / prendre congé", pt: "cumprimentar / despedir-se" },
+                                { fr: "contacter / donner", pt: "contatar / dar" },
+                                { fr: "faire (la bise / un signe)", pt: "fazer (dar um beijo / acenar)", conjugation: ["je fais", "tu fais", "il fait", "nous faisons", "vous faites", "ils font"] }
+                            ],
+                            nouns: [
+                                { fr: "un homme / une femme", pt: "um homem / uma mulher" },
+                                { fr: "un garçon / une fille", pt: "um garoto / uma garota" },
+                                { fr: "un monsieur / une dame", pt: "um senhor / uma senhora" },
+                                { fr: "les coordonnées (f.)", pt: "os dados de contato" },
+                                { fr: "l'adresse mail (f.) / le mot de passe", pt: "o endereço de e-mail / a senha" },
+                                { fr: "le profil / le réseau social", pt: "o perfil / a rede social" },
+                                { fr: "le jour / la nuit", pt: "o dia / a noite" },
+                                { fr: "le matin / l'après-midi / le soir", pt: "a manhã / a tarde / a noite" }
+                            ],
+                            adjectives: [
+                                { fr: "célibataire / marié(e)", pt: "solteiro(a) / casado(a)" },
+                                { fr: "bilingue", pt: "bilíngue" },
+                                { fr: "formel(le) / informel(le)", pt: "formal / informal" },
+                                { fr: "jeune / vieux (vieille)", pt: "jovem / velho(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "bonjour / bonsoir", pt: "bom dia / boa noite" },
+                                { fr: "salut / coucou", pt: "oi / tchau (informal) / oi" },
+                                { fr: "au revoir", pt: "tchau / até logo" },
+                                { fr: "à demain / à bientôt", pt: "até amanhã / até breve" },
+                                { fr: "heureusement", pt: "felizmente" }
+                            ],
+                            grammar: [
+                                { title: "Les Salutations", rules: ["Pour saluer: Bonjour, Salut, Tu vas bien ?, Comment allez-vous ?", "Pour prendre congé: Au revoir, Salut, À bientôt, Bonne soirée."] },
+                                { title: "Dire l'âge (AVOIR)", rules: ["En français, on utilise le verbe 'avoir' (ter) pour l'âge.", "Exemple: J'ai 23 ans. (Eu tenho 23 anos)", "Quel âge as-tu ? / Quel âge avez-vous ?"] },
+                                { title: "Les Adjectifs Possessifs", rules: ["Mon / ma / mes (Meu, minha, meus, minhas)", "Ton / ta / tes (Teu, tua, teus, tuas)", "Son / sa / ses (Dele, dela)"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 2", name: "Pays et Nationalités",
+                        content: {
+                            verbs: [
+                                { fr: "habiter", pt: "morar / habitar", conjugation: ["j'habite", "tu habites", "il habite", "nous habitons", "vous habitez", "ils habitent"] },
+                                { fr: "vivre", pt: "viver", conjugation: ["je vis", "tu vis", "il/elle vit", "nous vivons", "vous vivez", "ils/elles vivent"] },
+                                { fr: "aller", pt: "ir", conjugation: ["je vais", "tu vas", "il va", "nous allons", "vous allez", "ils vont"] },
+                                { fr: "voyager / visiter", pt: "viajar / visitar" }
+                            ],
+                            nouns: [
+                                { fr: "la nationalité / le pays", pt: "a nacionalidade / o país" },
+                                { fr: "la ville / le centre-ville", pt: "a cidade / o centro da cidade" },
+                                { fr: "la langue maternelle", pt: "a língua materna" },
+                                { fr: "la carte d'identité", pt: "a carteira de identidade" },
+                                { fr: "le passeport / le visa", pt: "o passaporte / o visto" }
+                            ],
+                            adjectives: [
+                                { fr: "brésilien(ne)", pt: "brasileiro(a)" },
+                                { fr: "français(e)", pt: "francês(a)" },
+                                { fr: "allemand(e) / belge", pt: "alemão(ã) / belga" },
+                                { fr: "étranger / étrangère", pt: "estrangeiro(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "ici / là-bas", pt: "aqui / lá (longe)" },
+                                { fr: "partout", pt: "em toda parte" },
+                                { fr: "souvent", pt: "frequentemente" }
+                            ],
+                            grammar: [
+                                { title: "Prépositions avec les Lieux", rules: ["en → pays féminins ou avec voyelle (en France, en Chine, en Italie).", "au → pays masculins (au Brésil, au Canada, au Maroc).", "aux → pays pluriels (aux États-Unis, aux Pays-Bas).", "à → villes et îles (à Paris, à Rome, à Madagascar)."] },
+                                { title: "La Négation", rules: ["Sujet + ne/n' + verbe + pas", "Je ne parle pas bien anglais.", "Ils ne sont pas français."] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 3", name: "Études et Professions",
+                        content: {
+                            verbs: [
+                                { fr: "étudier", pt: "estudar", conjugation: ["j'étudie", "tu étudies", "il étudie", "nous étudions", "vous étudiez", "ils étudient"] },
+                                { fr: "travailler", pt: "trabalhar" },
+                                { fr: "apprendre", pt: "aprender", conjugation: ["j'apprends", "tu apprends", "il apprend", "nous apprenons", "vous apprenez", "ils apprennent"] },
+                                { fr: "enseigner", pt: "ensinar" },
+                                { fr: "participer / réaliser", pt: "participar / realizar" }
+                            ],
+                            nouns: [
+                                { fr: "l'université / l'école", pt: "a universidade / a escola" },
+                                { fr: "le médecin / l'infirmière", pt: "o médico / a enfermeira" },
+                                { fr: "l'architecte / l'ingénieur", pt: "o arquiteto / o engenheiro" },
+                                { fr: "l'employé(e) / le(la) secrétaire", pt: "o(a) funcionário(a) / o(a) secretário(a)" },
+                                { fr: "le policier / le militaire", pt: "o policial / o militar" },
+                                { fr: "le boulanger / le pharmacien", pt: "o padeiro / o farmacêutico" }
+                            ],
+                            adjectives: [
+                                { fr: "professionnel(le)", pt: "profissional" },
+                                { fr: "difficile / facile", pt: "difícil / fácil" },
+                                { fr: "créatif / créative", pt: "criativo(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "beaucoup", pt: "muito" },
+                                { fr: "bien / mal", pt: "bem / mal" },
+                                { fr: "toujours", pt: "sempre" }
+                            ],
+                            grammar: [
+                                { title: "Le Féminin des Professions", rules: ["-ien devient -ienne (musicien → musicienne).", "-er devient -ère (boulanger → boulangère).", "-eur devient -euse (vendeur → vendeuse) ou -trice (acteur → actrice)."] },
+                                { title: "Parler de sa profession", rules: ["Je suis + profession (sans article): Je suis informaticien.", "Je travaille comme boulanger.", "Je travaille pour / chez Google."] }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: 2, title: "Dossier 2", subtitle: "Ville, Lieux & Directions", colors: ["bg-orange-400/80", "bg-red-500/80", "bg-yellow-400/80", "bg-pink-500/80"],
+                lessons: [
+                    {
+                        title: "Leçon 1", name: "Les Lieux de la Ville",
+                        content: {
+                            verbs: [
+                                { fr: "se promener", pt: "passear / caminhar", conjugation: ["je me promène", "tu te promènes", "il se promène", "nous nous promenons", "vous vous promenez", "ils se promènent"] },
+                                { fr: "acheter", pt: "comprar" },
+                                { fr: "manger / boire", pt: "comer / beber" },
+                                { fr: "chercher / trouver", pt: "procurar / encontrar" }
+                            ],
+                            nouns: [
+                                { fr: "la mairie / l'hôtel de ville", pt: "a prefeitura" },
+                                { fr: "l'hôpital / la pharmacie", pt: "o hospital / a farmácia" },
+                                { fr: "le supermarché / l'épicerie", pt: "o supermercado / a mercearia" },
+                                { fr: "la banque / la poste", pt: "o banco / os correios" },
+                                { fr: "le théâtre / le musée", pt: "o teatro / o museu" },
+                                { fr: "le pont / la rivière", pt: "a ponte / o rio" },
+                                { fr: "le marché / la boulangerie", pt: "o mercado / a padaria" }
+                            ],
+                            adjectives: [
+                                { fr: "historique", pt: "histórico(a)" },
+                                { fr: "magnifique", pt: "magnífico(a)" },
+                                { fr: "bruyant(e) / tranquille", pt: "barulhento(a) / tranquilo(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "près de / loin de", pt: "perto de / longe de" },
+                                { fr: "à côté de", pt: "ao lado de" },
+                                { fr: "en face de", pt: "em frente de" },
+                                { fr: "devant / derrière", pt: "na frente / atrás" },
+                                { fr: "sur / sous", pt: "sobre (em cima) / sob (embaixo)" }
+                            ],
+                            grammar: [
+                                { title: "Les Articles Contractés", rules: ["de + le = du (près du pont).", "de + les = des (loin des musées).", "à + le = au (aller au cinéma).", "à + les = aux (parler aux touristes)."] },
+                                { title: "L'expression 'Il y a'", rules: ["Utilisée pour indiquer l'existence: Il y a (Há / Existe / Tem).", "Il y a une pharmacie ici.", "Négation: Il n'y a pas de (Não há)."] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 2", name: "S'orienter et Transports",
+                        content: {
+                            verbs: [
+                                { fr: "descendre", pt: "descer", conjugation: ["je descends", "tu descends", "il descend", "nous descendons", "vous descendez", "ils descendent"] },
+                                { fr: "monter", pt: "subir / entrar (veículo)" },
+                                { fr: "tourner", pt: "virar" },
+                                { fr: "traverser", pt: "atravessar" },
+                                { fr: "continuer", pt: "continuar" },
+                                { fr: "prendre", pt: "pegar / tomar (transporte/rua)" }
+                            ],
+                            nouns: [
+                                { fr: "le chemin / l'itinéraire", pt: "o caminho / o roteiro" },
+                                { fr: "la rue / l'avenue / le boulevard", pt: "a rua / a avenida / o bulevar" },
+                                { fr: "le carrefour / la place", pt: "o cruzamento / a praça" },
+                                { fr: "la gare / l'arrêt de bus", pt: "a estação / o ponto de ônibus" },
+                                { fr: "le billet / le ticket", pt: "a passagem / o bilhete" },
+                                { fr: "la carte / le plan", pt: "o mapa (grande) / o mapa (cidade/menor)" }
+                            ],
+                            adjectives: [
+                                { fr: "premier / première", pt: "primeiro(a)" },
+                                { fr: "deuxième / troisième", pt: "segundo(a) / terceiro(a)" },
+                                { fr: "perdu(e)", pt: "perdido(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "tout droit", pt: "reto / sempre em frente" },
+                                { fr: "à gauche / à droite", pt: "à esquerda / à direita" },
+                                { fr: "jusqu'à / jusqu'au", pt: "até (a / ao)" }
+                            ],
+                            grammar: [
+                                { title: "Demander et Indiquer le chemin", rules: ["Pardon, pour aller à la gare ? (Com licença, para ir à estação?)", "Où se trouve le musée ? (Onde fica o museu?)", "Prenez la première rue à droite. (Pegue a primeira rua à direita.)", "Continuez tout droit jusqu'au feu rouge. (Continue reto até o sinal vermelho.)"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 3", name: "Le Logement Touristique",
+                        content: {
+                            verbs: [
+                                { fr: "réserver", pt: "reservar" },
+                                { fr: "louer", pt: "alugar" },
+                                { fr: "rester", pt: "ficar / permanecer" },
+                                { fr: "payer", pt: "pagar" }
+                            ],
+                            nouns: [
+                                { fr: "l'hôtel / l'auberge de jeunesse", pt: "o hotel / o hostel" },
+                                { fr: "la chambre (simple / double)", pt: "o quarto (simples / duplo)" },
+                                { fr: "la salle de bain / la douche", pt: "o banheiro / o chuveiro" },
+                                { fr: "le lit superposé / le drap", pt: "o beliche / o lençol" },
+                                { fr: "le petit déjeuner", pt: "o café da manhã" },
+                                { fr: "la réservation / le tarif", pt: "a reserva / o preço / a tarifa" }
+                            ],
+                            adjectives: [
+                                { fr: "libre / occupé(e)", pt: "livre / ocupado(a)" },
+                                { fr: "inclus(e)", pt: "incluso(a)" },
+                                { fr: "propre / sale", pt: "limpo(a) / sujo(a)" },
+                                { fr: "cher / chère", pt: "caro(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "combien", pt: "quanto" },
+                                { fr: "comment", pt: "como" },
+                                { fr: "environ", pt: "aproximadamente" }
+                            ],
+                            grammar: [
+                                { title: "Poser des questions à la réception", rules: ["Avez-vous des chambres doubles ? (Vocês têm quartos de casal?)", "C'est possible de faire la cuisine ? (É possível cozinhar?)", "Quel est le tarif pour une nuit ? (Qual é a tarifa por uma noite?)", "Le petit déjeuner est-il inclus ? (O café da manhã está incluso?)"] }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: 3, title: "Dossier 3", subtitle: "Famille, Corps & Quotidien", colors: ["bg-green-400/80", "bg-emerald-500/80", "bg-teal-400/80", "bg-cyan-500/80"],
+                lessons: [
+                    {
+                        title: "Leçon 1", name: "La Famille et Événements",
+                        content: {
+                            verbs: [
+                                { fr: "naître / mourir", pt: "nascer / morrer" },
+                                { fr: "se marier / se séparer", pt: "casar-se / separar-se" },
+                                { fr: "grandir / vieillir", pt: "crescer / envelhecer" },
+                                { fr: "ressembler à", pt: "parecer-se com" },
+                                { fr: "annoncer / féliciter", pt: "anunciar / felicitar" }
+                            ],
+                            nouns: [
+                                { fr: "les parents / les grands-parents", pt: "os pais / os avós" },
+                                { fr: "le fils / la fille / les enfants", pt: "o filho / a filha / as crianças (filhos)" },
+                                { fr: "le frère / la sœur", pt: "o irmão / a irmã" },
+                                { fr: "l'oncle / la tante", pt: "o tio / a tia" },
+                                { fr: "le cousin / la cousine", pt: "o primo / a prima" },
+                                { fr: "le beau-père / la belle-mère", pt: "o sogro (padrasto) / a sogra (madrasta)" },
+                                { fr: "le neveu / la nièce", pt: "o sobrinho / a sobrinha" },
+                                { fr: "la naissance / le mariage", pt: "o nascimento / o casamento" }
+                            ],
+                            adjectives: [
+                                { fr: "paternel(le) / maternel(le)", pt: "paterno(a) / materno(a)" },
+                                { fr: "aîné(e)", pt: "mais velho(a) (irmão/irmã)" },
+                                { fr: "cadet(te)", pt: "mais novo(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "ensemble", pt: "junto(s)" },
+                                { fr: "seul(e)", pt: "sozinho(a)" }
+                            ],
+                            grammar: [
+                                { title: "Les Adjectifs Possessifs (Pluriel)", rules: ["Notre / Nos (Nosso, nossa / Nossos, nossas)", "Votre / Vos (Vosso, vossa / Vossos, vossas)", "Leur / Leurs (Deles, delas)"] },
+                                { title: "Règle de 'Mon/Ton/Son' avec voyelle", rules: ["Devant un mot féminin qui commence par une voyelle ou un 'h' muet, on utilise MON, TON, SON.", "Exemple: mon amie (minha amiga), son histoire (história dele/dela)."] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 2", name: "Le Corps et la Santé",
+                        content: {
+                            verbs: [
+                                { fr: "avoir mal à", pt: "estar com dor em" },
+                                { fr: "soigner", pt: "cuidar / tratar (médico)" },
+                                { fr: "se reposer", pt: "descansar" },
+                                { fr: "respirer / tousser", pt: "respirar / tossir" }
+                            ],
+                            nouns: [
+                                { fr: "la tête / le dos / le ventre", pt: "a cabeça / as costas / a barriga" },
+                                { fr: "l'œil / les yeux", pt: "o olho / os olhos" },
+                                { fr: "la bouche / le nez / l'oreille", pt: "a boca / o nariz / a orelha" },
+                                { fr: "l'épaule / le bras / la main", pt: "o ombro / o braço / a mão" },
+                                { fr: "la jambe / le pied", pt: "a perna / o pé" },
+                                { fr: "le rhume / la toux / la fièvre", pt: "o resfriado / a tosse / a febre" },
+                                { fr: "la maladie", pt: "a doença" }
+                            ],
+                            adjectives: [
+                                { fr: "malade", pt: "doente" },
+                                { fr: "sain(e)", pt: "saudável" },
+                                { fr: "fatigué(e) / épuisé(e)", pt: "cansado(a) / exausto(a)" },
+                                { fr: "enrhumé(e)", pt: "resfriado(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "mieux / pire", pt: "melhor / pior" },
+                                { fr: "fortement", pt: "fortemente" }
+                            ],
+                            grammar: [
+                                { title: "Exprimer la douleur", rules: ["Avoir mal + à + article défini + partie du corps.", "J'ai mal à la tête. (Dor na cabeça - fem.)", "Il a mal au dos. (Dor nas costas - masc.)", "Nous avons mal aux dents. (Dor nos dentes - plur.)", "Tu as mal à l'épaule. (Dor no ombro - vogal)"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 3", name: "La Routine Quotidienne",
+                        content: {
+                            verbs: [
+                                { fr: "se réveiller / se lever", pt: "acordar-se / levantar-se" },
+                                { fr: "se laver / se doucher", pt: "lavar-se / tomar banho" },
+                                { fr: "se brosser les dents", pt: "escovar os dentes" },
+                                { fr: "se maquiller / se raser", pt: "maquiar-se / barbear-se" },
+                                { fr: "s'habiller", pt: "vestir-se" },
+                                { fr: "se coucher / s'endormir", pt: "deitar-se / adormecer" },
+                                { fr: "prendre le petit déjeuner", pt: "tomar café da manhã" }
+                            ],
+                            nouns: [
+                                { fr: "le petit déjeuner", pt: "o café da manhã" },
+                                { fr: "le déjeuner / le dîner", pt: "o almoço / o jantar" },
+                                { fr: "le matin / l'après-midi / le soir", pt: "a manhã / a tarde / a noite" },
+                                { fr: "l'horaire / la montre", pt: "o horário / o relógio" }
+                            ],
+                            adjectives: [
+                                { fr: "matinal(e)", pt: "matutino / madrugador" },
+                                { fr: "quotidien(ne)", pt: "diário(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "tôt / tard", pt: "cedo / tarde" },
+                                { fr: "d'abord", pt: "primeiro" },
+                                { fr: "puis / ensuite", pt: "depois / em seguida" },
+                                { fr: "toujours / parfois / jamais", pt: "sempre / às vezes / nunca" }
+                            ],
+                            grammar: [
+                                { title: "Les Verbes Pronominaux", rules: ["Utilisent un pronom réfléchi (me, te, se, nous, vous, se).", "Je me réveille, Tu te lèves, Il se maquille.", "Nous nous rasons, Vous vous brossez les dents, Ils s'endorment."] },
+                                { title: "Dire l'Heure", rules: ["Il est 8 heures. (São 8 horas.)", "Il est midi / minuit. (É meio-dia / meia-noite.)", "Il est 10 heures et quart. (10:15)", "Il est 11 heures et demie. (11:30)", "Il est 11 heures moins le quart. (10:45)"] }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: 4, title: "Dossier 4", subtitle: "Loisirs, Passé & Fêtes", colors: ["bg-amber-400/80", "bg-orange-500/80", "bg-yellow-500/80", "bg-red-400/80"],
+                lessons: [
+                    {
+                        title: "Leçon 1", name: "Sorties et Sports",
+                        content: {
+                            verbs: [
+                                { fr: "proposer", pt: "propor" },
+                                { fr: "accepter / refuser", pt: "aceitar / recusar" },
+                                { fr: "pouvoir", pt: "poder", conjugation: ["je peux", "tu peux", "il peut", "nous pouvons", "vous pouvez", "ils peuvent"] },
+                                { fr: "vouloir", pt: "querer", conjugation: ["je veux", "tu veux", "il veut", "nous voulons", "vous voulez", "ils veulent"] },
+                                { fr: "courir / danser / nager", pt: "correr / dançar / nadar" }
+                            ],
+                            nouns: [
+                                { fr: "le rendez-vous", pt: "o encontro / o compromisso" },
+                                { fr: "l'exposition / le musée", pt: "a exposição / o museu" },
+                                { fr: "le vélo / le cyclisme", pt: "a bicicleta / o ciclismo" },
+                                { fr: "la natation / l'escalade", pt: "a natação / a escalada" },
+                                { fr: "la randonnée / le ski", pt: "a trilha / o esqui" }
+                            ],
+                            adjectives: [
+                                { fr: "libre / occupé(e)", pt: "livre / ocupado(a)" },
+                                { fr: "sportif / sportive", pt: "esportista" },
+                                { fr: "sympa", pt: "legal / simpático(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "longtemps", pt: "por muito tempo" },
+                                { fr: "volontiers", pt: "com prazer / de boa vontade" }
+                            ],
+                            grammar: [
+                                { title: "Faire du / de la (Sports)", rules: ["Je fais du vélo. (Faço ciclismo - masc.)", "Je fais de la natation. (Faço natação - fem.)", "Je fais de l'escalade. (Faço escalada - vogal)"] },
+                                { title: "Accepter / Refuser", rules: ["Oui, d'accord ! / Je veux bien ! (Aceitar)", "Désolé(e), je ne peux pas. / Je ne suis pas libre. (Recusar)"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 2", name: "Raconter au Passé",
+                        content: {
+                            verbs: [
+                                { fr: "faire (fait) / lire (lu)", pt: "fazer (feito) / ler (lido) - Usa Avoir" },
+                                { fr: "écrire (écrit) / voir (vu)", pt: "escrever (escrito) / ver (visto) - Avoir" },
+                                { fr: "dire (dit) / prendre (pris)", pt: "dizer (dito) / pegar (pego) - Avoir" },
+                                { fr: "aller (allé) / venir (venu)", pt: "ir (ido) / vir (vindo) - Usa Être" },
+                                { fr: "sortir (sorti) / partir (parti)", pt: "sair (saído) / partir (partido) - Être" },
+                                { fr: "naître (né) / mourir (mort)", pt: "nascer (nascido) / morrer (morto) - Être" }
+                            ],
+                            nouns: [
+                                { fr: "le ménage / les courses", pt: "a faxina / as compras" },
+                                { fr: "la vaisselle", pt: "a louça" },
+                                { fr: "le souvenir", pt: "a lembrança" },
+                                { fr: "l'accident / la surprise", pt: "o acidente / a surpresa" }
+                            ],
+                            adjectives: [
+                                { fr: "dernier / dernière", pt: "último(a) / passado(a)" },
+                                { fr: "prochain(e)", pt: "próximo(a)" },
+                                { fr: "inattendu(e)", pt: "inesperado(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "hier / avant-hier", pt: "ontem / anteontem" },
+                                { fr: "la semaine dernière", pt: "a semana passada" },
+                                { fr: "déjà / pas encore", pt: "já / ainda não" }
+                            ],
+                            grammar: [
+                                { title: "Le Passé Composé (AVOIR)", rules: ["Sujet + Avoir au présent + Participe passé.", "J'ai mangé, Tu as lu, Il a écrit une lettre.", "Le participe ne s'accorde pas avec le sujet (en général)."] },
+                                { title: "Le Passé Composé (ÊTRE)", rules: ["Utilisé pour les verbes de mouvement (aller, venir, naître, etc.) et les verbes pronominaux.", "ATTENTION: Le participe S'ACCORDE en genre et en nombre avec le sujet.", "Elle est allée au cinéma. (Ela foi...)", "Ils se sont lavés. (Eles se lavaram.)"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 3", name: "Fêtes et Traditions",
+                        content: {
+                            verbs: [
+                                { fr: "célébrer / fêter", pt: "celebrar / comemorar" },
+                                { fr: "offrir", pt: "dar (de presente) / oferecer", conjugation: ["j'offre", "tu offres", "il offre", "nous offrons", "vous offrez", "ils offrent"] },
+                                { fr: "décorer", pt: "decorar" },
+                                { fr: "partager", pt: "compartilhar" },
+                                { fr: "s'amuser", pt: "divertir-se" }
+                            ],
+                            nouns: [
+                                { fr: "Noël / Pâques", pt: "Natal / Páscoa" },
+                                { fr: "le Nouvel An / la Saint-Sylvestre", pt: "Ano-Novo / Véspera de Ano-Novo" },
+                                { fr: "le feu d'artifice", pt: "os fogos de artifício" },
+                                { fr: "le cadeau", pt: "o presente" },
+                                { fr: "le sapin de Noël", pt: "a árvore de Natal" },
+                                { fr: "la galette des rois", pt: "o bolo de reis (tradição de janeiro)" },
+                                { fr: "la Chandeleur / l'Épiphanie", pt: "Dia da Candelária (crepes) / Dia de Reis" }
+                            ],
+                            adjectives: [
+                                { fr: "traditionnel(le)", pt: "tradicional" },
+                                { fr: "joyeux / joyeuse", pt: "alegre / feliz" },
+                                { fr: "férié(e)", pt: "feriado (dia)" }
+                            ],
+                            adverbs: [
+                                { fr: "ensemble", pt: "junto(s)" },
+                                { fr: "secrètement", pt: "secretamente" }
+                            ],
+                            grammar: [
+                                { title: "Parler des fêtes", rules: ["À Noël, on décore le sapin et on s'offre des cadeaux.", "Le 14 juillet, il y a un grand feu d'artifice pour la fête nationale.", "Pour Pâques, on cache et on mange des œufs en chocolat."] }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: 5, title: "Dossier 5", subtitle: "Voyages, Cinéma & Échanges", colors: ["bg-indigo-400/80", "bg-purple-500/80", "bg-fuchsia-500/80", "bg-violet-400/80"],
+                lessons: [
+                    {
+                        title: "Leçon 1", name: "Préparer un Voyage",
+                        content: {
+                            verbs: [
+                                { fr: "préparer / planifier", pt: "preparar / planejar" },
+                                { fr: "s'inquiéter", pt: "preocupar-se" },
+                                { fr: "se dépêcher", pt: "apressar-se" },
+                                { fr: "oublier", pt: "esquecer" },
+                                { fr: "emporter", pt: "levar (consigo em viagem)" }
+                            ],
+                            nouns: [
+                                { fr: "la valise / le bagage", pt: "a mala / a bagagem" },
+                                { fr: "le guide touristique", pt: "o guia turístico" },
+                                { fr: "le billet / le vol", pt: "a passagem / o voo" },
+                                { fr: "la douane / le passeport", pt: "a alfândega / o passaporte" },
+                                { fr: "le routard / le budget", pt: "o mochileiro / o orçamento" }
+                            ],
+                            adjectives: [
+                                { fr: "prudent(e)", pt: "prudente" },
+                                { fr: "curieux / curieuse", pt: "curioso(a)" },
+                                { fr: "imprévu(e)", pt: "imprevisto(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "à l'avance", pt: "com antecedência" },
+                                { fr: "partout", pt: "em todo lugar" },
+                                { fr: "nulle part", pt: "em lugar nenhum" }
+                            ],
+                            grammar: [
+                                { title: "L'Impératif (Conseils)", rules: ["Utilisé sans pronom sujet pour donner des ordres ou conseils.", "Prépare ton voyage ! (Prepare sua viagem!)", "N'oublie pas le passeport ! (Não esqueça o passaporte!)", "Dépêchons-nous ! (Vamos nos apressar!)"] },
+                                { title: "Le Passé Récent", rules: ["Formé avec VENIR DE + Infinitif. (Acabar de fazer algo)", "Je viens de réserver l'hôtel. (Acabo de reservar o hotel.)", "Elle vient de passer la douane. (Ela acabou de passar na alfândega.)"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 2", name: "Le Cinéma et Profils",
+                        content: {
+                            verbs: [
+                                { fr: "tourner (un film)", pt: "filmar / rodar um filme" },
+                                { fr: "remporter / gagner", pt: "conquistar / ganhar (um prêmio)" },
+                                { fr: "réaliser", pt: "dirigir (um filme)" },
+                                { fr: "jouer (un rôle)", pt: "atuar / interpretar (um papel)" }
+                            ],
+                            nouns: [
+                                { fr: "le réalisateur / la réalisatrice", pt: "o diretor / a diretora" },
+                                { fr: "l'acteur / l'actrice", pt: "o ator / a atriz" },
+                                { fr: "le scénario / la scène", pt: "o roteiro / a cena" },
+                                { fr: "la caméra / l'écran", pt: "a câmera / a tela" },
+                                { fr: "le prix / le succès", pt: "o prêmio / o sucesso" },
+                                { fr: "le signe du zodiaque", pt: "o signo do zodíaco" }
+                            ],
+                            adjectives: [
+                                { fr: "célèbre / connu(e)", pt: "famoso(a) / conhecido(a)" },
+                                { fr: "talentueux / talentueuse", pt: "talentoso(a)" },
+                                { fr: "timide / généreux", pt: "tímido(a) / generoso(a)" },
+                                { fr: "optimiste / sérieux", pt: "otimista / sério(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "rapidement", pt: "rapidamente" },
+                                { fr: "incroyablement", pt: "incrivelmente" },
+                                { fr: "en direct", pt: "ao vivo" }
+                            ],
+                            grammar: [
+                                { title: "Décrire physiquement", rules: ["Il a les yeux bleus et les cheveux bruns.", "Elle est grande et mince.", "Il a une allure sportive."] },
+                                { title: "C'est vs Il est", rules: ["C'EST + Déterminant + Nom: C'est un grand acteur. C'est mon ami.", "IL EST + Adjectif ou Profession (sans article): Il est grand. Il est réalisateur."] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 3", name: "Communication & Malentendus",
+                        content: {
+                            verbs: [
+                                { fr: "se tromper", pt: "enganar-se / cometer erro" },
+                                { fr: "comprendre", pt: "compreender" },
+                                { fr: "blesser", pt: "magoar / ferir os sentimentos" },
+                                { fr: "rappeler", pt: "ligar de volta / lembrar" },
+                                { fr: "s'excuser", pt: "desculpar-se" }
+                            ],
+                            nouns: [
+                                { fr: "le malentendu", pt: "o mal-entendido" },
+                                { fr: "l'appel téléphonique", pt: "a ligação telefônica" },
+                                { fr: "le message / le texto", pt: "a mensagem / o SMS" },
+                                { fr: "la colère / la tristesse", pt: "a raiva / a tristeza" }
+                            ],
+                            adjectives: [
+                                { fr: "déçu(e)", pt: "decepcionado(a)" },
+                                { fr: "fâché(e) / en colère", pt: "zangado(a) / com raiva" },
+                                { fr: "désolé(e)", pt: "arrependido(a) / sente muito" }
+                            ],
+                            adverbs: [
+                                { fr: "calmement", pt: "calmamente" },
+                                { fr: "juste", pt: "apenas / exatamente" },
+                                { fr: "au contraire", pt: "pelo contrário" }
+                            ],
+                            grammar: [
+                                { title: "Au Téléphone", rules: ["Allô, c'est de la part de qui ? (Alô, de parte de quem?)", "Ne quittez pas, je vous le passe. (Não desligue, vou passar pra ele/ela.)", "Vous faites erreur. (Você ligou errado.)", "Je me suis trompé(e). (Eu me enganei.)"] }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: 6, title: "Dossier 6", subtitle: "Météo, Nature & Futur", colors: ["bg-cyan-400/80", "bg-sky-500/80", "bg-blue-400/80", "bg-indigo-300/80"],
+                lessons: [
+                    {
+                        title: "Leçon 1", name: "La Météo et le Climat",
+                        content: {
+                            verbs: [
+                                { fr: "pleuvoir", pt: "chover (il pleut / il a plu)" },
+                                { fr: "neiger", pt: "nevar (il neige)" },
+                                { fr: "souffler", pt: "soprar (o vento)" },
+                                { fr: "geler", pt: "congelar / gear (il gèle)" },
+                                { fr: "se réchauffer / se refroidir", pt: "esquentar / esfriar" }
+                            ],
+                            nouns: [
+                                { fr: "l'orage (m.) / la tempête", pt: "a tempestade / o temporal" },
+                                { fr: "l'averse (f.) / l'éclair (m.)", pt: "o aguaceiro / o relâmpago" },
+                                { fr: "le brouillard / la canicule", pt: "a neblina / a onda de calor" },
+                                { fr: "les saisons", pt: "as estações (printemps, été, automne, hiver)" },
+                                { fr: "le vent / les nuages", pt: "o vento / as nuvens" }
+                            ],
+                            adjectives: [
+                                { fr: "dégagé", pt: "limpo / sem nuvens (céu)" },
+                                { fr: "couvert / gris", pt: "nublado / cinza (céu)" },
+                                { fr: "frais / fraîche", pt: "fresco(a)" },
+                                { fr: "doux / douce", pt: "ameno(a) / suave" }
+                            ],
+                            adverbs: [
+                                { fr: "fortement", pt: "fortemente" },
+                                { fr: "doucement", pt: "suavemente" },
+                                { fr: "soudainement", pt: "repentinamente" }
+                            ],
+                            grammar: [
+                                { title: "Parler du temps (FAIRE)", rules: ["Il fait beau. (O tempo está bom.)", "Il fait mauvais. (O tempo está ruim.)", "Il fait froid / chaud. (Faz frio / calor.)", "Il fait 25 degrés. (Faz 25 graus.)"] },
+                                { title: "Parler du temps (IL Y A)", rules: ["Il y a du soleil. (Tem sol.)", "Il y a du vent. (Tem vento.)", "Il y a des nuages. (Tem nuvens.)"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 2", name: "Îles, Nature et Futur",
+                        content: {
+                            verbs: [
+                                { fr: "admirer", pt: "admirar" },
+                                { fr: "découvrir", pt: "descobrir" },
+                                { fr: "explorer", pt: "explorar" },
+                                { fr: "protéger / préserver", pt: "proteger / preservar" }
+                            ],
+                            nouns: [
+                                { fr: "l'île (f.) / l'archipel (m.)", pt: "a ilha / o arquipélago" },
+                                { fr: "le volcan", pt: "o vulcão" },
+                                { fr: "la cascade / la rivière", pt: "a cachoeira / o rio" },
+                                { fr: "le paysage / la forêt", pt: "a paisagem / a floresta" },
+                                { fr: "le sable / la plage", pt: "a areia / a praia" }
+                            ],
+                            adjectives: [
+                                { fr: "sauvage", pt: "selvagem" },
+                                { fr: "paradisiaque", pt: "paradisíaco(a)" },
+                                { fr: "inoubliable", pt: "inesquecível" },
+                                { fr: "volcanique / montagneux", pt: "vulcânico(a) / montanhoso" }
+                            ],
+                            adverbs: [
+                                { fr: "au nord / au sud", pt: "ao norte / ao sul" },
+                                { fr: "à l'est / à l'ouest", pt: "a leste / a oeste" },
+                                { fr: "au loin", pt: "ao longe" }
+                            ],
+                            grammar: [
+                                { title: "Le Futur Simple (Réguliers)", rules: ["Infinitif + terminaisons (-ai, -as, -a, -ons, -ez, -ont).", "Je parlerai, Tu finiras, Il explorera."] },
+                                { title: "Le Futur Simple (Irréguliers)", rules: ["avoir → j'aurai", "être → je serai", "aller → j'irai", "faire → je ferai", "voir → je verrai", "pouvoir → je pourrai", "venir → je viendrai"] }
+                            ]
+                        }
+                    },
+                    {
+                        title: "Leçon 3", name: "Organisation et Projets",
+                        content: {
+                            verbs: [
+                                { fr: "planifier", pt: "planejar" },
+                                { fr: "organiser", pt: "organizar" },
+                                { fr: "annuler / reporter", pt: "cancelar / adiar" },
+                                { fr: "répartir (les tâches)", pt: "distribuir (as tarefas)" }
+                            ],
+                            nouns: [
+                                { fr: "le projet / la réunion", pt: "o projeto / a reunião" },
+                                { fr: "le calendrier / le planning", pt: "o calendário / o cronograma" },
+                                { fr: "la tâche / l'outil", pt: "a tarefa / a ferramenta" },
+                                { fr: "le collègue / le partenaire", pt: "o colega / o parceiro" },
+                                { fr: "l'emploi du temps", pt: "a agenda / o quadro de horários" }
+                            ],
+                            adjectives: [
+                                { fr: "urgent(e)", pt: "urgente" },
+                                { fr: "efficace", pt: "eficaz" },
+                                { fr: "chargé(e)", pt: "lotado(a) / sobrecarregado(a)" }
+                            ],
+                            adverbs: [
+                                { fr: "sinon", pt: "senão / caso contrário" },
+                                { fr: "à temps", pt: "a tempo" },
+                                { fr: "en retard / en avance", pt: "atrasado / adiantado" }
+                            ],
+                            grammar: [
+                                { title: "L'obligation et la nécessité", rules: ["Devoir + infinitif : Tu dois organiser tes priorités. (Você deve organizar...)", "Il faut + infinitif : Il faut répartir les tâches. (É preciso distribuir...)"] },
+                                { title: "Le Présent Continu", rules: ["ÊTRE EN TRAIN DE + Infinitif (Estar fazendo algo no momento).", "Je suis en train de finaliser le projet. (Estou finalizando o projeto.)", "Elle est en train de travailler avec ses collègues. (Ela está trabalhando com seus colegas.)"] }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ];
+
+        // ==========================================
+        // MOTOR DE ÁUDIO MELHORADO (TEXT-TO-SPEECH)
+        // ==========================================
+        let speechVoices = [];
+        const synth = window.speechSynthesis;
+
+        // Tenta carregar as vozes assim que o navegador disponibilizar
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = () => {
+                speechVoices = synth.getVoices();
+            };
+        }
+
+        window.playAudio = (text, event) => {
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+
+            // MUDANÇA IMPORTANTE PARA O ÁUDIO LER TODAS AS PALAVRAS DA LIÇÃO:
+            // 1. Remove qualquer texto que esteja entre parênteses "()"
+            // 2. Transforma as barras "/" em vírgulas "," para criar uma pausa natural e ler ambas as partes.
+            let cleanText = text.replace(/\([^)]*\)/g, ' ').replace(/\//g, ', ').trim();
+
+            if (!synth) {
+                console.warn("Navegador não suporta síntese de voz.");
+                return;
+            }
+
+            synth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'fr-FR';
+            
+            // Ajustes para soar muito mais natural (ligeiramente mais lento, tom amigável)
+            utterance.rate = 0.88; 
+            utterance.pitch = 1.05;
+
+            // Busca vozes francesas
+            if (speechVoices.length === 0) {
+                speechVoices = synth.getVoices();
+            }
+            
+            const frVoices = speechVoices.filter(v => v.lang.startsWith('fr'));
+            
+            if (frVoices.length > 0) {
+                // Algoritmo de busca pelas vozes de melhor qualidade (Premium, Natural, Google)
+                const bestVoice = frVoices.find(v => v.name.match(/Natural|Premium|Google français|Thomas|Audrey|Aurélie|Alice/i));
+                
+                if (bestVoice) {
+                    utterance.voice = bestVoice;
+                } else {
+                    utterance.voice = frVoices[0]; // Fallback para a voz padrão se nenhuma premium for encontrada
+                }
+            }
+
+            synth.speak(utterance);
+        };
+
+        // ==========================================
+        // GERENCIAMENTO DE ESTADO E RENDERIZAÇÃO
+        // ==========================================
+        const state = {
+            currentView: 'home', // 'home', 'folder', 'app'
+            activeDossierIdx: null,
+            activeLessonIdx: null,
+            activeTab: 'verbs',
+            isSidebarExpanded: window.innerWidth >= 768
+        };
+
+        window.addEventListener('resize', () => {
+            if (state.currentView === 'app') {
+                const shouldBeExpanded = window.innerWidth >= 768;
+                if (state.isSidebarExpanded !== shouldBeExpanded) {
+                    state.isSidebarExpanded = shouldBeExpanded;
+                    render();
+                }
+            }
+        });
+
+        const toggleSidebar = () => {
+            state.isSidebarExpanded = !state.isSidebarExpanded;
+            render();
+        };
+
+        const toggleConjugation = (id) => {
+            const el = document.getElementById(id);
+            const btn = document.getElementById(`btn-${id}`);
+            if (el.classList.contains('max-h-0')) {
+                el.classList.remove('max-h-0', 'opacity-0', 'pt-0', 'mt-0', 'border-t-0');
+                el.classList.add('max-h-40', 'opacity-100');
+                btn.innerHTML = 'Cacher la conjugaison';
+            } else {
+                el.classList.add('max-h-0', 'opacity-0', 'pt-0', 'mt-0', 'border-t-0');
+                el.classList.remove('max-h-40', 'opacity-100');
+                btn.innerHTML = 'Voir la conjugaison';
+            }
+        };
+
+        const goHome = () => {
+            state.currentView = 'home';
+            state.activeDossierIdx = null;
+            state.activeLessonIdx = null;
+            render();
+        };
+
+        const goFolder = (dossierIdx) => {
+            if (dossierIdx !== undefined) state.activeDossierIdx = dossierIdx;
+            state.currentView = 'folder';
+            state.activeLessonIdx = null;
+            render();
+        };
+
+        const openLesson = (lessonIdx) => {
+            state.activeLessonIdx = lessonIdx;
+            state.activeTab = 'verbs';
+            state.currentView = 'app';
+            render();
+        };
+
+        const setTab = (tabId) => {
+            state.activeTab = tabId;
+            render();
+        };
+
+        // ==========================================
+        // TEMPLATES DE RENDERIZAÇÃO HTML
+        // ==========================================
+
+        const renderHomeTemplate = () => {
+            let gridHTML = courseData.map((dossier, idx) => {
+                let colorsHTML = dossier.colors.map(color => `<div class="w-full h-full rounded-xl shadow-sm ${color}"></div>`).join('');
+                return `
+                    <div class="flex flex-col items-center gap-4 cursor-pointer group" onclick="goFolder(${idx})">
+                        <div class="app-icon glass-folder-icon w-28 h-28 md:w-36 md:h-36 border-2 transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center relative">
+                            <div class="grid grid-cols-2 gap-2 p-3 w-full h-full">
+                                ${colorsHTML}
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-xl md:text-2xl font-bold text-slate-800/90 tracking-wide block">${dossier.title}</span>
+                            <span class="text-xs font-semibold text-[#86868b] uppercase tracking-wider">${dossier.subtitle}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="flex flex-col items-center justify-center min-h-[100dvh] w-full p-4 relative z-10 animate-fade-in">
+                    <div class="mb-12 text-center">
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-[#1d1d1f] tracking-tight mb-3 drop-shadow-sm">Le Français</h1>
+                        <p class="text-[#86868b] font-medium text-lg uppercase tracking-widest">Sélectionnez le Dossier</p>
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 w-full max-w-5xl px-4">
+                        ${gridHTML}
+                    </div>
+                </div>
+            `;
+        };
+
+        const renderFolderTemplate = () => {
+            const dossier = courseData[state.activeDossierIdx];
+            let lessonsHTML = dossier.lessons.map((lesson, idx) => {
+                const colorBg = dossier.colors[idx % 4].replace('/80', '/20');
+                const colorText = dossier.colors[idx % 4].replace('bg-', 'text-').replace('/80', '');
+                return `
+                    <div onclick="openLesson(${idx})" class="lesson-card group flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl ${colorBg} flex items-center justify-center mb-4 border border-white/60 group-hover:scale-110 transition-transform shadow-sm">
+                            <i data-lucide="book-open" class="w-8 h-8 ${colorText}"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-[#1d1d1f] mb-1">${lesson.title}</h3>
+                        <p class="text-sm text-[#86868b] font-semibold tracking-wide uppercase">${lesson.name}</p>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="flex items-center justify-center min-h-[100dvh] w-full p-4 relative z-20 animate-fade-in folder-overlay">
+                    <button onclick="goHome()" class="absolute top-4 md:top-6 left-4 md:left-6 p-3 rounded-full bg-white/40 backdrop-blur-md border border-white/60 text-slate-700 hover:bg-white/60 transition shadow-sm z-50">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                    
+                    <div class="folder-container flex flex-col items-center w-full max-w-5xl">
+                        <div class="text-center mb-10 mt-8 md:mt-0">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-[#1d1d1f] tracking-tight mb-2">${dossier.title}</h2>
+                            <span class="px-4 py-1.5 bg-white/50 text-[#1d1d1f] text-sm font-bold rounded-full uppercase tracking-widest border border-white/80 shadow-sm inline-block">
+                                ${dossier.subtitle}
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-2 md:px-4 pb-8">
+                            ${lessonsHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        const renderContentCardsTemplate = (lesson) => {
+            const data = lesson.content[state.activeTab];
+
+            if (!data || data.length === 0) {
+                return `
+                    <div class="flex flex-col items-center justify-center py-20 text-[#86868b]">
+                        <i data-lucide="info" class="w-12 h-12 mb-4 opacity-40"></i>
+                        <p class="font-medium text-lg">Aucun contenu disponible.</p>
+                    </div>
+                `;
+            }
+
+            if (state.activeTab === 'grammar') {
+                let grammarHTML = data.map((rule, idx) => {
+                    let rulesHTML = rule.rules.map(r => {
+                        let escapedText = r.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                        return `
+                            <li class="flex items-start gap-3 text-slate-700 font-medium group/item">
+                                <button onclick="playAudio('${escapedText}', event)" class="mt-0.5 p-1 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition shrink-0" title="Écouter la phrase">
+                                    <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <span class="leading-relaxed mt-0.5">${r}</span>
+                            </li>
+                        `;
+                    }).join('');
+
+                    let fullRuleText = rule.rules.join('. ').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+                    return `
+                        <div class="glass-inner border border-white/60 p-6 rounded-3xl shadow-sm relative overflow-hidden group">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-teal-500/60 rounded-l-3xl"></div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg md:text-xl font-bold text-[#1d1d1f] flex items-center gap-3">
+                                    <i data-lucide="book-text" class="text-teal-600 w-5 h-5"></i>
+                                    ${rule.title}
+                                </h3>
+                                <button onclick="playAudio('${fullRuleText}', event)" class="p-2 rounded-full bg-white/50 text-teal-600 hover:bg-teal-100/50 transition border border-white/50 shadow-sm" title="Écouter la règle entière">
+                                    <i data-lucide="volume-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <ul class="space-y-3">
+                                ${rulesHTML}
+                            </ul>
+                        </div>
+                    `;
+                }).join('');
+
+                return `<div class="max-w-4xl mx-auto space-y-6 animate-fade-in">${grammarHTML}</div>`;
+            }
+
+            let cardsHTML = data.map((item, idx) => {
+                let escapedFr = item.fr.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                let conjHTML = '';
+                let conjId = `conj-${idx}`;
+                
+                if (item.conjugation) {
+                    let conjItems = item.conjugation.map(conj => {
+                        let escapedConj = conj.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                        return `
+                            <div class="bg-white/40 px-2 py-1.5 rounded-md flex justify-between items-center group/btn cursor-pointer" onclick="playAudio('${escapedConj}', event)">
+                                <span class="truncate">${conj}</span>
+                                <i data-lucide="volume-2" class="w-3 h-3 opacity-0 group-hover/btn:opacity-100 transition-opacity text-[#0066cc]"></i>
+                            </div>
+                        `;
+                    }).join('');
+
+                    conjHTML = `
+                        <div class="mt-4">
+                            <button id="btn-${conjId}" onclick="toggleConjugation('${conjId}')" class="text-xs w-full bg-white/50 text-slate-700 py-2.5 rounded-xl font-bold hover:bg-white/80 transition-colors border border-white/80 shadow-sm flex items-center justify-center gap-2">
+                                Voir la conjugaison
+                            </button>
+                            <div id="${conjId}" class="mt-0 pt-0 border-t-0 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px] md:text-xs text-slate-700 font-mono transition-all duration-300 overflow-hidden max-h-0 opacity-0 border-white/40">
+                                <div class="col-span-2 h-3"></div> <!-- spacer -->
+                                ${conjItems}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="glass-inner border border-white/60 p-5 rounded-2xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-lg md:text-xl font-extrabold text-[#1d1d1f] leading-tight pr-2">${item.fr}</h4>
+                                <button onclick="playAudio('${escapedFr}', event)" class="p-2 rounded-full bg-white/60 text-[#0066cc] hover:bg-[#0066cc] hover:text-white transition-colors shadow-sm shrink-0 border border-white">
+                                    <i data-lucide="volume-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <p class="text-[#86868b] font-semibold text-sm md:text-base mb-2 uppercase tracking-wide">${item.pt}</p>
+                        </div>
+                        ${conjHTML}
+                    </div>
+                `;
+            }).join('');
+
+            return `<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 animate-fade-in">${cardsHTML}</div>`;
+        };
+
+        const renderAppTemplate = () => {
+            const dossier = courseData[state.activeDossierIdx];
+            const lesson = dossier.lessons[state.activeLessonIdx];
+            
+            const tabs = [
+                { id: 'verbs', label: 'Verbes', icon: 'activity' },
+                { id: 'nouns', label: 'Substantifs', icon: 'type' },
+                { id: 'adjectives', label: 'Adjectifs', icon: 'case-sensitive' },
+                { id: 'adverbs', label: 'Adverbes & Conj.', icon: 'message-circle' },
+                { id: 'grammar', label: 'Grammaire', icon: 'book-text' }
+            ];
+
+            const sidebarClasses = state.isSidebarExpanded ? 'md:w-64 p-3 md:p-4 gap-2' : 'md:w-20 p-2 md:p-3 gap-3 md:gap-4 items-center';
+            const toggleIcon = state.isSidebarExpanded ? 'panel-left-close' : 'menu';
+
+            let tabsHTML = tabs.map(tab => {
+                const isActive = state.activeTab === tab.id;
+                const activeClass = isActive ? 'active' : 'text-slate-600';
+                const opacityClass = isActive ? '' : 'opacity-70';
+                
+                // Exibe texto sempre no mobile, ou se expandido no desktop
+                const textVisibility = state.isSidebarExpanded 
+                    ? 'block' 
+                    : 'hidden md:hidden block'; // hidden em md, block em mobile
+                
+                // Em telas < 768px, a barra é scroll horizontal e sempre mostra o texto
+                return `
+                    <button onclick="setTab('${tab.id}')" title="${!state.isSidebarExpanded ? tab.label : ''}"
+                        class="mode-tab shrink-0 flex items-center justify-center md:justify-start gap-3 rounded-xl transition-all
+                        ${state.isSidebarExpanded ? 'px-4 py-2.5 md:w-full' : 'px-4 py-2.5 md:w-12 md:h-12 md:p-0'} 
+                        ${activeClass}">
+                        <i data-lucide="${tab.icon}" class="w-4 h-4 ${opacityClass}"></i>
+                        <span class="text-sm font-bold whitespace-nowrap md:${state.isSidebarExpanded ? 'block' : 'hidden'}">${tab.label}</span>
+                    </button>
+                `;
+            }).join('');
+
+            return `
+                <div class="flex flex-col h-[100dvh] w-full p-0 md:p-6 relative z-30 animate-fade-in">
+                    <div class="flex flex-col w-full h-full glass-panel md:rounded-[2.5rem] overflow-hidden relative shadow-2xl border-white/50">
+                        
+                        <!-- HEADER -->
+                        <div class="flex items-center justify-between p-4 md:p-6 bg-white/40 backdrop-blur-3xl border-b border-white/50 z-20 shrink-0">
+                            <div class="flex items-center gap-3 md:gap-4">
+                                <button onclick="goFolder()" class="p-2 md:p-2.5 rounded-xl glass-btn text-slate-700" title="Retour aux leçons">
+                                    <i data-lucide="chevron-left" class="w-5 h-5 md:w-6 md:h-6"></i>
+                                </button>
+                                <div>
+                                    <p class="text-[10px] md:text-xs font-bold text-[#86868b] uppercase tracking-widest mb-0.5">${dossier.title}</p>
+                                    <h1 class="text-lg md:text-2xl font-extrabold text-[#1d1d1f] tracking-tight truncate max-w-[200px] sm:max-w-xs md:max-w-md">${lesson.title}</h1>
+                                </div>
+                            </div>
+                            <span class="hidden md:inline-block px-4 py-1.5 bg-white/60 text-[#0066cc] text-sm font-bold rounded-full shadow-sm border border-white/80">
+                                ${lesson.name}
+                            </span>
+                        </div>
+
+                        <!-- CONTENT AREA -->
+                        <div class="flex-1 flex flex-col md:flex-row overflow-hidden bg-white/10 relative">
+                            
+                            <!-- SIDEBAR -->
+                            <div class="shrink-0 border-b md:border-b-0 md:border-r border-white/40 bg-white/20 backdrop-blur-xl 
+                                transition-all duration-300 ease-in-out flex md:flex-col custom-scrollbar z-10
+                                overflow-x-auto md:overflow-x-hidden md:overflow-y-auto ${sidebarClasses}">
+                                
+                                <!-- Toggle Button Desktop -->
+                                <div class="hidden md:flex w-full justify-end mb-4">
+                                    <button onclick="toggleSidebar()" class="p-2 rounded-lg text-slate-500 hover:bg-white/50 hover:text-slate-800 transition-colors" title="Toggle Menu">
+                                        <i data-lucide="${toggleIcon}" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+
+                                ${tabsHTML}
+                            </div>
+
+                            <!-- MAIN CONTENT -->
+                            <div class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
+                                ${renderContentCardsTemplate(lesson)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // ==========================================
+        // RENDER LOOP
+        // ==========================================
+        const render = () => {
+            const app = document.getElementById('app');
+            
+            if (state.currentView === 'home') {
+                app.innerHTML = renderHomeTemplate();
+            } else if (state.currentView === 'folder') {
+                app.innerHTML = renderFolderTemplate();
+            } else if (state.currentView === 'app') {
+                app.innerHTML = renderAppTemplate();
+            }
+            
+            // Inicializa os ícones do Lucide após atualizar o DOM
+            lucide.createIcons();
+        };
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>
