@@ -118,7 +118,7 @@
 
     <script>
         // ==========================================
-        // DADOS DO CURSO (EXTENSAMENTE REVISADO E ENRIQUECIDO)
+        // DADOS DO CURSO (Maciçamente enriquecido e com os verbos 100% separados)
         // ==========================================
         const courseData = [
             {
@@ -128,73 +128,126 @@
                         title: "Leçon 1", name: "Les Présentations et Contacts",
                         content: {
                             verbs: [
-                                { fr: "être", pt: "ser / estar", conjugation: ["je suis", "tu es", "il/elle/on est", "nous sommes", "vous êtes", "ils/elles sont"] },
-                                { fr: "avoir", pt: "ter", conjugation: ["j'ai", "tu as", "il/elle/on a", "nous avons", "vous avez", "ils/elles ont"] },
-                                { fr: "s'appeler", pt: "chamar-se", conjugation: ["je m'appelle", "tu t'appelles", "il s'appelle", "nous nous appelons", "vous vous appelez", "ils s'appellent"] },
-                                { fr: "saluer / prendre congé", pt: "cumprimentar / despedir-se" },
-                                { fr: "contacter / donner", pt: "contatar / dar" },
-                                { fr: "faire (la bise / un signe)", pt: "fazer (dar um beijo / acenar)", conjugation: ["je fais", "tu fais", "il fait", "nous faisons", "vous faites", "ils font"] }
+                                { fr: "être (été)", pt: "ser / estar", conjugation: ["je suis", "tu es", "il / elle / on est", "nous sommes", "vous êtes", "ils / elles sont"] },
+                                { fr: "avoir (eu)", pt: "ter", conjugation: ["j'ai", "tu as", "il / elle / on a", "nous avons", "vous avez", "ils / elles ont"] },
+                                { fr: "s'appeler (appelé)", pt: "chamar-se", conjugation: ["je m'appelle", "tu t'appelles", "il s'appelle", "nous nous appelons", "vous vous appelez", "ils s'appellent"] },
+                                { fr: "contacter (contacté)", pt: "contatar", conjugation: ["je contacte", "tu contactes", "il contacte", "nous contactons", "vous contactez", "ils contactent"] },
+                                { fr: "donner (donné)", pt: "dar / fornecer", conjugation: ["je donne", "tu donnes", "il donne", "nous donnons", "vous donnez", "ils donnent"] },
+                                { fr: "confirmer (confirmé)", pt: "confirmar", conjugation: ["je confirme", "tu confirmes", "il confirme", "nous confirmons", "vous confirmez", "ils confirment"] },
+                                { fr: "pratiquer (pratiqué)", pt: "praticar", conjugation: ["je pratique", "tu pratiques", "il pratique", "nous pratiquons", "vous pratiquez", "ils pratiquent"] },
+                                { fr: "étudier (étudié)", pt: "estudar", conjugation: ["j'étudie", "tu étudies", "il étudie", "nous étudions", "vous étudiez", "ils étudient"] },
+                                { fr: "faire (fait)", pt: "fazer", conjugation: ["je fais", "tu fais", "il fait", "nous faisons", "vous faites", "ils font"] },
+                                { fr: "saluer (salué)", pt: "cumprimentar", conjugation: ["je salue", "tu salues", "il salue", "nous saluons", "vous saluez", "ils saluent"] },
+                                { fr: "prendre (pris)", pt: "tomar / despedir-se", conjugation: ["je prends", "tu prends", "il prend", "nous prenons", "vous prenez", "ils prennent"] },
+                                { fr: "serrer (serré)", pt: "apertar (a mão)", conjugation: ["je serre", "tu serres", "il serre", "nous serrons", "vous serrez", "ils serrent"] }
                             ],
                             nouns: [
+                                { fr: "une relation formelle", pt: "uma relação formal" },
+                                { fr: "une relation informelle", pt: "uma relação informal" },
+                                { fr: "un trombinoscope", pt: "um quadro com fotos de pessoas" },
+                                { fr: "l'accueil", pt: "a recepção" },
+                                { fr: "l'inscription", pt: "a inscrição" },
+                                { fr: "le profil", pt: "o perfil" },
                                 { fr: "un homme / une femme", pt: "um homem / uma mulher" },
-                                { fr: "un garçon / une fille", pt: "um garoto / uma garota" },
+                                { fr: "un garçon / une fille", pt: "um garoto / uma menina" },
+                                { fr: "un jeune homme / une jeune femme", pt: "um jovem / uma jovem mulher" },
                                 { fr: "un monsieur / une dame", pt: "um senhor / uma senhora" },
                                 { fr: "les coordonnées (f.)", pt: "os dados de contato" },
-                                { fr: "l'adresse mail (f.) / le mot de passe", pt: "o endereço de e-mail / a senha" },
-                                { fr: "le profil / le réseau social", pt: "o perfil / a rede social" },
-                                { fr: "le jour / la nuit", pt: "o dia / a noite" },
-                                { fr: "le matin / l'après-midi / le soir", pt: "a manhã / a tarde / a noite" }
+                                { fr: "l'adresse mail (f.)", pt: "o endereço de e-mail" },
+                                { fr: "le mot de passe", pt: "a senha" },
+                                { fr: "le réseau social", pt: "a rede social" },
+                                { fr: "un site Internet", pt: "um site de internet" },
+                                { fr: "le couloir", pt: "o corredor" },
+                                { fr: "l'escalier", pt: "a escadaria" },
+                                { fr: "la salle de classe", pt: "a sala de aula" },
+                                { fr: "le carnet", pt: "o caderno de anotações" }
                             ],
                             adjectives: [
-                                { fr: "célibataire / marié(e)", pt: "solteiro(a) / casado(a)" },
+                                { fr: "célibataire", pt: "solteiro(a)" },
+                                { fr: "marié(e)", pt: "casado(a)" },
                                 { fr: "bilingue", pt: "bilíngue" },
-                                { fr: "formel(le) / informel(le)", pt: "formal / informal" },
-                                { fr: "jeune / vieux (vieille)", pt: "jovem / velho(a)" }
+                                { fr: "formel(le)", pt: "formal" },
+                                { fr: "informel(le)", pt: "informal" },
+                                { fr: "jeune", pt: "jovem" }
                             ],
                             adverbs: [
-                                { fr: "bonjour / bonsoir", pt: "bom dia / boa noite" },
-                                { fr: "salut / coucou", pt: "oi / tchau (informal) / oi" },
-                                { fr: "au revoir", pt: "tchau / até logo" },
-                                { fr: "à demain / à bientôt", pt: "até amanhã / até breve" },
-                                { fr: "heureusement", pt: "felizmente" }
+                                { fr: "bonjour", pt: "bom dia" },
+                                { fr: "bonsoir", pt: "boa noite" },
+                                { fr: "salut", pt: "oi / tchau (informal)" },
+                                { fr: "coucou", pt: "oizinho" },
+                                { fr: "au revoir", pt: "tchau (formal)" },
+                                { fr: "à demain", pt: "até amanhã" },
+                                { fr: "à bientôt", pt: "até breve" },
+                                { fr: "avant", pt: "antes" },
+                                { fr: "après", pt: "depois" }
                             ],
                             grammar: [
-                                { title: "Les Salutations", rules: ["Pour saluer: Bonjour, Salut, Tu vas bien ?, Comment allez-vous ?", "Pour prendre congé: Au revoir, Salut, À bientôt, Bonne soirée."] },
-                                { title: "Dire l'âge (AVOIR)", rules: ["En français, on utilise le verbe 'avoir' (ter) pour l'âge.", "Exemple: J'ai 23 ans. (Eu tenho 23 anos)", "Quel âge as-tu ? / Quel âge avez-vous ?"] },
-                                { title: "Les Adjectifs Possessifs", rules: ["Mon / ma / mes (Meu, minha, meus, minhas)", "Ton / ta / tes (Teu, tua, teus, tuas)", "Son / sa / ses (Dele, dela)"] }
+                                { title: "Les Salutations et Expressions", rules: ["Pour saluer: Bonjour, Salut, Tu vas bien ?, Comment allez-vous ?", "Pour prendre congé: Au revoir, Salut, À bientôt, Bonne soirée.", "Faire la bise (Cumprimentar com beijos no rosto).", "Serrer la main (Apertar a mão).", "Faire un signe de la main (Acenar)."] },
+                                { title: "Dire l'âge (AVOIR)", rules: ["En français, on utilise le verbe 'avoir' (ter) pour l'âge.", "Exemples: J'ai 23 ans. (Eu tenho 23 ans). Ils ont 23 ans.", "Quel âge as-tu ? / Quel âge avez-vous ?"] },
+                                { title: "Les Adjectifs Possessifs", rules: ["Mon / ma / mes (Meu, minha, meus, minhas) -> mon nom, ma nationalité, mes études.", "Ton / ta / tes (Teu, tua, teus, tuas) -> ton livre, ta culture.", "Son / sa / ses (Dele, dela).", "Notre / nos (Nosso, nossa, nossos, nossas).", "Votre / vos (Vosso, vossa, de vocês) -> votre langue, vos contacts.", "RÈGLE IMPORTANTE: mon/ton/son + nom féminin qui commence par une voyelle. Ex: mon amie."] },
+                                { title: "Uso de preposições com lugares", rules: ["à + lieu (ex: à l’université, à l'accueil, dans le couloir)"] }
                             ]
                         }
                     },
                     {
-                        title: "Leçon 2", name: "Pays et Nationalités",
+                        title: "Leçon 2", name: "Pays, Villes et Nationalités",
                         content: {
                             verbs: [
-                                { fr: "habiter", pt: "morar / habitar", conjugation: ["j'habite", "tu habites", "il habite", "nous habitons", "vous habitez", "ils habitent"] },
-                                { fr: "vivre", pt: "viver", conjugation: ["je vis", "tu vis", "il/elle vit", "nous vivons", "vous vivez", "ils/elles vivent"] },
-                                { fr: "aller", pt: "ir", conjugation: ["je vais", "tu vas", "il va", "nous allons", "vous allez", "ils vont"] },
-                                { fr: "voyager / visiter", pt: "viajar / visitar" }
+                                { fr: "aller (allé)", pt: "ir", conjugation: ["je vais", "tu vas", "il va", "nous allons", "vous allez", "ils vont"] },
+                                { fr: "vivre (vécu)", pt: "viver", conjugation: ["je vis", "tu vis", "il vit", "nous vivons", "vous vivez", "ils vivent"] },
+                                { fr: "habiter (habité)", pt: "morar / habitar", conjugation: ["j'habite", "tu habites", "il habite", "nous habitons", "vous habitez", "ils habitent"] },
+                                { fr: "parler (parlé)", pt: "falar", conjugation: ["je parle", "tu parles", "il parle", "nous parlons", "vous parlez", "ils parlent"] },
+                                { fr: "apprendre (appris)", pt: "aprender", conjugation: ["j'apprends", "tu apprends", "il apprend", "nous apprenons", "vous apprenez", "ils apprennent"] },
+                                { fr: "vouloir (voulu)", pt: "querer", conjugation: ["je veux", "tu veux", "il veut", "nous voulons", "vous voulez", "ils veulent"] },
+                                { fr: "voyager (voyagé)", pt: "viajar", conjugation: ["je voyage", "tu voyages", "il voyage", "nous voyageons", "vous voyagez", "ils voyagent"] },
+                                { fr: "visiter (visité)", pt: "visitar", conjugation: ["je visite", "tu visites", "il visite", "nous visitons", "vous visitez", "ils visitent"] }
                             ],
                             nouns: [
-                                { fr: "la nationalité / le pays", pt: "a nacionalidade / o país" },
-                                { fr: "la ville / le centre-ville", pt: "a cidade / o centro da cidade" },
+                                { fr: "la nationalité", pt: "a nacionalidade" },
+                                { fr: "le pays", pt: "o país" },
+                                { fr: "la ville", pt: "a cidade" },
+                                { fr: "la capitale", pt: "a capital" },
                                 { fr: "la langue maternelle", pt: "a língua materna" },
                                 { fr: "la carte d'identité", pt: "a carteira de identidade" },
-                                { fr: "le passeport / le visa", pt: "o passaporte / o visto" }
+                                { fr: "le passeport", pt: "o passaporte" },
+                                { fr: "le visa", pt: "o visto" },
+                                { fr: "le formulaire", pt: "o formulário" },
+                                { fr: "l'émission", pt: "o programa" },
+                                { fr: "le jeu-concours", pt: "o concurso (sorteio)" },
+                                { fr: "le tirage au sort", pt: "o sorteio" },
+                                { fr: "le bulletin de participation", pt: "o formulário de participação" },
+                                { fr: "le rêve", pt: "o sonho" },
+                                { fr: "la passion", pt: "a paixão" },
+                                { fr: "la Tunisie / l'Italie / le Sénégal / le Canada", pt: "a Tunísia / a Itália / o Senegal / o Canadá" },
+                                { fr: "les États-Unis / la Chine / le Maroc", pt: "os Estados Unidos / a China / o Marrocos" },
+                                { fr: "Paris / Rome / Athènes / Tunis / Dakar", pt: "Paris / Roma / Atenas / Túnis / Dakar" }
                             ],
                             adjectives: [
                                 { fr: "brésilien(ne)", pt: "brasileiro(a)" },
                                 { fr: "français(e)", pt: "francês(a)" },
-                                { fr: "allemand(e) / belge", pt: "alemão(ã) / belga" },
-                                { fr: "étranger / étrangère", pt: "estrangeiro(a)" }
+                                { fr: "espagnol(e)", pt: "espanhol(a)" },
+                                { fr: "anglais(e)", pt: "inglês(a)" },
+                                { fr: "italien(ne)", pt: "italiano(a)" },
+                                { fr: "allemand(e)", pt: "alemão(ã)" },
+                                { fr: "belge", pt: "belga" },
+                                { fr: "canadien(ne)", pt: "canadense" },
+                                { fr: "étranger / étrangère", pt: "estrangeiro(a)" },
+                                { fr: "européen(ne)", pt: "europeu/europeia" },
+                                { fr: "africain(e)", pt: "africano(a)" }
                             ],
                             adverbs: [
-                                { fr: "ici / là-bas", pt: "aqui / lá (longe)" },
+                                { fr: "toujours", pt: "sempre" },
+                                { fr: "souvent", pt: "frequentemente" },
+                                { fr: "ici", pt: "aqui" },
+                                { fr: "là-bas", pt: "lá (longe)" },
                                 { fr: "partout", pt: "em toda parte" },
-                                { fr: "souvent", pt: "frequentemente" }
+                                { fr: "plus ou moins", pt: "mais ou menos" }
                             ],
                             grammar: [
-                                { title: "Prépositions avec les Lieux", rules: ["en → pays féminins ou avec voyelle (en France, en Chine, en Italie).", "au → pays masculins (au Brésil, au Canada, au Maroc).", "aux → pays pluriels (aux États-Unis, aux Pays-Bas).", "à → villes et îles (à Paris, à Rome, à Madagascar)."] },
-                                { title: "La Négation", rules: ["Sujet + ne/n' + verbe + pas", "Je ne parle pas bien anglais.", "Ils ne sont pas français."] }
+                                { title: "Prépositions avec les Pays et Villes", rules: ["en → pays féminins ou avec voyelle (en France, en Chine, en Tunisie, en Italie).", "au → pays masculins (au Brésil, au Canada, au Maroc, au Sénégal).", "aux → pays pluriels (aux États-Unis, aux Pays-Bas).", "à → villes et îles (à Paris, à Rome, à Rio de Janeiro, à Madagascar)."] },
+                                { title: "La Négation (ne... pas)", rules: ["Sujet + ne (ou n') + verbe + pas", "Ex: Je ne parle pas bien anglais.", "Ex: Je n’ai pas cours le mardi.", "Ex: Ils ne sont pas français."] },
+                                { title: "Exprimer un rêve", rules: ["AVOIR UN RÊVE DE....", "J’ai un rêve : aller à Paris.", "Mon rêve, c’est de participer à la Fête de la musique."] },
+                                { title: "Questions d'identification", rules: ["Quelle est votre langue maternelle ?", "Quelles sont vos coordonnées ?", "Quel est votre prénom ?", "Est-ce qu'il est brésilien ?"] }
                             ]
                         }
                     },
@@ -202,74 +255,132 @@
                         title: "Leçon 3", name: "Études et Professions",
                         content: {
                             verbs: [
-                                { fr: "étudier", pt: "estudar", conjugation: ["j'étudie", "tu étudies", "il étudie", "nous étudions", "vous étudiez", "ils étudient"] },
-                                { fr: "travailler", pt: "trabalhar" },
-                                { fr: "apprendre", pt: "aprender", conjugation: ["j'apprends", "tu apprends", "il apprend", "nous apprenons", "vous apprenez", "ils apprennent"] },
-                                { fr: "enseigner", pt: "ensinar" },
-                                { fr: "participer / réaliser", pt: "participar / realizar" }
+                                { fr: "travailler (travaillé)", pt: "trabalhar", conjugation: ["je travaille", "tu travailles", "il travaille", "nous travaillons", "vous travaillez", "ils travaillent"] },
+                                { fr: "adorer (adoré)", pt: "adorar", conjugation: ["j'adore", "tu adores", "il adore", "nous adorons", "vous adorez", "ils adorent"] },
+                                { fr: "désirer (désiré)", pt: "desejar", conjugation: ["je désire", "tu désires", "il désire", "nous désirons", "vous désirez", "ils désirent"] },
+                                { fr: "rêver (rêvé)", pt: "sonhar", conjugation: ["je rêve", "tu rêves", "il rêve", "nous rêvons", "vous rêvez", "ils rêvent"] },
+                                { fr: "s'inscrire (inscrit)", pt: "inscrever-se", conjugation: ["je m'inscris", "tu t'inscris", "il s'inscrit", "nous nous inscrivons", "vous vous inscrivez", "ils s'inscrivent"] },
+                                { fr: "se présenter (présenté)", pt: "apresentar-se", conjugation: ["je me présente", "tu te présentes", "il se présente", "nous nous présentons", "vous vous présentez", "ils se présentent"] },
+                                { fr: "répondre (répondu)", pt: "responder", conjugation: ["je réponds", "tu réponds", "il répond", "nous répondons", "vous répondez", "ils répondent"] },
+                                { fr: "participer (participé)", pt: "participar", conjugation: ["je participe", "tu participes", "il participe", "nous participons", "vous participez", "ils participent"] },
+                                { fr: "compléter (complété)", pt: "completar", conjugation: ["je complète", "tu complètes", "il complète", "nous complétons", "vous complétez", "ils complètent"] },
+                                { fr: "réaliser (réalisé)", pt: "realizar", conjugation: ["je réalise", "tu réalises", "il réalise", "nous réalisons", "vous réalisez", "ils réalisent"] },
+                                { fr: "deviner (deviné)", pt: "adivinhar", conjugation: ["je devine", "tu devines", "il devine", "nous devinons", "vous devinez", "ils devinent"] }
                             ],
                             nouns: [
                                 { fr: "l'université / l'école", pt: "a universidade / a escola" },
-                                { fr: "le médecin / l'infirmière", pt: "o médico / a enfermeira" },
-                                { fr: "l'architecte / l'ingénieur", pt: "o arquiteto / o engenheiro" },
+                                { fr: "le bureau", pt: "o escritório" },
+                                { fr: "le secrétariat", pt: "a secretaria" },
+                                { fr: "la matière / la spécialité", pt: "a disciplina / a especialização" },
+                                { fr: "l'architecture / l'économie / la médecine", pt: "a arquitetura / a economia / a medicina" },
+                                { fr: "la littérature / les sciences politiques", pt: "a literatura / as ciências políticas" },
+                                { fr: "le métier / l'entreprise", pt: "a profissão (trabalho) / a empresa" },
+                                { fr: "le médecin / l'infirmier / l'infirmière", pt: "o médico / o enfermeiro / a enfermeira" },
+                                { fr: "l'architecte / l'ingénieur(e)", pt: "o arquiteto / o engenheiro" },
                                 { fr: "l'employé(e) / le(la) secrétaire", pt: "o(a) funcionário(a) / o(a) secretário(a)" },
-                                { fr: "le policier / le militaire", pt: "o policial / o militar" },
-                                { fr: "le boulanger / le pharmacien", pt: "o padeiro / o farmacêutico" }
+                                { fr: "l'avocat(e) / le comptable", pt: "o advogado(a) / o contador" },
+                                { fr: "le boulanger / la boulangère", pt: "o padeiro / a padeira" },
+                                { fr: "le policier / la policière", pt: "o policial / a policial" },
+                                { fr: "le pharmacien / la pharmacienne", pt: "o farmacêutico / a farmacêutica" },
+                                { fr: "le photographe / le réalisateur", pt: "o fotógrafo / o diretor de cinema" },
+                                { fr: "le présentateur / le candidat", pt: "o apresentador / o candidato" },
+                                { fr: "le journaliste", pt: "o jornalista" },
+                                { fr: "le professeur", pt: "o professor" }
                             ],
                             adjectives: [
                                 { fr: "professionnel(le)", pt: "profissional" },
-                                { fr: "difficile / facile", pt: "difícil / fácil" },
-                                { fr: "créatif / créative", pt: "criativo(a)" }
+                                { fr: "créatif / créative", pt: "criativo(a)" },
+                                { fr: "heureux / heureuse", pt: "feliz" },
+                                { fr: "compétent(e)", pt: "competente" }
                             ],
                             adverbs: [
-                                { fr: "beaucoup", pt: "muito" },
-                                { fr: "bien / mal", pt: "bem / mal" },
-                                { fr: "toujours", pt: "sempre" }
+                                { fr: "heureusement", pt: "felizmente" },
+                                { fr: "malheureusement", pt: "infelizmente" },
+                                { fr: "bien", pt: "bem" },
+                                { fr: "mal", pt: "mal" },
+                                { fr: "pendant", pt: "durante" }
                             ],
                             grammar: [
-                                { title: "Le Féminin des Professions", rules: ["-ien devient -ienne (musicien → musicienne).", "-er devient -ère (boulanger → boulangère).", "-eur devient -euse (vendeur → vendeuse) ou -trice (acteur → actrice)."] },
-                                { title: "Parler de sa profession", rules: ["Je suis + profession (sans article): Je suis informaticien.", "Je travaille comme boulanger.", "Je travaille pour / chez Google."] }
+                                { title: "Le Féminin des Professions", rules: ["-ien devient -ienne (informaticien → informaticienne, musicien → musicienne).", "-er devient -ère (boulanger → boulangère, infirmier → infirmière).", "-eur devient -euse (vendeur → vendeuse).", "-teur devient -trice (acteur → actrice, directeur → directrice).", "-iste reste -iste (journaliste → journaliste)."] },
+                                { title: "Parler de sa profession", rules: ["Je suis + profession (sans article): Je suis architecte. Je suis médecin.", "Je travaille comme boulanger.", "Je travaille pour / chez Google."] },
+                                { title: "L’article interrogatif 'quel'", rules: ["quel (masc. singulier): Quel est votre nom ?", "quelle (fém. singulier): Quelle langue étudiez-vous ?", "quels / quelles (pluriel): Quels jours préférez-vous ?"] }
                             ]
                         }
                     }
                 ]
             },
             {
-                id: 2, title: "Dossier 2", subtitle: "Ville, Lieux & Directions", colors: ["bg-orange-400/80", "bg-red-500/80", "bg-yellow-400/80", "bg-pink-500/80"],
+                id: 2, title: "Dossier 2", subtitle: "Ville, Lieux & Logement", colors: ["bg-orange-400/80", "bg-red-500/80", "bg-yellow-400/80", "bg-pink-500/80"],
                 lessons: [
                     {
                         title: "Leçon 1", name: "Les Lieux de la Ville",
                         content: {
                             verbs: [
-                                { fr: "se promener", pt: "passear / caminhar", conjugation: ["je me promène", "tu te promènes", "il se promène", "nous nous promenons", "vous vous promenez", "ils se promènent"] },
-                                { fr: "acheter", pt: "comprar" },
-                                { fr: "manger / boire", pt: "comer / beber" },
-                                { fr: "chercher / trouver", pt: "procurar / encontrar" }
+                                { fr: "se promener (promené)", pt: "passear / caminhar", conjugation: ["je me promène", "tu te promènes", "il se promène", "nous nous promenons", "vous vous promenez", "ils se promènent"] },
+                                { fr: "se retrouver (retrouvé)", pt: "encontrar-se", conjugation: ["je me retrouve", "tu te retrouves", "il se retrouve", "nous nous retrouvons", "vous vous retrouvez", "ils se retrouvent"] },
+                                { fr: "se trouver (trouvé)", pt: "achar / pensar / se encontrar", conjugation: ["je me trouve", "tu te trouves", "il se trouve", "nous nous trouvons", "vous vous trouvez", "ils se trouvent"] },
+                                { fr: "ouvrir (ouvert)", pt: "abrir", conjugation: ["j'ouvre", "tu ouvres", "il ouvre", "nous ouvrons", "vous ouvrez", "ils ouvrent"] },
+                                { fr: "fermer (fermé)", pt: "fechar", conjugation: ["je ferme", "tu fermes", "il ferme", "nous fermons", "vous fermez", "ils ferment"] },
+                                { fr: "acheter (acheté)", pt: "comprar", conjugation: ["j'achète", "tu achètes", "il achète", "nous achetons", "vous achetez", "ils achètent"] },
+                                { fr: "manger (mangé)", pt: "comer", conjugation: ["je mange", "tu manges", "il mange", "nous mangeons", "vous mangez", "ils mangent"] },
+                                { fr: "voir (vu)", pt: "ver", conjugation: ["je vois", "tu vois", "il voit", "nous voyons", "vous voyez", "ils voient"] },
+                                { fr: "chercher (cherché)", pt: "procurar", conjugation: ["je cherche", "tu cherches", "il cherche", "nous cherchons", "vous cherchez", "ils cherchent"] },
+                                { fr: "trouver (trouvé)", pt: "achar / encontrar", conjugation: ["je trouve", "tu trouves", "il trouve", "nous trouvons", "vous trouvez", "ils trouvent"] },
+                                { fr: "passer (passé)", pt: "passar", conjugation: ["je passe", "tu passes", "il passe", "nous passons", "vous passez", "ils passent"] },
+                                { fr: "observer (observé)", pt: "observar", conjugation: ["j'observe", "tu observes", "il observe", "nous observons", "vous observez", "ils observent"] },
+                                { fr: "écouter (écouté)", pt: "escutar", conjugation: ["j'écoute", "tu écoutes", "il écoute", "nous écoutons", "vous écoutez", "ils écoutent"] }
                             ],
                             nouns: [
-                                { fr: "la mairie / l'hôtel de ville", pt: "a prefeitura" },
-                                { fr: "l'hôpital / la pharmacie", pt: "o hospital / a farmácia" },
+                                { fr: "le lieu / l'endroit", pt: "o lugar" },
+                                { fr: "la mairie / l'hôtel de ville", pt: "a prefeitura municipal" },
+                                { fr: "la préfecture", pt: "a prefeitura estadual" },
+                                { fr: "la cathédrale / le château / l'église", pt: "a catedral / o castelo / a igreja" },
+                                { fr: "l'hôpital / la pharmacie / la poste", pt: "o hospital / a farmácia / o correio" },
                                 { fr: "le supermarché / l'épicerie", pt: "o supermercado / a mercearia" },
-                                { fr: "la banque / la poste", pt: "o banco / os correios" },
-                                { fr: "le théâtre / le musée", pt: "o teatro / o museu" },
+                                { fr: "la boulangerie / la banque", pt: "a padaria / o banco" },
+                                { fr: "le théâtre / le musée / la bibliothèque", pt: "o teatro / o museu / a biblioteca" },
+                                { fr: "le complexe sportif / le jardin", pt: "o complexo esportivo / o jardim" },
+                                { fr: "les remparts / le marché", pt: "a muralha / o mercado" },
                                 { fr: "le pont / la rivière", pt: "a ponte / o rio" },
-                                { fr: "le marché / la boulangerie", pt: "o mercado / a padaria" }
+                                { fr: "la rue / la place / le boulevard / le parking", pt: "a rua / a praça / a avenida larga / o estacionamento" },
+                                { fr: "le quartier / le centre-ville / la banlieue", pt: "o bairro / o centro da cidade / a periferia" },
+                                { fr: "le monument", pt: "o monumento" },
+                                { fr: "le commissariat", pt: "a delegacia" }
                             ],
                             adjectives: [
-                                { fr: "historique", pt: "histórico(a)" },
+                                { fr: "intéressant(e)", pt: "interessante" },
+                                { fr: "traditionnel(le)", pt: "tradicional" },
                                 { fr: "magnifique", pt: "magnífico(a)" },
-                                { fr: "bruyant(e) / tranquille", pt: "barulhento(a) / tranquilo(a)" }
+                                { fr: "agréable", pt: "agradável" },
+                                { fr: "bruyant(e)", pt: "barulhento(a)" },
+                                { fr: "tranquille", pt: "tranquilo(a)" },
+                                { fr: "ancien(ne)", pt: "antigo(a)" },
+                                { fr: "moderne", pt: "moderno(a)" },
+                                { fr: "classique", pt: "clássico(a)" },
+                                { fr: "original(e)", pt: "original" },
+                                { fr: "historique", pt: "histórico" }
                             ],
                             adverbs: [
-                                { fr: "près de / loin de", pt: "perto de / longe de" },
+                                { fr: "près de", pt: "perto de" },
+                                { fr: "proche de", pt: "próximo de" },
+                                { fr: "loin de", pt: "longe de" },
                                 { fr: "à côté de", pt: "ao lado de" },
                                 { fr: "en face de", pt: "em frente de" },
-                                { fr: "devant / derrière", pt: "na frente / atrás" },
-                                { fr: "sur / sous", pt: "sobre (em cima) / sob (embaixo)" }
+                                { fr: "devant", pt: "na frente" },
+                                { fr: "derrière", pt: "atrás" },
+                                { fr: "sur", pt: "sobre (em cima)" },
+                                { fr: "sous", pt: "sob (embaixo)" },
+                                { fr: "autour de", pt: "ao redor de" },
+                                { fr: "au bord de", pt: "à beira de" },
+                                { fr: "à pied", pt: "a pé" },
+                                { fr: "en voiture", pt: "de carro" },
+                                { fr: "en bus", pt: "de ônibus" }
                             ],
                             grammar: [
-                                { title: "Les Articles Contractés", rules: ["de + le = du (près du pont).", "de + les = des (loin des musées).", "à + le = au (aller au cinéma).", "à + les = aux (parler aux touristes)."] },
-                                { title: "L'expression 'Il y a'", rules: ["Utilisée pour indiquer l'existence: Il y a (Há / Existe / Tem).", "Il y a une pharmacie ici.", "Négation: Il n'y a pas de (Não há)."] }
+                                { title: "Les Articles Contractés (Lieux)", rules: ["de + le = du (près du parking, à côté du restaurant).", "de + les = des (loin des écoles, loin des musées).", "de + la = de la (en face de la mairie).", "à + le = au (aller au cinéma).", "à + les = aux (parler aux touristes)."] },
+                                { title: "L'expression 'Il y a'", rules: ["Utilisée pour indiquer l'existence: Il y a (Há / Existe / Tem).", "Ex: Il y a une pharmacie ici.", "Négation: Il n'y a pas de (Não há). Ex: Il n'y a pas de vent.", "Question: Y a-t-il ......... ? (Há....?)"] },
+                                { title: "C'est vs Ce sont", rules: ["C'est une belle ville. (É uma bela cidade)", "Ce n'est pas loin. (Não é longe)", "Ce sont mes amis. (São meus amigos)", "Ce ne sont pas des touristes. (Não são turistas)"] },
+                                { title: "Questions et réponses", rules: ["Pourquoi aimez-vous ce lieu ? Parce que j’adore la peinture.", "Où se trouve ce lieu ? (Onde fica esse lugar?)", "De quoi s’agit-il ? (Do que se trata?)"] }
                             ]
                         }
                     },
@@ -277,106 +388,185 @@
                         title: "Leçon 2", name: "S'orienter et Transports",
                         content: {
                             verbs: [
-                                { fr: "descendre", pt: "descer", conjugation: ["je descends", "tu descends", "il descend", "nous descendons", "vous descendez", "ils descendent"] },
-                                { fr: "monter", pt: "subir / entrar (veículo)" },
-                                { fr: "tourner", pt: "virar" },
-                                { fr: "traverser", pt: "atravessar" },
-                                { fr: "continuer", pt: "continuar" },
-                                { fr: "prendre", pt: "pegar / tomar (transporte/rua)" }
+                                { fr: "descendre (descendu)", pt: "descer", conjugation: ["je descends", "tu descends", "il descend", "nous descendons", "vous descendez", "ils descendent"] },
+                                { fr: "monter (monté)", pt: "subir / entrar (veículo)", conjugation: ["je monte", "tu montes", "il monte", "nous montons", "vous montez", "ils montent"] },
+                                { fr: "tourner (tourné)", pt: "virar", conjugation: ["je tourne", "tu tournes", "il tourne", "nous tournons", "vous tournez", "ils tournent"] },
+                                { fr: "changer (changé)", pt: "trocar, mudar", conjugation: ["je change", "tu changes", "il change", "nous changeons", "vous changez", "ils changent"] },
+                                { fr: "traverser (traversé)", pt: "atravessar", conjugation: ["je traverse", "tu traverses", "il traverse", "nous traversons", "vous traversez", "ils traversent"] },
+                                { fr: "continuer (continué)", pt: "continuar", conjugation: ["je continue", "tu continues", "il continue", "nous continuons", "vous continuez", "ils continuent"] },
+                                { fr: "prendre (pris)", pt: "pegar / tomar (transporte/rua)", conjugation: ["je prends", "tu prends", "il prend", "nous prenons", "vous prenez", "ils prennent"] },
+                                { fr: "indiquer (indiqué)", pt: "indicar", conjugation: ["j'indique", "tu indiques", "il indique", "nous indiquons", "vous indiquez", "ils indiquent"] },
+                                { fr: "demander (demandé)", pt: "perguntar / pedir", conjugation: ["je demande", "tu demandes", "il demande", "nous demandons", "vous demandez", "ils demandent"] }
                             ],
                             nouns: [
-                                { fr: "le chemin / l'itinéraire", pt: "o caminho / o roteiro" },
-                                { fr: "la rue / l'avenue / le boulevard", pt: "a rua / a avenida / o bulevar" },
-                                { fr: "le carrefour / la place", pt: "o cruzamento / a praça" },
-                                { fr: "la gare / l'arrêt de bus", pt: "a estação / o ponto de ônibus" },
-                                { fr: "le billet / le ticket", pt: "a passagem / o bilhete" },
-                                { fr: "la carte / le plan", pt: "o mapa (grande) / o mapa (cidade/menor)" }
+                                { fr: "le chemin", pt: "o caminho" },
+                                { fr: "l'itinéraire", pt: "o roteiro" },
+                                { fr: "le trajet", pt: "o trajeto" },
+                                { fr: "la rue", pt: "a rua" },
+                                { fr: "l'avenue", pt: "a avenida" },
+                                { fr: "la gare", pt: "a estação" },
+                                { fr: "l'arrêt de bus", pt: "o ponto de ônibus" },
+                                { fr: "la station de métro", pt: "a estação de metrô" },
+                                { fr: "le billet de train", pt: "a passagem de trem" },
+                                { fr: "le ticket", pt: "o bilhete" },
+                                { fr: "la carte", pt: "o mapa (grande / cartográfico)" },
+                                { fr: "le plan", pt: "o mapa (cidade, menor)" },
+                                { fr: "le dépliant", pt: "o folheto / panfleto" },
+                                { fr: "l'entrée", pt: "a entrada" },
+                                { fr: "la place", pt: "o lugar (vaga)" }
                             ],
                             adjectives: [
                                 { fr: "premier / première", pt: "primeiro(a)" },
-                                { fr: "deuxième / troisième", pt: "segundo(a) / terceiro(a)" },
+                                { fr: "deuxième / second(e)", pt: "segundo(a)" },
+                                { fr: "troisième", pt: "terceiro(a)" },
+                                { fr: "quatrième", pt: "quarto(a)" },
+                                { fr: "cinquième", pt: "quinto(a)" },
+                                { fr: "sixième", pt: "sexto(a)" },
+                                { fr: "dixième", pt: "décimo(a)" },
                                 { fr: "perdu(e)", pt: "perdido(a)" }
                             ],
                             adverbs: [
                                 { fr: "tout droit", pt: "reto / sempre em frente" },
-                                { fr: "à gauche / à droite", pt: "à esquerda / à direita" },
-                                { fr: "jusqu'à / jusqu'au", pt: "até (a / ao)" }
+                                { fr: "à gauche", pt: "à esquerda" },
+                                { fr: "à droite", pt: "à direita" },
+                                { fr: "vers la gauche", pt: "em direção à esquerda" },
+                                { fr: "vers la droite", pt: "em direção à direita" },
+                                { fr: "jusque", pt: "até" },
+                                { fr: "jusqu'à", pt: "até a" },
+                                { fr: "jusqu'au", pt: "até ao" }
                             ],
                             grammar: [
-                                { title: "Demander et Indiquer le chemin", rules: ["Pardon, pour aller à la gare ? (Com licença, para ir à estação?)", "Où se trouve le musée ? (Onde fica o museu?)", "Prenez la première rue à droite. (Pegue a primeira rua à direita.)", "Continuez tout droit jusqu'au feu rouge. (Continue reto até o sinal vermelho.)"] }
+                                { title: "Demander et Indiquer le chemin", rules: ["Pardon, pour aller à la gare ? (Com licença, para ir à estação?)", "Où se trouve le musée ? (Onde fica o museu?)", "Prenez la première rue à droite. (Pegue a primeira rua à direita.)", "Continuez tout droit jusqu'au pont. (Continue reto até a ponte.)", "Traversez la rivière et tournez à gauche. (Atravesse o rio e vire à esquerda.)"] },
+                                { title: "Prendre (Transport & Direction)", rules: ["Prendre le métro / la voiture / le train / l'avion.", "Prendre la rue / Prendre la deuxième à gauche."] }
                             ]
                         }
                     },
                     {
-                        title: "Leçon 3", name: "Le Logement Touristique",
+                        title: "Leçon 3", name: "Le Logement Touristique et Cartes",
                         content: {
                             verbs: [
-                                { fr: "réserver", pt: "reservar" },
-                                { fr: "louer", pt: "alugar" },
-                                { fr: "rester", pt: "ficar / permanecer" },
-                                { fr: "payer", pt: "pagar" }
+                                { fr: "réserver (réservé)", pt: "reservar", conjugation: ["je réserve", "tu réserves", "il réserve", "nous réservons", "vous réservez", "ils réservent"] },
+                                { fr: "louer (loué)", pt: "alugar", conjugation: ["je loue", "tu loues", "il loue", "nous louons", "vous louez", "ils louent"] },
+                                { fr: "rester (resté)", pt: "ficar / permanecer", conjugation: ["je reste", "tu restes", "il reste", "nous restons", "vous restez", "ils restent"] },
+                                { fr: "payer (payé)", pt: "pagar", conjugation: ["je paie", "tu paies", "il paie", "nous payons", "vous payez", "ils paient"] },
+                                { fr: "inclure (inclus)", pt: "incluir", conjugation: ["j'inclus", "tu inclus", "il inclut", "nous incluons", "vous incluez", "ils incluent"] },
+                                { fr: "envoyer (envoyé)", pt: "enviar", conjugation: ["j'envoie", "tu envoies", "il envoie", "nous envoyons", "vous envoyez", "ils envoient"] },
+                                { fr: "se baigner (baigné)", pt: "tomar banho (mar/piscina)", conjugation: ["je me baigne", "tu te baignes", "il se baigne", "nous nous baignons", "vous vous baignez", "ils se baignent"] },
+                                { fr: "penser (pensé)", pt: "pensar", conjugation: ["je pense", "tu penses", "il pense", "nous pensons", "vous pensez", "ils pensent"] },
+                                { fr: "nager (nagé)", pt: "nadar", conjugation: ["je nage", "tu nages", "il nage", "nous nageons", "vous nagez", "ils nagent"] },
+                                { fr: "rentrer (rentré)", pt: "voltar / retornar", conjugation: ["je rentre", "tu rentres", "il rentre", "nous rentrons", "vous rentrez", "ils rentrent"] }
                             ],
                             nouns: [
-                                { fr: "l'hôtel / l'auberge de jeunesse", pt: "o hotel / o hostel" },
-                                { fr: "la chambre (simple / double)", pt: "o quarto (simples / duplo)" },
-                                { fr: "la salle de bain / la douche", pt: "o banheiro / o chuveiro" },
-                                { fr: "le lit superposé / le drap", pt: "o beliche / o lençol" },
+                                { fr: "l'hôtel (m.)", pt: "o hotel" },
+                                { fr: "l'auberge de jeunesse (f.)", pt: "o hostel" },
+                                { fr: "la chambre (simple, double, mixte)", pt: "o quarto (simples, duplo, misto)" },
+                                { fr: "la salle de bain", pt: "o banheiro" },
+                                { fr: "la douche", pt: "o chuveiro" },
+                                { fr: "les toilettes", pt: "os sanitários" },
+                                { fr: "le lit superposé", pt: "o beliche" },
+                                { fr: "le drap", pt: "o lençol" },
+                                { fr: "la serviette", pt: "a toalha" },
                                 { fr: "le petit déjeuner", pt: "o café da manhã" },
-                                { fr: "la réservation / le tarif", pt: "a reserva / o preço / a tarifa" }
+                                { fr: "le prix / le tarif", pt: "o preço / a tarifa" },
+                                { fr: "la réservation", pt: "a reserva" },
+                                { fr: "la carte d’adhérent", pt: "o cartão de sócio" },
+                                { fr: "la carte postale", pt: "o cartão postal" },
+                                { fr: "le timbre", pt: "o selo" },
+                                { fr: "l'enveloppe", pt: "o envelope" },
+                                { fr: "l'expéditeur / l'expéditrice", pt: "o remetente / a remetente" },
+                                { fr: "le destinataire", pt: "o destinatário" },
+                                { fr: "la plage / la montagne / le désert", pt: "a praia / a montanha / o deserto" },
+                                { fr: "les vacances", pt: "as férias" }
                             ],
                             adjectives: [
-                                { fr: "libre / occupé(e)", pt: "livre / ocupado(a)" },
+                                { fr: "libre", pt: "livre" },
+                                { fr: "occupé(e)", pt: "ocupado(a)" },
                                 { fr: "inclus(e)", pt: "incluso(a)" },
-                                { fr: "propre / sale", pt: "limpo(a) / sujo(a)" },
-                                { fr: "cher / chère", pt: "caro(a)" }
+                                { fr: "cher / chère", pt: "caro / cara" },
+                                { fr: "génial(e)", pt: "genial" },
+                                { fr: "formidable", pt: "formidável" },
+                                { fr: "merveilleux / merveilleuse", pt: "maravilhoso / maravilhosa" },
+                                { fr: "extraordinaire", pt: "extraordinário" },
+                                { fr: "confortable", pt: "confortável" }
                             ],
                             adverbs: [
                                 { fr: "combien", pt: "quanto" },
                                 { fr: "comment", pt: "como" },
-                                { fr: "environ", pt: "aproximadamente" }
+                                { fr: "bientôt", pt: "em breve" },
+                                { fr: "à bientôt", pt: "até logo" },
+                                { fr: "hier", pt: "ontem" },
+                                { fr: "demain", pt: "amanhã" }
                             ],
                             grammar: [
-                                { title: "Poser des questions à la réception", rules: ["Avez-vous des chambres doubles ? (Vocês têm quartos de casal?)", "C'est possible de faire la cuisine ? (É possível cozinhar?)", "Quel est le tarif pour une nuit ? (Qual é a tarifa por uma noite?)", "Le petit déjeuner est-il inclus ? (O café da manhã está incluso?)"] }
+                                { title: "Poser des questions à la réception", rules: ["Avez-vous des chambres doubles ? (Vocês têm quartos de casal?)", "C'est possible de faire la cuisine ? (É possível cozinhar?)", "Quel est le prix ? (Qual é o preço?)", "Le petit déjeuner est inclus ? (O café da manhã está incluso?)", "Vous acceptez les animaux ? (Vocês aceitam animais?)"] },
+                                { title: "Adjectifs démonstratifs", rules: ["ce + masculin: ce pays, ce château, ce musée, ce théâtre.", "cet + masculin (voyelle): cet hôtel, cet endroit, cet appartement.", "cette + féminin: cette ville, cette plage, cette montagne, cette lumière.", "ces + pluriel: ces vacances, ces cuisines, ces musées."] },
+                                { title: "Expressions de la correspondance", rules: ["Chère maman, Cher Max (Querida mamãe, Querido Max)", "Salut les filles ! / Salut les gars ! (Oi meninas! / Oi pessoal!)", "Je t’embrasse / Bises / Bisous (Um beijo / Beijos)", "Amitiés (Atenciosamente)"] }
                             ]
                         }
                     }
                 ]
             },
             {
-                id: 3, title: "Dossier 3", subtitle: "Famille, Corps & Quotidien", colors: ["bg-green-400/80", "bg-emerald-500/80", "bg-teal-400/80", "bg-cyan-500/80"],
+                id: 3, title: "Dossier 3", subtitle: "Famille, Corps & Routine", colors: ["bg-green-400/80", "bg-emerald-500/80", "bg-teal-400/80", "bg-cyan-500/80"],
                 lessons: [
                     {
                         title: "Leçon 1", name: "La Famille et Événements",
                         content: {
                             verbs: [
-                                { fr: "naître / mourir", pt: "nascer / morrer" },
-                                { fr: "se marier / se séparer", pt: "casar-se / separar-se" },
-                                { fr: "grandir / vieillir", pt: "crescer / envelhecer" },
-                                { fr: "ressembler à", pt: "parecer-se com" },
-                                { fr: "annoncer / féliciter", pt: "anunciar / felicitar" }
+                                { fr: "naître (né)", pt: "nascer", conjugation: ["je nais", "tu nais", "il naît", "nous naissons", "vous naissez", "ils naissent"] },
+                                { fr: "mourir (mort)", pt: "morrer", conjugation: ["je meurs", "tu meurs", "il meurt", "nous mourons", "vous mourez", "ils meurent"] },
+                                { fr: "se marier (marié)", pt: "casar-se", conjugation: ["je me marie", "tu te maries", "il se marie", "nous nous marions", "vous vous mariez", "ils se marient"] },
+                                { fr: "se séparer (séparé)", pt: "separar-se", conjugation: ["je me sépare", "tu te sépares", "il se sépare", "nous nous séparons", "vous vous séparez", "ils se séparent"] },
+                                { fr: "ressembler (ressemblé) à", pt: "parecer-se com", conjugation: ["je ressemble", "tu ressembles", "il ressemble", "nous ressemblons", "vous ressemblez", "ils ressemblent"] },
+                                { fr: "annoncer (annoncé)", pt: "anunciar", conjugation: ["j'annonce", "tu annonces", "il annonce", "nous annonçons", "vous annoncez", "ils annoncent"] },
+                                { fr: "féliciter (félicité)", pt: "felicitar", conjugation: ["je félicite", "tu félicites", "il félicite", "nous félicitons", "vous félicitez", "ils félicitent"] },
+                                { fr: "dire (dit)", pt: "dizer", conjugation: ["je dis", "tu dis", "il / elle dit", "nous disons", "vous dites", "ils / elles disent"] },
+                                { fr: "paraître (paru)", pt: "parecer (físico/impressão)", conjugation: ["je parais", "tu parais", "il paraît", "nous paraissons", "vous paraissez", "ils paraissent"] },
+                                { fr: "avoir (eu) l'air de", pt: "parecer (sentimento)", conjugation: ["j'ai l'air de", "tu as l'air de", "il a l'air de", "nous avons l'air de", "vous avez l'air de", "ils ont l'air de"] },
+                                { fr: "s'intéresser (intéressé) à", pt: "interessar-se por", conjugation: ["je m'intéresse", "tu t'intéresses", "il s'intéresse", "nous nous intéressons", "vous vous intéressez", "ils s'intéressent"] }
                             ],
                             nouns: [
-                                { fr: "les parents / les grands-parents", pt: "os pais / os avós" },
-                                { fr: "le fils / la fille / les enfants", pt: "o filho / a filha / as crianças (filhos)" },
+                                { fr: "la famille / les parents", pt: "a família / os pais" },
+                                { fr: "le père / la mère", pt: "o pai / a mãe" },
+                                { fr: "l'enfant / les enfants", pt: "a criança (o filho) / os filhos" },
+                                { fr: "le fils / la fille", pt: "o filho / a filha" },
                                 { fr: "le frère / la sœur", pt: "o irmão / a irmã" },
-                                { fr: "l'oncle / la tante", pt: "o tio / a tia" },
-                                { fr: "le cousin / la cousine", pt: "o primo / a prima" },
+                                { fr: "les grands-parents / les petits-enfants", pt: "os avós / os netos" },
+                                { fr: "le grand-père / la grand-mère", pt: "o avô / a avó" },
+                                { fr: "le petit-fils / la petite-fille", pt: "o neto / a neta" },
+                                { fr: "l'oncle / la tante / le cousin / la cousine", pt: "o tio / a tia / o primo / a prima" },
                                 { fr: "le beau-père / la belle-mère", pt: "o sogro (padrasto) / a sogra (madrasta)" },
+                                { fr: "le beau-frère / la belle-sœur", pt: "o cunhado / a cunhada" },
                                 { fr: "le neveu / la nièce", pt: "o sobrinho / a sobrinha" },
-                                { fr: "la naissance / le mariage", pt: "o nascimento / o casamento" }
+                                { fr: "la naissance / le mariage / le décès", pt: "o nascimento / o casamento / o falecimento" },
+                                { fr: "le bonheur / la tristesse", pt: "a felicidade / a tristeza" },
+                                { fr: "le signe du zodiaque", pt: "o signo do zodíaco" },
+                                { fr: "le jumeau / la jumelle", pt: "o gêmeo / a gêmea" }
                             ],
                             adjectives: [
-                                { fr: "paternel(le) / maternel(le)", pt: "paterno(a) / materno(a)" },
-                                { fr: "aîné(e)", pt: "mais velho(a) (irmão/irmã)" },
-                                { fr: "cadet(te)", pt: "mais novo(a)" }
+                                { fr: "paternel(le)", pt: "paterno(a)" },
+                                { fr: "maternel(le)", pt: "materno(a)" },
+                                { fr: "indépendant(e)", pt: "independente" },
+                                { fr: "organisé(e)", pt: "organizado(a)" },
+                                { fr: "timide", pt: "tímido(a)" },
+                                { fr: "romantique", pt: "romântico(a)" },
+                                { fr: "intelligent(e)", pt: "inteligente" },
+                                { fr: "généreux / généreuse", pt: "generoso(a)" },
+                                { fr: "optimiste", pt: "otimista" },
+                                { fr: "sérieux / sérieuse", pt: "sério(a)" },
+                                { fr: "patient(e)", pt: "paciente" },
+                                { fr: "superficiel(le)", pt: "superficial" },
+                                { fr: "menteur / menteuse", pt: "mentiroso(a)" }
                             ],
                             adverbs: [
                                 { fr: "ensemble", pt: "junto(s)" },
-                                { fr: "seul(e)", pt: "sozinho(a)" }
+                                { fr: "seul(e)", pt: "sozinho(a)" },
+                                { fr: "même", pt: "mesmo(a)" }
                             ],
                             grammar: [
-                                { title: "Les Adjectifs Possessifs (Pluriel)", rules: ["Notre / Nos (Nosso, nossa / Nossos, nossas)", "Votre / Vos (Vosso, vossa / Vossos, vossas)", "Leur / Leurs (Deles, delas)"] },
-                                { title: "Règle de 'Mon/Ton/Son' avec voyelle", rules: ["Devant un mot féminin qui commence par une voyelle ou un 'h' muet, on utilise MON, TON, SON.", "Exemple: mon amie (minha amiga), son histoire (história dele/dela)."] }
+                                { title: "C'est vs Il est", rules: ["C’EST + Déterminant + Nom: C'est un grand acteur. C'est mon ami.", "IL EST + Adjectif ou Profession (sans article): Il est grand. Il est médecin."] },
+                                { title: "Pronoms toniques", rules: ["Moi, je suis balance. (Eu, eu sou libra.)", "Toi aussi, tu es artiste? (Você também é artista?)", "Lui, il aime aller à la plage. Elle aussi, elle est photographe.", "Nous, nous allons. Vous aussi, vous faites...", "Eux, ils adorent les chiens. Elles, elles visitent..."] },
+                                { title: "Exprimer des ressemblances", rules: ["Ils se ressemblent comme deux gouttes d’eau. (Eles se parecem como duas gotas d’água.)", "Elle ressemble à son père. (Ela se parece com o pai.)", "Il a le sourire de sa mère. (Ele tem o sorriso da mãe.)"] }
                             ]
                         }
                     },
@@ -384,32 +574,64 @@
                         title: "Leçon 2", name: "Le Corps et la Santé",
                         content: {
                             verbs: [
-                                { fr: "avoir mal à", pt: "estar com dor em" },
-                                { fr: "soigner", pt: "cuidar / tratar (médico)" },
-                                { fr: "se reposer", pt: "descansar" },
-                                { fr: "respirer / tousser", pt: "respirar / tossir" }
+                                { fr: "avoir (eu) mal à", pt: "estar com dor em", conjugation: ["j'ai mal", "tu as mal", "il a mal", "nous avons mal", "vous avez mal", "ils ont mal"] },
+                                { fr: "soigner (soigné)", pt: "cuidar (médico)", conjugation: ["je soigne", "tu soignes", "il soigne", "nous soignons", "vous soignez", "ils soignent"] },
+                                { fr: "se reposer (reposé)", pt: "descansar", conjugation: ["je me repose", "tu te reposes", "il se repose", "nous nous reposons", "vous vous reposez", "ils se reposent"] },
+                                { fr: "tousser (toussé)", pt: "tossir", conjugation: ["je tousse", "tu tousses", "il tousse", "nous toussons", "vous toussez", "ils toussent"] },
+                                { fr: "respirer (respiré)", pt: "respirar", conjugation: ["je respire", "tu respires", "il respire", "nous respirons", "vous respirez", "ils respirent"] },
+                                { fr: "mentir (menti)", pt: "mentir", conjugation: ["je mens", "tu mens", "il ment", "nous mentons", "vous mentez", "ils mentent"] },
+                                { fr: "réagir (réagi)", pt: "reagir", conjugation: ["je réagis", "tu réagis", "il réagit", "nous réagissons", "vous réagissez", "ils réagissent"] }
                             ],
                             nouns: [
-                                { fr: "la tête / le dos / le ventre", pt: "a cabeça / as costas / a barriga" },
+                                { fr: "le corps", pt: "o corpo" },
+                                { fr: "la tête", pt: "a cabeça" },
+                                { fr: "le dos", pt: "as costas" },
+                                { fr: "le ventre", pt: "a barriga" },
                                 { fr: "l'œil / les yeux", pt: "o olho / os olhos" },
-                                { fr: "la bouche / le nez / l'oreille", pt: "a boca / o nariz / a orelha" },
-                                { fr: "l'épaule / le bras / la main", pt: "o ombro / o braço / a mão" },
-                                { fr: "la jambe / le pied", pt: "a perna / o pé" },
-                                { fr: "le rhume / la toux / la fièvre", pt: "o resfriado / a tosse / a febre" },
-                                { fr: "la maladie", pt: "a doença" }
+                                { fr: "la bouche", pt: "a boca" },
+                                { fr: "le nez", pt: "o nariz" },
+                                { fr: "l'oreille", pt: "a orelha" },
+                                { fr: "l'épaule", pt: "o ombro" },
+                                { fr: "le bras", pt: "o braço" },
+                                { fr: "la main", pt: "a mão" },
+                                { fr: "la jambe", pt: "a perna" },
+                                { fr: "le pied", pt: "o pé" },
+                                { fr: "la dent / les dents", pt: "o dente / os dentes" },
+                                { fr: "les cheveux", pt: "os cabelos" },
+                                { fr: "le rhume", pt: "o resfriado" },
+                                { fr: "la toux", pt: "a tosse" },
+                                { fr: "la fièvre", pt: "a febre" },
+                                { fr: "l'écoulement nasal", pt: "o corrimento nasal" },
+                                { fr: "la maladie", pt: "a doença" },
+                                { fr: "l'hôpital", pt: "o hospital" },
+                                { fr: "le médicament", pt: "o medicamento" }
                             ],
                             adjectives: [
                                 { fr: "malade", pt: "doente" },
                                 { fr: "sain(e)", pt: "saudável" },
-                                { fr: "fatigué(e) / épuisé(e)", pt: "cansado(a) / exausto(a)" },
-                                { fr: "enrhumé(e)", pt: "resfriado(a)" }
+                                { fr: "fatigué(e)", pt: "cansado(a)" },
+                                { fr: "épuisé(e)", pt: "exausto(a)" },
+                                { fr: "enrhumé(e)", pt: "resfriado(a)" },
+                                { fr: "vivant(e)", pt: "vivo(a)" },
+                                { fr: "mort(e)", pt: "morto(a)" },
+                                { fr: "grand(e) / petit(e)", pt: "alto(a) / baixo(a)" },
+                                { fr: "mince / maigre", pt: "magro(a) (esguio) / magro(a)" },
+                                { fr: "gros / grosse", pt: "gordo / gorda" },
+                                { fr: "blond(e)", pt: "loiro(a)" },
+                                { fr: "brun(e)", pt: "moreno(a)" },
+                                { fr: "roux / rousse", pt: "ruivo / ruiva" },
+                                { fr: "châtain", pt: "castanho(a)" }
                             ],
                             adverbs: [
-                                { fr: "mieux / pire", pt: "melhor / pior" },
-                                { fr: "fortement", pt: "fortemente" }
+                                { fr: "mieux", pt: "melhor" },
+                                { fr: "pire", pt: "pior" },
+                                { fr: "fortement", pt: "fortemente" },
+                                { fr: "doucement", pt: "suavemente" }
                             ],
                             grammar: [
-                                { title: "Exprimer la douleur", rules: ["Avoir mal + à + article défini + partie du corps.", "J'ai mal à la tête. (Dor na cabeça - fem.)", "Il a mal au dos. (Dor nas costas - masc.)", "Nous avons mal aux dents. (Dor nos dentes - plur.)", "Tu as mal à l'épaule. (Dor no ombro - vogal)"] }
+                                { title: "Exprimer la douleur", rules: ["Avoir mal + à + article défini + partie du corps.", "J'ai mal à la tête. (Dor na cabeça - fem.)", "Il a mal au dos. (Dor nas costas - masc.)", "Nous avons mal aux dents. (Dor nos dentes - plur.)", "Tu as mal à l'épaule. (Dor no ombro - vogal)"] },
+                                { title: "Prépositions DANS, À, EN", rules: ["DANS: intérieur, figuré, temps futur. Ex: dans la maison, dans 5 minutes.", "À: villes, lieux, but, rythme. Ex: à Paris, à l'école, tasse à café.", "EN: pays fem/voyelle, transport, matière, mois/saisons. Ex: en France, en avion, en bois, en été."] },
+                                { title: "Avoir l'air de (Parecer)", rules: ["j’ai l’air de, tu as l’air de, il/elle a l’air de, nous avons l’air de...", "Ex: Tu as l'air fatigué. (Você parece cansado)"] }
                             ]
                         }
                     },
@@ -417,33 +639,64 @@
                         title: "Leçon 3", name: "La Routine Quotidienne",
                         content: {
                             verbs: [
-                                { fr: "se réveiller / se lever", pt: "acordar-se / levantar-se" },
-                                { fr: "se laver / se doucher", pt: "lavar-se / tomar banho" },
-                                { fr: "se brosser les dents", pt: "escovar os dentes" },
-                                { fr: "se maquiller / se raser", pt: "maquiar-se / barbear-se" },
-                                { fr: "s'habiller", pt: "vestir-se" },
-                                { fr: "se coucher / s'endormir", pt: "deitar-se / adormecer" },
-                                { fr: "prendre le petit déjeuner", pt: "tomar café da manhã" }
+                                { fr: "se réveiller (réveillé)", pt: "acordar-se", conjugation: ["je me réveille", "tu te réveilles", "il se réveille", "nous nous réveillons", "vous vous réveillez", "ils se réveillent"] },
+                                { fr: "se lever (levé)", pt: "levantar-se", conjugation: ["je me lève", "tu te lèves", "il se lève", "nous nous levons", "vous vous levez", "ils se lèvent"] },
+                                { fr: "se laver (lavé)", pt: "lavar-se", conjugation: ["je me lave", "tu te laves", "il se lave", "nous nous lavons", "vous vous lavez", "ils se lavent"] },
+                                { fr: "se doucher (douché)", pt: "tomar banho", conjugation: ["je me douche", "tu te douches", "il se douche", "nous nous douchons", "vous vous douchez", "ils se douchent"] },
+                                { fr: "se brosser (brossé) les dents", pt: "escovar os dentes", conjugation: ["je me brosse", "tu te brosses", "il se brosse", "nous nous brossons", "vous vous brossez", "ils se brossent"] },
+                                { fr: "s'habiller (habillé)", pt: "vestir-se", conjugation: ["je m'habille", "tu t'habilles", "il s'habille", "nous nous habillons", "vous vous habillez", "ils s'habillent"] },
+                                { fr: "se maquiller (maquillé)", pt: "maquiar-se", conjugation: ["je me maquille", "tu te maquilles", "il se maquille", "nous nous maquillons", "vous vous maquillez", "ils se maquillent"] },
+                                { fr: "se coiffer (coiffé)", pt: "pentear-se", conjugation: ["je me coiffe", "tu te coiffes", "il se coiffe", "nous nous coiffons", "vous vous coiffez", "ils se coiffent"] },
+                                { fr: "se raser (rasé)", pt: "barbear-se", conjugation: ["je me rase", "tu te rases", "il se rase", "nous nous rasons", "vous vous rasez", "ils se rasent"] },
+                                { fr: "s'endormir (endormi)", pt: "adormecer", conjugation: ["je m'endors", "tu t'endors", "il s'endort", "nous nous endormons", "vous vous endormez", "ils s'endorment"] },
+                                { fr: "se coucher (couché)", pt: "deitar-se", conjugation: ["je me couche", "tu te couches", "il se couche", "nous nous couchons", "vous vous couchez", "ils se couchent"] },
+                                { fr: "allumer (allumé)", pt: "ligar (acender)", conjugation: ["j'allume", "tu allumes", "il allume", "nous allumons", "vous allumez", "ils allument"] },
+                                { fr: "éteindre (éteint)", pt: "desligar (apagar)", conjugation: ["j'éteins", "tu éteins", "il éteint", "nous éteignons", "vous éteignez", "ils éteignent"] },
+                                { fr: "se connecter (connecté)", pt: "conectar-se", conjugation: ["je me connecte", "tu te connectes", "il se connecte", "nous nous connectons", "vous vous connectez", "ils se connectent"] },
+                                { fr: "télécharger (téléchargé)", pt: "baixar (download)", conjugation: ["je télécharge", "tu télécharges", "il télécharge", "nous téléchargeons", "vous téléchargez", "ils téléchargent"] },
+                                { fr: "surfer (surfé)", pt: "navegar (na internet)", conjugation: ["je surfe", "tu surfes", "il surfe", "nous surfons", "vous surfez", "ils surfent"] }
                             ],
                             nouns: [
                                 { fr: "le petit déjeuner", pt: "o café da manhã" },
-                                { fr: "le déjeuner / le dîner", pt: "o almoço / o jantar" },
-                                { fr: "le matin / l'après-midi / le soir", pt: "a manhã / a tarde / a noite" },
-                                { fr: "l'horaire / la montre", pt: "o horário / o relógio" }
+                                { fr: "le déjeuner", pt: "o almoço" },
+                                { fr: "le dîner", pt: "o jantar" },
+                                { fr: "le matin / la matinée", pt: "a manhã / o período da manhã" },
+                                { fr: "l'après-midi", pt: "a tarde" },
+                                { fr: "le soir / la soirée", pt: "a noite (início) / o período da noite" },
+                                { fr: "la nuit / la nuitée", pt: "a noite (madrugada) / a pernoite" },
+                                { fr: "l'horaire", pt: "o horário" },
+                                { fr: "la télévision / la télé", pt: "a televisão" },
+                                { fr: "l'ordinateur / le clavier", pt: "o computador / o teclado" },
+                                { fr: "le journal / les actualités", pt: "o jornal / o noticiário" },
+                                { fr: "la tâche ménagère", pt: "a tarefa doméstica" },
+                                { fr: "les courses", pt: "as compras" },
+                                { fr: "le dessin animé / le feuilleton", pt: "o desenho animado / a novela" },
+                                { fr: "les vêtements", pt: "as roupas" }
                             ],
                             adjectives: [
-                                { fr: "matinal(e)", pt: "matutino / madrugador" },
-                                { fr: "quotidien(ne)", pt: "diário(a)" }
+                                { fr: "matinal(e)", pt: "matutino" },
+                                { fr: "quotidien(ne)", pt: "diário(a)" },
+                                { fr: "ouvert(e)", pt: "aberto(a)" },
+                                { fr: "fermé(e)", pt: "fechado(a)" }
                             ],
                             adverbs: [
-                                { fr: "tôt / tard", pt: "cedo / tarde" },
+                                { fr: "tôt", pt: "cedo" },
+                                { fr: "tard", pt: "tarde" },
                                 { fr: "d'abord", pt: "primeiro" },
-                                { fr: "puis / ensuite", pt: "depois / em seguida" },
-                                { fr: "toujours / parfois / jamais", pt: "sempre / às vezes / nunca" }
+                                { fr: "puis", pt: "depois" },
+                                { fr: "ensuite", pt: "em seguida" },
+                                { fr: "toujours", pt: "sempre" },
+                                { fr: "souvent", pt: "frequentemente" },
+                                { fr: "parfois", pt: "às vezes" },
+                                { fr: "jamais", pt: "nunca" },
+                                { fr: "d'habitude", pt: "de costume" },
+                                { fr: "en général", pt: "em geral" },
+                                { fr: "encore", pt: "ainda / mais" }
                             ],
                             grammar: [
                                 { title: "Les Verbes Pronominaux", rules: ["Utilisent un pronom réfléchi (me, te, se, nous, vous, se).", "Je me réveille, Tu te lèves, Il se maquille.", "Nous nous rasons, Vous vous brossez les dents, Ils s'endorment."] },
-                                { title: "Dire l'Heure", rules: ["Il est 8 heures. (São 8 horas.)", "Il est midi / minuit. (É meio-dia / meia-noite.)", "Il est 10 heures et quart. (10:15)", "Il est 11 heures et demie. (11:30)", "Il est 11 heures moins le quart. (10:45)"] }
+                                { title: "Dire l'Heure", rules: ["Il est 8 heures. (São 8 horas.)", "Il est midi / minuit. (É meio-dia / meia-noite.)", "Il est 10 heures et quart. (10:15) / Il est 11 heures et demie. (11:30)", "Il est 11 heures moins le quart. (10:45)"] },
+                                { title: "Expression de l’obligation", rules: ["Avec DEVOIR: Je dois aller à la poste. (Eu devo ir ao correio)", "Avec FALLOIR: Il faut acheter du pain. (É preciso comprar pão)"] }
                             ]
                         }
                     }
@@ -453,53 +706,86 @@
                 id: 4, title: "Dossier 4", subtitle: "Loisirs, Passé & Fêtes", colors: ["bg-amber-400/80", "bg-orange-500/80", "bg-yellow-500/80", "bg-red-400/80"],
                 lessons: [
                     {
-                        title: "Leçon 1", name: "Sorties et Sports",
+                        title: "Leçon 1", name: "Sorties et Invitations",
                         content: {
                             verbs: [
-                                { fr: "proposer", pt: "propor" },
-                                { fr: "accepter / refuser", pt: "aceitar / recusar" },
-                                { fr: "pouvoir", pt: "poder", conjugation: ["je peux", "tu peux", "il peut", "nous pouvons", "vous pouvez", "ils peuvent"] },
-                                { fr: "vouloir", pt: "querer", conjugation: ["je veux", "tu veux", "il veut", "nous voulons", "vous voulez", "ils veulent"] },
-                                { fr: "courir / danser / nager", pt: "correr / dançar / nadar" }
+                                { fr: "proposer (proposé)", pt: "propor", conjugation: ["je propose", "tu proposes", "il propose", "nous proposons", "vous proposez", "ils proposent"] },
+                                { fr: "accepter (accepté)", pt: "aceitar", conjugation: ["j'accepte", "tu acceptes", "il accepte", "nous acceptons", "vous acceptez", "ils acceptent"] },
+                                { fr: "refuser (refusé)", pt: "recusar", conjugation: ["je refuse", "tu refuses", "il refuse", "nous refusons", "vous refusez", "ils refusent"] },
+                                { fr: "pouvoir (pu)", pt: "poder", conjugation: ["je peux", "tu peux", "il peut", "nous pouvons", "vous pouvez", "ils peuvent"] },
+                                { fr: "vouloir (voulu)", pt: "querer", conjugation: ["je veux", "tu veux", "il veut", "nous voulons", "vous voulez", "ils veulent"] },
+                                { fr: "boire (bu)", pt: "beber", conjugation: ["je bois", "tu bois", "il boit", "nous buvons", "vous buvez", "ils boivent"] },
+                                { fr: "laisser (laissé)", pt: "deixar", conjugation: ["je laisse", "tu laisses", "il laisse", "nous laissons", "vous laissez", "ils laissent"] },
+                                { fr: "inviter (invité)", pt: "convidar", conjugation: ["j'invite", "tu invites", "il invite", "nous invitons", "vous invitez", "ils invitent"] },
+                                { fr: "aider (aidé)", pt: "ajudar", conjugation: ["j'aide", "tu aides", "il aide", "nous aidons", "vous aidez", "ils aident"] },
+                                { fr: "fixer (fixé)", pt: "marcar / fixar", conjugation: ["je fixe", "tu fixes", "il fixe", "nous fixons", "vous fixez", "ils fixent"] },
+                                { fr: "venir (venu)", pt: "vir", conjugation: ["je viens", "tu viens", "il vient", "nous venons", "vous venez", "ils viennent"] },
+                                { fr: "apporter (apporté)", pt: "trazer", conjugation: ["j'apporte", "tu apportes", "il apporte", "nous apportons", "vous apportez", "ils apportent"] },
+                                { fr: "téléphoner (téléphoné)", pt: "telefonar", conjugation: ["je téléphone", "tu téléphones", "il téléphone", "nous téléphonons", "vous téléphonez", "ils téléphonent"] }
                             ],
                             nouns: [
-                                { fr: "le rendez-vous", pt: "o encontro / o compromisso" },
-                                { fr: "l'exposition / le musée", pt: "a exposição / o museu" },
-                                { fr: "le vélo / le cyclisme", pt: "a bicicleta / o ciclismo" },
-                                { fr: "la natation / l'escalade", pt: "a natação / a escalada" },
-                                { fr: "la randonnée / le ski", pt: "a trilha / o esqui" }
+                                { fr: "le rendez-vous", pt: "o encontro (compromisso)" },
+                                { fr: "la sortie", pt: "a saída" },
+                                { fr: "l'agenda", pt: "a agenda" },
+                                { fr: "l'exposition / l'expo", pt: "a exposição" },
+                                { fr: "le musée", pt: "o museu" },
+                                { fr: "le restaurant / le resto", pt: "o restaurante" },
+                                { fr: "le cinéma / le ciné", pt: "o cinema" },
+                                { fr: "la boîte", pt: "a boate" },
+                                { fr: "la discothèque", pt: "a discoteca" },
+                                { fr: "le bar sympa", pt: "o bar legal" },
+                                { fr: "l'apéro / l'apéritif", pt: "o aperitivo" },
+                                { fr: "la soirée", pt: "a festa / a noite" },
+                                { fr: "la fête surprise", pt: "a festa surpresa" },
+                                { fr: "l'invitation", pt: "o convite" },
+                                { fr: "le voisin / la voisine", pt: "o vizinho / a vizinha" },
+                                { fr: "le collègue", pt: "o colega" }
                             ],
                             adjectives: [
-                                { fr: "libre / occupé(e)", pt: "livre / ocupado(a)" },
-                                { fr: "sportif / sportive", pt: "esportista" },
-                                { fr: "sympa", pt: "legal / simpático(a)" }
+                                { fr: "libre", pt: "livre" },
+                                { fr: "occupé(e)", pt: "ocupado(a)" },
+                                { fr: "sympa", pt: "legal, simpático" },
+                                { fr: "génial(e)", pt: "genial" }
                             ],
                             adverbs: [
                                 { fr: "longtemps", pt: "por muito tempo" },
-                                { fr: "volontiers", pt: "com prazer / de boa vontade" }
+                                { fr: "volontiers", pt: "com prazer" },
+                                { fr: "d'accord", pt: "de acordo" }
                             ],
                             grammar: [
-                                { title: "Faire du / de la (Sports)", rules: ["Je fais du vélo. (Faço ciclismo - masc.)", "Je fais de la natation. (Faço natação - fem.)", "Je fais de l'escalade. (Faço escalada - vogal)"] },
-                                { title: "Accepter / Refuser", rules: ["Oui, d'accord ! / Je veux bien ! (Aceitar)", "Désolé(e), je ne peux pas. / Je ne suis pas libre. (Recusar)"] }
+                                { title: "Le Futur Proche", rules: ["Structure: verbe aller au présent + verbe à l’infinitif.", "Exemples : je vais faire un gâteau (eu vou fazer um bolo).", "tu vas venir (você vai vir). on va danser (a gente vai dançar).", "Négation: je ne vais pas rester très longtemps."] },
+                                { title: "L’impératif", rules: ["Utilisé pour inviter, donner des instructions, ordonner.", "Formé avec les formes du présent sans le pronom. (Ex: tu viens → viens.)", "Négation: ne + verbe + pas. (Ex: n’oublie pas.)"] },
+                                { title: "Expressions d’invitation", rules: ["Tu veux sortir ? On peut aller en boîte ?", "Réponses: Oui, d’accord / Ok, ça marche / Je veux bien.", "Refus: C’est impossible pour moi / Je ne suis pas libre / Désolé(e), je ne peux pas."] }
                             ]
                         }
                     },
                     {
-                        title: "Leçon 2", name: "Raconter au Passé",
+                        title: "Leçon 2", name: "Raconter au Passé Composé",
                         content: {
                             verbs: [
-                                { fr: "faire (fait) / lire (lu)", pt: "fazer (feito) / ler (lido) - Usa Avoir" },
-                                { fr: "écrire (écrit) / voir (vu)", pt: "escrever (escrito) / ver (visto) - Avoir" },
-                                { fr: "dire (dit) / prendre (pris)", pt: "dizer (dito) / pegar (pego) - Avoir" },
-                                { fr: "aller (allé) / venir (venu)", pt: "ir (ido) / vir (vindo) - Usa Être" },
-                                { fr: "sortir (sorti) / partir (parti)", pt: "sair (saído) / partir (partido) - Être" },
-                                { fr: "naître (né) / mourir (mort)", pt: "nascer (nascido) / morrer (morto) - Être" }
+                                { fr: "faire (fait)", pt: "fazer (Usa Avoir no PC)", conjugation: ["je fais", "tu fais", "il fait", "nous faisons", "vous faites", "ils font"] },
+                                { fr: "lire (lu)", pt: "ler (Usa Avoir)", conjugation: ["je lis", "tu lis", "il lit", "nous lisons", "vous lisez", "ils lisent"] },
+                                { fr: "écrire (écrit)", pt: "escrever (Usa Avoir)", conjugation: ["j'écris", "tu écris", "il écrit", "nous écrivons", "vous écrivez", "ils écrivent"] },
+                                { fr: "voir (vu)", pt: "ver (Usa Avoir)", conjugation: ["je vois", "tu vois", "il voit", "nous voyons", "vous voyez", "ils voient"] },
+                                { fr: "prendre (pris)", pt: "pegar / tomar (Usa Avoir)", conjugation: ["je prends", "tu prends", "il prend", "nous prenons", "vous prenez", "ils prennent"] },
+                                { fr: "aller (allé)", pt: "ir (Usa Être no PC)", conjugation: ["je vais", "tu vas", "il va", "nous allons", "vous allez", "ils vont"] },
+                                { fr: "venir (venu)", pt: "vir (Usa Être)", conjugation: ["je viens", "tu viens", "il vient", "nous venons", "vous venez", "ils viennent"] },
+                                { fr: "sortir (sorti)", pt: "sair (Usa Être)", conjugation: ["je sors", "tu sors", "il sort", "nous sortons", "vous sortez", "ils sortent"] },
+                                { fr: "partir (parti)", pt: "partir (Usa Être)", conjugation: ["je pars", "tu pars", "il part", "nous partons", "vous partez", "ils partent"] },
+                                { fr: "emmener (emmené)", pt: "levar (pessoas) (Usa Avoir)", conjugation: ["j'emmène", "tu emmènes", "il emmène", "nous emmenons", "vous emmenez", "ils emmènent"] },
+                                { fr: "ranger (rangé)", pt: "arrumar (Usa Avoir)", conjugation: ["je range", "tu ranges", "il range", "nous rangeons", "vous rangez", "ils rangent"] },
+                                { fr: "bronzer (bronzé)", pt: "bronzear-se (Usa Être)", conjugation: ["je bronze", "tu bronzes", "il bronze", "nous bronzons", "vous bronzez", "ils bronzent"] },
+                                { fr: "se détendre (détendu)", pt: "relaxar-se (Usa Être)", conjugation: ["je me détends", "tu te détends", "il se détend", "nous nous détendons", "vous vous détendez", "ils se détendent"] }
                             ],
                             nouns: [
-                                { fr: "le ménage / les courses", pt: "a faxina / as compras" },
+                                { fr: "le ménage", pt: "a faxina" },
+                                { fr: "les courses", pt: "as compras" },
                                 { fr: "la vaisselle", pt: "a louça" },
-                                { fr: "le souvenir", pt: "a lembrança" },
-                                { fr: "l'accident / la surprise", pt: "o acidente / a surpresa" }
+                                { fr: "le souvenir", pt: "a lembrança / o souvenir" },
+                                { fr: "les vacances", pt: "as férias" },
+                                { fr: "le retour", pt: "o retorno" },
+                                { fr: "l'achat", pt: "a compra" },
+                                { fr: "la tâche ménagère", pt: "a tarefa doméstica" }
                             ],
                             adjectives: [
                                 { fr: "dernier / dernière", pt: "último(a) / passado(a)" },
@@ -507,13 +793,17 @@
                                 { fr: "inattendu(e)", pt: "inesperado(a)" }
                             ],
                             adverbs: [
-                                { fr: "hier / avant-hier", pt: "ontem / anteontem" },
+                                { fr: "hier", pt: "ontem" },
+                                { fr: "avant-hier", pt: "anteontem" },
+                                { fr: "la veille", pt: "na véspera" },
                                 { fr: "la semaine dernière", pt: "a semana passada" },
-                                { fr: "déjà / pas encore", pt: "já / ainda não" }
+                                { fr: "l’année dernière", pt: "o ano passado" },
+                                { fr: "déjà", pt: "já" },
+                                { fr: "pas encore", pt: "ainda não" }
                             ],
                             grammar: [
-                                { title: "Le Passé Composé (AVOIR)", rules: ["Sujet + Avoir au présent + Participe passé.", "J'ai mangé, Tu as lu, Il a écrit une lettre.", "Le participe ne s'accorde pas avec le sujet (en général)."] },
-                                { title: "Le Passé Composé (ÊTRE)", rules: ["Utilisé pour les verbes de mouvement (aller, venir, naître, etc.) et les verbes pronominaux.", "ATTENTION: Le participe S'ACCORDE en genre et en nombre avec le sujet.", "Elle est allée au cinéma. (Ela foi...)", "Ils se sont lavés. (Eles se lavaram.)"] }
+                                { title: "Le Passé Composé (AVOIR)", rules: ["Sujet + Avoir au présent + Participe passé.", "Ex: J'ai marché, tu as pris le bus, il a fait les courses.", "Le participe ne s'accorde pas avec le sujet.", "Négation: Je n’ai pas couru. Je n’ai pas fait les courses."] },
+                                { title: "Le Passé Composé (ÊTRE)", rules: ["Pour les verbes de mouvement (aller, venir, naître, etc.) et les verbes pronominaux.", "ATTENTION: Le participe S'ACCORDE en genre et en nombre avec le sujet.", "Ex: Je suis allé(e). Elle est partie. Nous sommes arrivé(e)s.", "Pronominal: Je me suis réveillé(e). Ils se sont mariés."] }
                             ]
                         }
                     },
@@ -521,20 +811,33 @@
                         title: "Leçon 3", name: "Fêtes et Traditions",
                         content: {
                             verbs: [
-                                { fr: "célébrer / fêter", pt: "celebrar / comemorar" },
-                                { fr: "offrir", pt: "dar (de presente) / oferecer", conjugation: ["j'offre", "tu offres", "il offre", "nous offrons", "vous offrez", "ils offrent"] },
-                                { fr: "décorer", pt: "decorar" },
-                                { fr: "partager", pt: "compartilhar" },
-                                { fr: "s'amuser", pt: "divertir-se" }
+                                { fr: "célébrer (célébré)", pt: "celebrar", conjugation: ["je célèbre", "tu célèbres", "il célèbre", "nous célébrons", "vous célébrez", "ils célèbrent"] },
+                                { fr: "fêter (fêté)", pt: "comemorar", conjugation: ["je fête", "tu fêtes", "il fête", "nous fêtons", "vous fêtez", "ils fêtent"] },
+                                { fr: "offrir (offert)", pt: "dar (de presente) / oferecer", conjugation: ["j'offre", "tu offres", "il offre", "nous offrons", "vous offrez", "ils offrent"] },
+                                { fr: "décorer (décoré)", pt: "decorar", conjugation: ["je décore", "tu décores", "il décore", "nous décorons", "vous décorez", "ils décorent"] },
+                                { fr: "partager (partagé)", pt: "compartilhar", conjugation: ["je partage", "tu partages", "il partage", "nous partageons", "vous partagez", "ils partagent"] },
+                                { fr: "s'amuser (amusé)", pt: "divertir-se", conjugation: ["je m'amuse", "tu t'amuses", "il s'amuse", "nous nous amusons", "vous vous amusez", "ils s'amusent"] },
+                                { fr: "souhaiter (souhaité)", pt: "desejar", conjugation: ["je souhaite", "tu souhaites", "il souhaite", "nous souhaitons", "vous souhaitez", "ils souhaitent"] },
+                                { fr: "attendre (attendu)", pt: "esperar", conjugation: ["j'attends", "tu attends", "il attend", "nous attendons", "vous attendez", "ils attendent"] },
+                                { fr: "battre (battu)", pt: "bater", conjugation: ["je bats", "tu bats", "il bat", "nous battons", "vous battez", "ils battent"] }
                             ],
                             nouns: [
-                                { fr: "Noël / Pâques", pt: "Natal / Páscoa" },
-                                { fr: "le Nouvel An / la Saint-Sylvestre", pt: "Ano-Novo / Véspera de Ano-Novo" },
+                                { fr: "Noël", pt: "Natal" },
+                                { fr: "Pâques", pt: "Páscoa" },
+                                { fr: "le Nouvel An", pt: "Ano-Novo" },
+                                { fr: "la Saint-Sylvestre", pt: "Véspera de Ano-Novo" },
+                                { fr: "la Saint-Valentin", pt: "Dia dos Namorados" },
                                 { fr: "le feu d'artifice", pt: "os fogos de artifício" },
-                                { fr: "le cadeau", pt: "o presente" },
                                 { fr: "le sapin de Noël", pt: "a árvore de Natal" },
-                                { fr: "la galette des rois", pt: "o bolo de reis (tradição de janeiro)" },
-                                { fr: "la Chandeleur / l'Épiphanie", pt: "Dia da Candelária (crepes) / Dia de Reis" }
+                                { fr: "le cadeau", pt: "o presente" },
+                                { fr: "le chocolat", pt: "o chocolate" },
+                                { fr: "la fleur", pt: "a flor" },
+                                { fr: "la galette des rois", pt: "o bolo de reis" },
+                                { fr: "la Chandeleur", pt: "Dia da Candelária (crepes)" },
+                                { fr: "la fête nationale (14 juillet)", pt: "o Dia da Bastilha (festa nacional)" },
+                                { fr: "la fête des Mères", pt: "Dia das Mães" },
+                                { fr: "le muguet", pt: "o lírio-do-vale" },
+                                { fr: "le gui", pt: "o visco" }
                             ],
                             adjectives: [
                                 { fr: "traditionnel(le)", pt: "tradicional" },
@@ -546,7 +849,7 @@
                                 { fr: "secrètement", pt: "secretamente" }
                             ],
                             grammar: [
-                                { title: "Parler des fêtes", rules: ["À Noël, on décore le sapin et on s'offre des cadeaux.", "Le 14 juillet, il y a un grand feu d'artifice pour la fête nationale.", "Pour Pâques, on cache et on mange des œufs en chocolat."] }
+                                { title: "Parler des fêtes", rules: ["À Noël, on décore le sapin et on s'offre des cadeaux.", "Le 14 juillet, il y a un grand feu d'artifice pour la fête nationale.", "Pour Pâques, on cache et on mange des œufs en chocolat.", "Au Nouvel An, on s’embrasse sous le gui et on s’amuse avec des amis."] }
                             ]
                         }
                     }
@@ -559,32 +862,47 @@
                         title: "Leçon 1", name: "Préparer un Voyage",
                         content: {
                             verbs: [
-                                { fr: "préparer / planifier", pt: "preparar / planejar" },
-                                { fr: "s'inquiéter", pt: "preocupar-se" },
-                                { fr: "se dépêcher", pt: "apressar-se" },
-                                { fr: "oublier", pt: "esquecer" },
-                                { fr: "emporter", pt: "levar (consigo em viagem)" }
+                                { fr: "préparer (préparé)", pt: "preparar", conjugation: ["je prépare", "tu prépares", "il prépare", "nous préparons", "vous préparez", "ils préparent"] },
+                                { fr: "planifier (planifié)", pt: "planejar", conjugation: ["je planifie", "tu planifies", "il planifie", "nous planifions", "vous planifiez", "ils planifient"] },
+                                { fr: "s'inquiéter (inquiété)", pt: "preocupar-se", conjugation: ["je m'inquiète", "tu t'inquiètes", "il s'inquiète", "nous nous inquiétons", "vous vous inquiétez", "ils s'inquiètent"] },
+                                { fr: "se dépêcher (dépêché)", pt: "apressar-se", conjugation: ["je me dépêche", "tu te dépêches", "il se dépêche", "nous nous dépêchons", "vous vous dépêchez", "ils se dépêchent"] },
+                                { fr: "oublier (oublié)", pt: "esquecer", conjugation: ["j'oublie", "tu oublies", "il oublie", "nous oublions", "vous oubliez", "ils oublient"] },
+                                { fr: "emporter (emporté)", pt: "levar (consigo)", conjugation: ["j'emporte", "tu emportes", "il emporte", "nous emportons", "vous emportez", "ils emportent"] },
+                                { fr: "profiter (profité)", pt: "aproveitar", conjugation: ["je profite", "tu profites", "il profite", "nous profitons", "vous profitez", "ils profitent"] },
+                                { fr: "découvrir (découvert)", pt: "descobrir", conjugation: ["je découvre", "tu découvres", "il découvre", "nous découvrons", "vous découvrez", "ils découvrent"] }
                             ],
                             nouns: [
-                                { fr: "la valise / le bagage", pt: "a mala / a bagagem" },
+                                { fr: "la valise", pt: "a mala" },
+                                { fr: "le bagage", pt: "a bagagem" },
                                 { fr: "le guide touristique", pt: "o guia turístico" },
-                                { fr: "le billet / le vol", pt: "a passagem / o voo" },
-                                { fr: "la douane / le passeport", pt: "a alfândega / o passaporte" },
-                                { fr: "le routard / le budget", pt: "o mochileiro / o orçamento" }
+                                { fr: "la carte", pt: "o mapa" },
+                                { fr: "le billet", pt: "a passagem" },
+                                { fr: "le vol", pt: "o voo" },
+                                { fr: "le séjour", pt: "a estadia" },
+                                { fr: "le routard", pt: "o mochileiro" },
+                                { fr: "le budget", pt: "o orçamento" },
+                                { fr: "la destination", pt: "o destino" },
+                                { fr: "l'aventure", pt: "a aventura" }
                             ],
                             adjectives: [
                                 { fr: "prudent(e)", pt: "prudente" },
                                 { fr: "curieux / curieuse", pt: "curioso(a)" },
-                                { fr: "imprévu(e)", pt: "imprevisto(a)" }
+                                { fr: "imprévu(e)", pt: "imprevisto(a)" },
+                                { fr: "inquiet / inquiète", pt: "preocupado(a)" },
+                                { fr: "exotique", pt: "exótico(a)" },
+                                { fr: "romantique", pt: "romântico(a)" }
                             ],
                             adverbs: [
                                 { fr: "à l'avance", pt: "com antecedência" },
-                                { fr: "partout", pt: "em todo lugar" },
-                                { fr: "nulle part", pt: "em lugar nenhum" }
+                                { fr: "nulle part", pt: "em lugar nenhum" },
+                                { fr: "ailleurs", pt: "em outro lugar" },
+                                { fr: "tout de suite", pt: "imediatamente" },
+                                { fr: "à peine", pt: "mal (quase não)" }
                             ],
                             grammar: [
-                                { title: "L'Impératif (Conseils)", rules: ["Utilisé sans pronom sujet pour donner des ordres ou conseils.", "Prépare ton voyage ! (Prepare sua viagem!)", "N'oublie pas le passeport ! (Não esqueça o passaporte!)", "Dépêchons-nous ! (Vamos nos apressar!)"] },
-                                { title: "Le Passé Récent", rules: ["Formé avec VENIR DE + Infinitif. (Acabar de fazer algo)", "Je viens de réserver l'hôtel. (Acabo de reservar o hotel.)", "Elle vient de passer la douane. (Ela acabou de passar na alfândega.)"] }
+                                { title: "L'Impératif (Conseils & Ordres)", rules: ["Utilisé sans pronom sujet.", "Affirmatif: Prépare ton voyage ! Informez-vous ! Repose-toi !", "Négatif: N'oublie pas le passeport ! Ne vous inquiétez pas ! Ne te trompe pas !", "Dépêchons-nous ! (Vamos nos apressar!)"] },
+                                { title: "Le Passé Récent", rules: ["Formé avec VENIR DE + Infinitif. (Acabar de fazer algo)", "Ex: Je viens de réserver l'hôtel. (Acabo de reservar o hotel.)", "Elle vient de préparer ses bagages. (Ela acabou de preparar as malas.)"] },
+                                { title: "Donner un conseil (Structures)", rules: ["Il faut + infinitif: Il faut préparer le voyage à l’avance.", "N’oublie pas de + infinitif.", "Pense à + infinitif: Pense à vérifier les prix.", "Essaie de + infinitif: Essaie de profiter du moment."] }
                             ]
                         }
                     },
@@ -592,33 +910,48 @@
                         title: "Leçon 2", name: "Le Cinéma et Profils",
                         content: {
                             verbs: [
-                                { fr: "tourner (un film)", pt: "filmar / rodar um filme" },
-                                { fr: "remporter / gagner", pt: "conquistar / ganhar (um prêmio)" },
-                                { fr: "réaliser", pt: "dirigir (um filme)" },
-                                { fr: "jouer (un rôle)", pt: "atuar / interpretar (um papel)" }
+                                { fr: "tourner (tourné)", pt: "filmar / rodar (um filme)", conjugation: ["je tourne", "tu tournes", "il tourne", "nous tournons", "vous tournez", "ils tournent"] },
+                                { fr: "remporter (remporté)", pt: "conquistar (um prêmio)", conjugation: ["je remporte", "tu remportes", "il remporte", "nous remportons", "vous remportez", "ils remportent"] },
+                                { fr: "gagner (gagné)", pt: "ganhar", conjugation: ["je gagne", "tu gagnes", "il gagne", "nous gagnons", "vous gagnez", "ils gagnent"] },
+                                { fr: "réaliser (réalisé)", pt: "dirigir (um filme)", conjugation: ["je réalise", "tu réalises", "il réalise", "nous réalisons", "vous réalisez", "ils réalisent"] },
+                                { fr: "jouer (joué)", pt: "atuar / interpretar", conjugation: ["je joue", "tu joues", "il joue", "nous jouons", "vous jouez", "ils jouent"] },
+                                { fr: "obtenir (obtenu)", pt: "obter / conseguir", conjugation: ["j'obtiens", "tu obtiens", "il obtient", "nous obtenons", "vous obtenez", "ils obtiennent"] }
                             ],
                             nouns: [
                                 { fr: "le réalisateur / la réalisatrice", pt: "o diretor / a diretora" },
                                 { fr: "l'acteur / l'actrice", pt: "o ator / a atriz" },
-                                { fr: "le scénario / la scène", pt: "o roteiro / a cena" },
-                                { fr: "la caméra / l'écran", pt: "a câmera / a tela" },
-                                { fr: "le prix / le succès", pt: "o prêmio / o sucesso" },
-                                { fr: "le signe du zodiaque", pt: "o signo do zodíaco" }
+                                { fr: "la voix", pt: "a voz" },
+                                { fr: "le rôle principal", pt: "o papel principal" },
+                                { fr: "le scénario", pt: "o roteiro" },
+                                { fr: "la scène", pt: "a cena" },
+                                { fr: "le prix", pt: "o prêmio" },
+                                { fr: "le succès", pt: "o sucesso" },
+                                { fr: "la carrière", pt: "a carreira" },
+                                { fr: "le tournage", pt: "a filmagem" },
+                                { fr: "le festival", pt: "o festival" },
+                                { fr: "le gala", pt: "o baile de gala" },
+                                { fr: "l'écran", pt: "a tela" }
                             ],
                             adjectives: [
-                                { fr: "célèbre / connu(e)", pt: "famoso(a) / conhecido(a)" },
+                                { fr: "célèbre", pt: "famoso(a)" },
+                                { fr: "connu(e)", pt: "conhecido(a)" },
                                 { fr: "talentueux / talentueuse", pt: "talentoso(a)" },
-                                { fr: "timide / généreux", pt: "tímido(a) / generoso(a)" },
-                                { fr: "optimiste / sérieux", pt: "otimista / sério(a)" }
+                                { fr: "grand(e) / petit(e)", pt: "alto(a) / baixo(a)" },
+                                { fr: "mince / gros(se)", pt: "magro(a) / gordo(a)" },
+                                { fr: "brun(e) / blond(e) / roux (rousse)", pt: "moreno(a) / loiro(a) / ruivo(a)" },
+                                { fr: "raide", pt: "liso (cabelo)" },
+                                { fr: "bouclé", pt: "encaracolado (cabelo)" },
+                                { fr: "frisé", pt: "crespo (cabelo)" }
                             ],
                             adverbs: [
                                 { fr: "rapidement", pt: "rapidamente" },
+                                { fr: "facilement", pt: "facilmente" },
                                 { fr: "incroyablement", pt: "incrivelmente" },
+                                { fr: "secrètement", pt: "secretamente" },
                                 { fr: "en direct", pt: "ao vivo" }
                             ],
                             grammar: [
-                                { title: "Décrire physiquement", rules: ["Il a les yeux bleus et les cheveux bruns.", "Elle est grande et mince.", "Il a une allure sportive."] },
-                                { title: "C'est vs Il est", rules: ["C'EST + Déterminant + Nom: C'est un grand acteur. C'est mon ami.", "IL EST + Adjectif ou Profession (sans article): Il est grand. Il est réalisateur."] }
+                                { title: "Décrire physiquement", rules: ["Il/Elle est + adjectif → Il est grand.", "Il/Elle a les cheveux + couleur + forme → Elle a les cheveux châtains et bouclés.", "Il/Elle a les yeux + couleur → Il a les yeux verts.", "Il/Elle a une allure sportive."] }
                             ]
                         }
                     },
@@ -626,22 +959,32 @@
                         title: "Leçon 3", name: "Communication & Malentendus",
                         content: {
                             verbs: [
-                                { fr: "se tromper", pt: "enganar-se / cometer erro" },
-                                { fr: "comprendre", pt: "compreender" },
-                                { fr: "blesser", pt: "magoar / ferir os sentimentos" },
-                                { fr: "rappeler", pt: "ligar de volta / lembrar" },
-                                { fr: "s'excuser", pt: "desculpar-se" }
+                                { fr: "se tromper (trompé)", pt: "enganar-se / cometer erro", conjugation: ["je me trompe", "tu te trompes", "il se trompe", "nous nous trompons", "vous vous trompez", "ils se trompent"] },
+                                { fr: "comprendre (compris)", pt: "compreender", conjugation: ["je comprends", "tu comprends", "il comprend", "nous comprenons", "vous comprenez", "ils comprennent"] },
+                                { fr: "blesser (blessé)", pt: "magoar / ferir os sentimentos", conjugation: ["je blesse", "tu blesses", "il blesse", "nous blessons", "vous blessez", "ils blessent"] },
+                                { fr: "rappeler (rappelé)", pt: "ligar de volta / lembrar", conjugation: ["je rappelle", "tu rappelles", "il rappelle", "nous rappelons", "vous rappelez", "ils rappellent"] },
+                                { fr: "s'excuser (excusé)", pt: "desculpar-se", conjugation: ["je m'excuse", "tu t'excuses", "il s'excuse", "nous nous excusons", "vous vous excusez", "ils s'excusent"] }
                             ],
                             nouns: [
                                 { fr: "le malentendu", pt: "o mal-entendido" },
+                                { fr: "la dispute", pt: "a briga" },
                                 { fr: "l'appel téléphonique", pt: "a ligação telefônica" },
-                                { fr: "le message / le texto", pt: "a mensagem / o SMS" },
-                                { fr: "la colère / la tristesse", pt: "a raiva / a tristeza" }
+                                { fr: "le message", pt: "a mensagem" },
+                                { fr: "le texto", pt: "o SMS" },
+                                { fr: "la colère", pt: "a raiva" },
+                                { fr: "la tristesse", pt: "a tristeza" },
+                                { fr: "le forum", pt: "o fórum" },
+                                { fr: "le commentaire", pt: "o comentário" },
+                                { fr: "la conversation", pt: "a conversa" }
                             ],
                             adjectives: [
                                 { fr: "déçu(e)", pt: "decepcionado(a)" },
-                                { fr: "fâché(e) / en colère", pt: "zangado(a) / com raiva" },
-                                { fr: "désolé(e)", pt: "arrependido(a) / sente muito" }
+                                { fr: "désolé(e)", pt: "arrependido(a)" },
+                                { fr: "fâché(e)", pt: "zangado(a)" },
+                                { fr: "en colère", pt: "com raiva" },
+                                { fr: "soulagé(e)", pt: "aliviado(a)" },
+                                { fr: "stressé(e)", pt: "estressado(a)" },
+                                { fr: "content(e)", pt: "contente" }
                             ],
                             adverbs: [
                                 { fr: "calmement", pt: "calmamente" },
@@ -649,7 +992,8 @@
                                 { fr: "au contraire", pt: "pelo contrário" }
                             ],
                             grammar: [
-                                { title: "Au Téléphone", rules: ["Allô, c'est de la part de qui ? (Alô, de parte de quem?)", "Ne quittez pas, je vous le passe. (Não desligue, vou passar pra ele/ela.)", "Vous faites erreur. (Você ligou errado.)", "Je me suis trompé(e). (Eu me enganei.)"] }
+                                { title: "Au Téléphone", rules: ["Allô, c'est de la part de qui ? (Alô, de parte de quem?)", "Ne quittez pas, je vous le passe. (Não desligue, vou passar pra ele/ela.)", "Vous faites erreur. (Você ligou errado.)", "Je me suis trompé(e). (Eu me enganei.)", "Vous voulez laisser un message ? (Quer deixar recado?)"] },
+                                { title: "Donner une opinion et justifier", rules: ["je pense que… (eu acho que...)", "à mon avis… (na minha opinião…)", "parce que… / car... (porque…)", "c’est pourquoi… (por isso…)"] }
                             ]
                         }
                     }
@@ -662,24 +1006,39 @@
                         title: "Leçon 1", name: "La Météo et le Climat",
                         content: {
                             verbs: [
-                                { fr: "pleuvoir", pt: "chover (il pleut / il a plu)" },
-                                { fr: "neiger", pt: "nevar (il neige)" },
-                                { fr: "souffler", pt: "soprar (o vento)" },
-                                { fr: "geler", pt: "congelar / gear (il gèle)" },
-                                { fr: "se réchauffer / se refroidir", pt: "esquentar / esfriar" }
+                                { fr: "pleuvoir (plu)", pt: "chover", conjugation: ["il pleut"] },
+                                { fr: "neiger (neigé)", pt: "nevar", conjugation: ["il neige"] },
+                                { fr: "souffler (soufflé)", pt: "soprar (o vento)", conjugation: ["je souffle", "tu souffles", "il souffle", "nous soufflons", "vous soufflez", "ils soufflent"] },
+                                { fr: "geler (gelé)", pt: "congelar / gear", conjugation: ["je gèle", "tu gèles", "il gèle", "nous gelons", "vous gelez", "ils gèlent"] },
+                                { fr: "se réchauffer (réchauffé)", pt: "esquentar", conjugation: ["je me réchauffe", "tu te réchauffes", "il se réchauffe", "nous nous réchauffons", "vous vous réchauffez", "ils se réchauffent"] },
+                                { fr: "se refroidir (refroidi)", pt: "esfriar", conjugation: ["je me refroidis", "tu te refroidis", "il se refroidit", "nous nous refroidissons", "vous vous refroidissez", "ils se refroidissent"] }
                             ],
                             nouns: [
-                                { fr: "l'orage (m.) / la tempête", pt: "a tempestade / o temporal" },
-                                { fr: "l'averse (f.) / l'éclair (m.)", pt: "o aguaceiro / o relâmpago" },
-                                { fr: "le brouillard / la canicule", pt: "a neblina / a onda de calor" },
-                                { fr: "les saisons", pt: "as estações (printemps, été, automne, hiver)" },
-                                { fr: "le vent / les nuages", pt: "o vento / as nuvens" }
+                                { fr: "l'orage (m.)", pt: "a tempestade" },
+                                { fr: "la tempête", pt: "o temporal" },
+                                { fr: "l'averse (f.)", pt: "o aguaceiro" },
+                                { fr: "l'éclair (m.)", pt: "o relâmpago" },
+                                { fr: "le brouillard", pt: "a neblina" },
+                                { fr: "la canicule", pt: "a onda de calor" },
+                                { fr: "le printemps", pt: "a primavera" },
+                                { fr: "l'été", pt: "o verão" },
+                                { fr: "l'automne", pt: "o outono" },
+                                { fr: "l'hiver", pt: "o inverno" },
+                                { fr: "le vent", pt: "o vento" },
+                                { fr: "les nuages", pt: "as nuvens" },
+                                { fr: "le soleil", pt: "o sol" },
+                                { fr: "le ciel", pt: "o céu" },
+                                { fr: "le climat", pt: "o clima" },
+                                { fr: "la météo", pt: "a previsão do tempo" }
                             ],
                             adjectives: [
-                                { fr: "dégagé", pt: "limpo / sem nuvens (céu)" },
-                                { fr: "couvert / gris", pt: "nublado / cinza (céu)" },
+                                { fr: "dégagé", pt: "limpo (céu)" },
+                                { fr: "couvert", pt: "nublado (céu)" },
+                                { fr: "gris", pt: "cinza (céu)" },
                                 { fr: "frais / fraîche", pt: "fresco(a)" },
-                                { fr: "doux / douce", pt: "ameno(a) / suave" }
+                                { fr: "doux / douce", pt: "ameno(a)" },
+                                { fr: "chaud(e)", pt: "quente" },
+                                { fr: "froid(e)", pt: "frio(a)" }
                             ],
                             adverbs: [
                                 { fr: "fortement", pt: "fortemente" },
@@ -687,8 +1046,8 @@
                                 { fr: "soudainement", pt: "repentinamente" }
                             ],
                             grammar: [
-                                { title: "Parler du temps (FAIRE)", rules: ["Il fait beau. (O tempo está bom.)", "Il fait mauvais. (O tempo está ruim.)", "Il fait froid / chaud. (Faz frio / calor.)", "Il fait 25 degrés. (Faz 25 graus.)"] },
-                                { title: "Parler du temps (IL Y A)", rules: ["Il y a du soleil. (Tem sol.)", "Il y a du vent. (Tem vento.)", "Il y a des nuages. (Tem nuvens.)"] }
+                                { title: "Parler du temps (FAIRE)", rules: ["Il fait beau. (O tempo está bom.)", "Il fait mauvais. (O tempo está ruim.)", "Il fait froid / chaud. (Faz frio / calor.)", "Il fait 25 degrés. (Faz 25 graus.)", "Il fait gris. (Está cinzento.)"] },
+                                { title: "Parler du temps (IL Y A & Verbes)", rules: ["Il y a du soleil. (Tem sol.)", "Il y a du vent. (Tem vento.)", "Il y a des nuages / du brouillard. (Tem nuvens / neblina.)", "Il pleut. (Chove)", "Il neige. (Neva)", "Il gèle. (Congela/Geia)"] }
                             ]
                         }
                     },
@@ -696,32 +1055,47 @@
                         title: "Leçon 2", name: "Îles, Nature et Futur",
                         content: {
                             verbs: [
-                                { fr: "admirer", pt: "admirar" },
-                                { fr: "découvrir", pt: "descobrir" },
-                                { fr: "explorer", pt: "explorar" },
-                                { fr: "protéger / préserver", pt: "proteger / preservar" }
+                                { fr: "admirer (admiré)", pt: "admirar", conjugation: ["j'admire", "tu admires", "il admire", "nous admirons", "vous admirez", "ils admirent"] },
+                                { fr: "découvrir (découvert)", pt: "descobrir", conjugation: ["je découvre", "tu découvres", "il découvre", "nous découvrons", "vous découvrez", "ils découvrent"] },
+                                { fr: "explorer (exploré)", pt: "explorar", conjugation: ["j'explore", "tu explores", "il explore", "nous explorons", "vous explorez", "ils explorent"] },
+                                { fr: "protéger (protégé)", pt: "proteger", conjugation: ["je protège", "tu protèges", "il protège", "nous protégeons", "vous protégez", "ils protègent"] },
+                                { fr: "chiner (chiné)", pt: "garimpar (objetos antigos)", conjugation: ["je chine", "tu chines", "il chine", "nous chinons", "vous chinez", "ils chinent"] }
                             ],
                             nouns: [
-                                { fr: "l'île (f.) / l'archipel (m.)", pt: "a ilha / o arquipélago" },
+                                { fr: "l'île (f.)", pt: "a ilha" },
+                                { fr: "l'archipel (m.)", pt: "o arquipélago" },
                                 { fr: "le volcan", pt: "o vulcão" },
-                                { fr: "la cascade / la rivière", pt: "a cachoeira / o rio" },
-                                { fr: "le paysage / la forêt", pt: "a paisagem / a floresta" },
-                                { fr: "le sable / la plage", pt: "a areia / a praia" }
+                                { fr: "le canyon", pt: "o cânion" },
+                                { fr: "la cascade", pt: "a cachoeira" },
+                                { fr: "la rivière", pt: "o rio" },
+                                { fr: "le lac", pt: "o lago" },
+                                { fr: "le paysage", pt: "a paisagem" },
+                                { fr: "la forêt", pt: "a floresta" },
+                                { fr: "la montagne", pt: "a montanha" },
+                                { fr: "le sable", pt: "a areia" },
+                                { fr: "la plage", pt: "a praia" },
+                                { fr: "la mer", pt: "o mar" }
                             ],
                             adjectives: [
                                 { fr: "sauvage", pt: "selvagem" },
                                 { fr: "paradisiaque", pt: "paradisíaco(a)" },
                                 { fr: "inoubliable", pt: "inesquecível" },
-                                { fr: "volcanique / montagneux", pt: "vulcânico(a) / montanhoso" }
+                                { fr: "volcanique", pt: "vulcânico(a)" },
+                                { fr: "montagneux / montagneuse", pt: "montanhoso(a)" },
+                                { fr: "futuriste", pt: "futurista" },
+                                { fr: "surprenant(e)", pt: "surpreendente" }
                             ],
                             adverbs: [
-                                { fr: "au nord / au sud", pt: "ao norte / ao sul" },
-                                { fr: "à l'est / à l'ouest", pt: "a leste / a oeste" },
-                                { fr: "au loin", pt: "ao longe" }
+                                { fr: "au nord", pt: "ao norte" },
+                                { fr: "au sud", pt: "ao sul" },
+                                { fr: "à l'est", pt: "a leste" },
+                                { fr: "à l'ouest", pt: "a oeste" },
+                                { fr: "au loin", pt: "ao longe" },
+                                { fr: "particulièrement", pt: "particularmente" }
                             ],
                             grammar: [
-                                { title: "Le Futur Simple (Réguliers)", rules: ["Infinitif + terminaisons (-ai, -as, -a, -ons, -ez, -ont).", "Je parlerai, Tu finiras, Il explorera."] },
-                                { title: "Le Futur Simple (Irréguliers)", rules: ["avoir → j'aurai", "être → je serai", "aller → j'irai", "faire → je ferai", "voir → je verrai", "pouvoir → je pourrai", "venir → je viendrai"] }
+                                { title: "Le Futur Simple (Réguliers)", rules: ["Infinitif + terminaisons (-ai, -as, -a, -ons, -ez, -ont).", "Je parlerai, Tu finiras, Il explorera, Nous voyagerons."] },
+                                { title: "Le Futur Simple (Irréguliers)", rules: ["avoir → j'aurai, tu auras, il aura", "être → je serai, tu seras", "aller → j'irai, nous irons", "faire → je ferai, vous ferez", "voir → je verrai", "pouvoir → je pourrai", "venir → je viendrai"] }
                             ]
                         }
                     },
@@ -729,31 +1103,40 @@
                         title: "Leçon 3", name: "Organisation et Projets",
                         content: {
                             verbs: [
-                                { fr: "planifier", pt: "planejar" },
-                                { fr: "organiser", pt: "organizar" },
-                                { fr: "annuler / reporter", pt: "cancelar / adiar" },
-                                { fr: "répartir (les tâches)", pt: "distribuir (as tarefas)" }
+                                { fr: "planifier (planifié)", pt: "planejar", conjugation: ["je planifie", "tu planifies", "il planifie", "nous planifions", "vous planifiez", "ils planifient"] },
+                                { fr: "organiser (organisé)", pt: "organizar", conjugation: ["j'organise", "tu organises", "il organise", "nous organisons", "vous organisez", "ils organisent"] },
+                                { fr: "annuler (annulé)", pt: "cancelar", conjugation: ["j'annule", "tu annules", "il annule", "nous annulons", "vous annulez", "ils annulent"] },
+                                { fr: "reporter (reporté)", pt: "adiar", conjugation: ["je reporte", "tu reportes", "il reporte", "nous reportons", "vous reportez", "ils reportent"] },
+                                { fr: "répartir (réparti)", pt: "distribuir (tarefas)", conjugation: ["je répartis", "tu répartis", "il répartit", "nous répartissons", "vous répartissez", "ils répartissent"] },
+                                { fr: "remplacer (remplacé)", pt: "substituir", conjugation: ["je remplace", "tu remplaces", "il remplace", "nous remplaçons", "vous remplacez", "ils remplacent"] }
                             ],
                             nouns: [
-                                { fr: "le projet / la réunion", pt: "o projeto / a reunião" },
-                                { fr: "le calendrier / le planning", pt: "o calendário / o cronograma" },
-                                { fr: "la tâche / l'outil", pt: "a tarefa / a ferramenta" },
-                                { fr: "le collègue / le partenaire", pt: "o colega / o parceiro" },
+                                { fr: "le projet", pt: "o projeto" },
+                                { fr: "la réunion", pt: "a reunião" },
+                                { fr: "le planning", pt: "o cronograma" },
+                                { fr: "la tâche", pt: "a tarefa" },
+                                { fr: "l'outil", pt: "a ferramenta" },
+                                { fr: "le calendrier", pt: "o calendário" },
+                                { fr: "le collègue", pt: "o colega" },
+                                { fr: "le partenaire", pt: "o parceiro" },
                                 { fr: "l'emploi du temps", pt: "a agenda / o quadro de horários" }
                             ],
                             adjectives: [
                                 { fr: "urgent(e)", pt: "urgente" },
                                 { fr: "efficace", pt: "eficaz" },
-                                { fr: "chargé(e)", pt: "lotado(a) / sobrecarregado(a)" }
+                                { fr: "chargé(e)", pt: "lotado(a) / sobrecarregado(a)" },
+                                { fr: "pratique", pt: "prático(a)" }
                             ],
                             adverbs: [
-                                { fr: "sinon", pt: "senão / caso contrário" },
+                                { fr: "sinon", pt: "senão (caso contrário)" },
                                 { fr: "à temps", pt: "a tempo" },
-                                { fr: "en retard / en avance", pt: "atrasado / adiantado" }
+                                { fr: "en retard", pt: "atrasado" },
+                                { fr: "en avance", pt: "adiantado" },
+                                { fr: "bien sûr", pt: "claro (certamente)" }
                             ],
                             grammar: [
                                 { title: "L'obligation et la nécessité", rules: ["Devoir + infinitif : Tu dois organiser tes priorités. (Você deve organizar...)", "Il faut + infinitif : Il faut répartir les tâches. (É preciso distribuir...)"] },
-                                { title: "Le Présent Continu", rules: ["ÊTRE EN TRAIN DE + Infinitif (Estar fazendo algo no momento).", "Je suis en train de finaliser le projet. (Estou finalizando o projeto.)", "Elle est en train de travailler avec ses collègues. (Ela está trabalhando com seus colegas.)"] }
+                                { title: "Le Présent Continu", rules: ["ÊTRE EN TRAIN DE + Infinitif (Estar fazendo algo no momento exato).", "Je suis en train de finaliser le projet. (Estou finalizando o projeto.)", "Elle est en train de parler avec ses collègues. (Ela está falando com os colegas.)"] }
                             ]
                         }
                     }
@@ -780,24 +1163,30 @@
                 event.preventDefault();
             }
 
-            // MUDANÇA IMPORTANTE PARA O ÁUDIO LER TODAS AS PALAVRAS DA LIÇÃO:
-            // 1. Remove qualquer texto que esteja entre parênteses "()"
-            // 2. Transforma as barras "/" em vírgulas "," para criar uma pausa natural e ler ambas as partes.
-            let cleanText = text.replace(/\([^)]*\)/g, ' ').replace(/\//g, ', ').trim();
+            // MUDANÇA IMPORTANTE PARA O ÁUDIO LER DE FORMA MAIS NATURAL:
+            // 1. Remove texto entre parênteses "()" para não ler a tradução ou dicas.
+            // 2. Transforma barras "/", travessões "-" e reticências "..." em PONTOS FINAIS "."
+            // O ponto final força a API de SpeechSynthesis a fazer uma pausa natural na fala.
+            let cleanText = text
+                .replace(/\([^)]*\)/g, ' ') // Remove conteúdo entre parênteses
+                .replace(/\//g, '. ')       // Substitui barras por ponto (causa pausa)
+                .replace(/ - /g, '. ')      // Substitui traços isolados por ponto
+                .replace(/\.\.\./g, '. ')   // Substitui reticências por ponto
+                .trim();
 
             if (!synth) {
                 console.warn("Navegador não suporta síntese de voz.");
                 return;
             }
 
-            synth.cancel();
+            synth.cancel(); // Para qualquer fala em andamento
 
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'fr-FR';
             
-            // Ajustes para soar muito mais natural (ligeiramente mais lento, tom amigável)
-            utterance.rate = 0.88; 
-            utterance.pitch = 1.05;
+            // Ajustes para soar muito mais natural
+            utterance.rate = 0.85; // Ligeiramente mais lento
+            utterance.pitch = 1.0; // Tom neutro/natural
 
             // Busca vozes francesas
             if (speechVoices.length === 0) {
@@ -807,13 +1196,13 @@
             const frVoices = speechVoices.filter(v => v.lang.startsWith('fr'));
             
             if (frVoices.length > 0) {
-                // Algoritmo de busca pelas vozes de melhor qualidade (Premium, Natural, Google)
-                const bestVoice = frVoices.find(v => v.name.match(/Natural|Premium|Google français|Thomas|Audrey|Aurélie|Alice/i));
+                // Algoritmo de busca pelas vozes de melhor qualidade
+                const bestVoice = frVoices.find(v => v.name.match(/Natural|Premium|Google français|Thomas|Audrey|Aurélie|Alice|Microsoft Hortense|Microsoft Paul/i));
                 
                 if (bestVoice) {
                     utterance.voice = bestVoice;
                 } else {
-                    utterance.voice = frVoices[0]; // Fallback para a voz padrão se nenhuma premium for encontrada
+                    utterance.voice = frVoices[0]; // Fallback para a voz padrão
                 }
             }
 
@@ -1081,7 +1470,6 @@
                     ? 'block' 
                     : 'hidden md:hidden block'; // hidden em md, block em mobile
                 
-                // Em telas < 768px, a barra é scroll horizontal e sempre mostra o texto
                 return `
                     <button onclick="setTab('${tab.id}')" title="${!state.isSidebarExpanded ? tab.label : ''}"
                         class="mode-tab shrink-0 flex items-center justify-center md:justify-start gap-3 rounded-xl transition-all
