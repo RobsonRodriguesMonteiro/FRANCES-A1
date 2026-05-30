@@ -113,82 +113,91 @@
         /* ========================================== */
         /* ESTILOS ESPECÍFICOS DO MODO PRÁTICA        */
         /* ========================================== */
-        .duo-button {
-            transition: all 0.1s ease;
-            box-shadow: 0 4px 0 0 #e5e7eb;
+        .practice-btn {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,1);
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .duo-button:active:not(:disabled) {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 0 #e5e7eb;
+        .practice-btn:active:not(:disabled) { transform: scale(0.96); }
+        
+        .practice-btn-primary {
+            background: linear-gradient(135deg, #0066cc, #005bb5);
+            color: white; border: none;
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
         }
-        .duo-button-blue {
-            box-shadow: 0 4px 0 0 #1899d6;
-            background-color: #1cb0f6;
-            color: white;
-            border: none;
-        }
-        .duo-button-blue:active:not(:disabled) {
-            box-shadow: 0 0 0 0 #1899d6;
-        }
-        .duo-button-green {
-            box-shadow: 0 4px 0 0 #58a700;
-            background-color: #58cc02;
-            color: white;
-            border: none;
-        }
-        .duo-button-green:active:not(:disabled) {
-            box-shadow: 0 0 0 0 #58a700;
-        }
-        .duo-button-red {
-            box-shadow: 0 4px 0 0 #ea2b2b;
-            background-color: #ff4b4b;
-            color: white;
-            border: none;
-        }
-        .duo-button-red:active:not(:disabled) {
-            box-shadow: 0 0 0 0 #ea2b2b;
+        .practice-btn-primary:hover:not(:disabled) {
+            box-shadow: 0 12px 25px rgba(0, 102, 204, 0.4); transform: translateY(-2px);
         }
         
-        .duo-card {
-            box-shadow: 0 4px 0 0 #e5e7eb;
-            transition: all 0.2s;
+        .practice-btn-success {
+            background: linear-gradient(135deg, #14b8a6, #0d9488); /* Teal */
+            color: white; border: none;
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.3);
         }
-        .duo-card.selected {
-            border-color: #84d8ff;
-            background-color: #ddf4ff;
-            color: #1899d6;
-            box-shadow: 0 4px 0 0 #84d8ff;
+        .practice-btn-success:hover:not(:disabled) { 
+            box-shadow: 0 12px 25px rgba(20, 184, 166, 0.4); transform: translateY(-2px); 
         }
-        .duo-card.matched {
-            background-color: #e5e7eb;
-            color: #9ca3af;
-            border-color: #e5e7eb;
-            box-shadow: none;
-            transform: translateY(4px);
-            pointer-events: none;
+        
+        .practice-btn-danger {
+            background: linear-gradient(135deg, #f43f5e, #e11d48); /* Rose */
+            color: white; border: none;
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);
         }
-        .duo-card.error {
-            border-color: #ff4b4b;
-            background-color: #ffdfe0;
-            color: #ea2b2b;
+        .practice-btn-danger:hover:not(:disabled) { 
+            box-shadow: 0 12px 25px rgba(244, 63, 94, 0.4); transform: translateY(-2px); 
+        }
+        
+        .practice-btn:disabled {
+            background: rgba(255,255,255,0.6); color: rgba(0,0,0,0.3);
+            box-shadow: none; border-color: rgba(255,255,255,0.4); cursor: not-allowed; transform: none;
+        }
+        
+        .practice-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 1px 1px rgba(255,255,255,1);
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+        }
+        .practice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08), inset 0 1px 1px rgba(255,255,255,1);
+        }
+        .practice-card.selected {
+            border-color: #0066cc;
+            background: rgba(0, 102, 204, 0.05);
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+            transform: scale(0.98);
+        }
+        .practice-card.matched {
+            opacity: 0; pointer-events: none; transform: scale(0.9);
+        }
+        .practice-card.error {
+            border-color: #f43f5e;
+            background: rgba(244, 63, 94, 0.05);
             animation: shake 0.4s;
         }
 
         .word-block {
-            box-shadow: 0 2px 0 0 #e5e7eb;
-            cursor: pointer;
-            user-select: none;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            cursor: pointer; transition: all 0.2s;
         }
+        .word-block:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
         .word-block.used {
-            background-color: #e5e7eb;
-            color: #e5e7eb;
-            box-shadow: none;
-            pointer-events: none;
+            background: rgba(0,0,0,0.04); color: transparent;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); pointer-events: none; border-color: transparent;
         }
 
         .drop-zone {
-            min-height: 3rem;
-            border-bottom: 2px solid #e5e7eb;
+            min-height: 4rem;
+            border-bottom: 2px dashed rgba(148, 163, 184, 0.5);
+            padding-bottom: 0.5rem;
         }
 
         @keyframes shake {
@@ -200,11 +209,11 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         .slide-up {
-            animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
 </head>
@@ -214,24 +223,26 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- MODO PRÁTICA (ESTILO DUOLINGO) MODAL       -->
+    <!-- MODO PRÁTICA (ESTILO GLASSMORPHISM) MODAL  -->
     <!-- ========================================== -->
-    <div id="practiceModal" class="fixed inset-0 bg-white z-[100] hidden flex-col font-sans">
+    <div id="practiceModal" class="fixed inset-0 z-[100] hidden flex-col font-sans bg-[#f5f5f7]/80 backdrop-blur-2xl">
         <!-- Header: Barra de Progresso -->
-        <div class="flex items-center p-4 md:px-8 max-w-4xl mx-auto w-full">
-            <button onclick="closePractice()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold p-2">✕</button>
-            <div class="flex-1 mx-4 bg-gray-200 h-4 rounded-full overflow-hidden">
-                <div id="practiceProgress" class="bg-green-500 h-full w-0 transition-all duration-500 rounded-full"></div>
+        <div class="flex items-center p-4 md:px-8 max-w-4xl mx-auto w-full pt-6 md:pt-8">
+            <button onclick="closePractice()" class="text-slate-400 hover:text-slate-600 transition-colors p-2 bg-white/50 rounded-full shadow-sm border border-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex-1 mx-6 bg-slate-200/50 h-3 rounded-full overflow-hidden shadow-inner border border-white/50">
+                <div id="practiceProgress" class="bg-gradient-to-r from-teal-400 to-blue-500 h-full w-0 transition-all duration-500 rounded-full shadow-[0_0_10px_rgba(45,212,191,0.5)]"></div>
             </div>
-            <div class="text-red-500 font-bold text-xl flex items-center gap-1">
-                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <div class="text-rose-500 font-bold text-xl flex items-center gap-1.5 drop-shadow-sm">
+                <i data-lucide="heart" class="w-6 h-6 fill-rose-500 text-rose-500"></i>
                 <span id="heartsCount">3</span>
             </div>
         </div>
 
         <!-- Área Central: A Atividade -->
         <div class="flex-1 overflow-y-auto px-4 py-8 flex flex-col items-center max-w-3xl mx-auto w-full custom-scrollbar">
-            <h2 id="activityTitle" class="text-2xl font-bold text-gray-800 mb-8 self-start w-full">Carregando...</h2>
+            <h2 id="activityTitle" class="text-2xl md:text-3xl font-extrabold text-[#1d1d1f] mb-8 self-start w-full tracking-tight">Carregando...</h2>
             
             <!-- Container Dinâmico -->
             <div id="activityContainer" class="w-full flex flex-col items-center gap-6">
@@ -240,22 +251,22 @@
         </div>
 
         <!-- Rodapé: Botões de Ação e Feedback -->
-        <div id="practiceFooter" class="border-t-2 border-gray-200 p-4 md:p-6 bg-white relative z-10 transition-colors duration-300">
+        <div id="practiceFooter" class="border-t border-white/60 p-4 md:p-6 bg-white/40 backdrop-blur-md relative z-10 transition-colors duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
             <div class="max-w-4xl mx-auto flex justify-between items-center gap-4">
                 
                 <!-- Feedback Área (Escondida por padrão) -->
-                <div id="feedbackArea" class="hidden absolute left-0 bottom-full w-full p-4 md:px-8 py-6 flex flex-col slide-up">
-                    <div class="max-w-4xl mx-auto w-full flex items-center gap-4">
-                        <div id="feedbackIcon" class="w-16 h-16 rounded-full flex items-center justify-center text-3xl bg-white shadow-sm"></div>
+                <div id="feedbackArea" class="hidden absolute left-0 bottom-full w-full p-4 md:px-8 py-6 flex flex-col slide-up shadow-[0_-20px_40px_rgba(0,0,0,0.05)]">
+                    <div class="max-w-4xl mx-auto w-full flex items-center gap-5">
+                        <div id="feedbackIcon" class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-md shrink-0"></div>
                         <div>
-                            <h3 id="feedbackTitle" class="text-2xl font-bold">Correto!</h3>
-                            <p id="feedbackText" class="text-lg opacity-90 mt-1 hidden"></p>
+                            <h3 id="feedbackTitle" class="text-2xl font-extrabold tracking-tight">Correto!</h3>
+                            <p id="feedbackText" class="text-base md:text-lg font-medium opacity-90 mt-1 hidden"></p>
                         </div>
                     </div>
                 </div>
 
-                <button id="btnSkip" onclick="skipActivity()" class="duo-button text-gray-400 font-bold uppercase tracking-wider py-3 px-6 rounded-xl border-2 border-gray-200 hover:bg-gray-50 flex-shrink-0">Pular</button>
-                <button id="btnCheck" onclick="checkAnswer()" class="duo-button bg-gray-200 text-gray-400 font-bold uppercase tracking-wider py-3 px-8 rounded-xl w-full md:w-auto md:min-w-[150px] cursor-not-allowed">Verificar</button>
+                <button id="btnSkip" onclick="skipActivity()" class="practice-btn text-slate-500 font-bold uppercase tracking-wider py-3.5 px-6 rounded-2xl flex-shrink-0 hover:text-slate-700">Pular</button>
+                <button id="btnCheck" onclick="checkAnswer()" class="practice-btn practice-btn-primary font-bold uppercase tracking-wider py-3.5 px-8 rounded-2xl w-full md:w-auto md:min-w-[160px]" disabled>Verificar</button>
             </div>
         </div>
     </div>
@@ -1631,7 +1642,7 @@
                                     ${lesson.name}
                                 </span>
                                 <!-- BOTÃO PRATICAR -->
-                                <button onclick="startPractice(${state.activeDossierIdx}, ${state.activeLessonIdx})" class="duo-button duo-button-blue px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 hover:brightness-110 shrink-0 ml-auto md:ml-0">
+                                <button onclick="startPractice(${state.activeDossierIdx}, ${state.activeLessonIdx})" class="practice-btn practice-btn-primary px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shrink-0 ml-auto md:ml-0">
                                     <i data-lucide="gamepad-2" class="w-4 h-4 text-white"></i>
                                     <span class="text-white hidden md:inline-block">Pratiquer</span>
                                 </button>
@@ -1681,7 +1692,7 @@
 
 
         // ==========================================
-        // LÓGICA DO MODO PRÁTICA (GERADOR DINÂMICO)
+        // LÓGICA DO MODO PRÁTICA (GERADOR DINÂMICO E CONTROLE)
         // ==========================================
         
         let practiceState = {
@@ -1696,17 +1707,6 @@
             isChecking: false
         };
 
-        const curatedActivities = {
-            "0-0": [ // Dossier 1 - Leçon 1 (Index 0-0)
-                { type: "translate", phrase: "Je m'appelle Thomas.", pt: ["Eu", "me", "chamo", "Thomas."], pool: ["Eu", "sou", "me", "chamo", "Thomas.", "Você", "homem"] },
-                { type: "listen", phrase: "Bonjour, comment allez-vous ?", pt: "Bom dia, como vai você?", options: ["Bonjour, comment allez-vous ?", "Bonsoir, comment tu t'appelles ?", "Salut, je suis français."] }
-            ],
-            "0-1": [ // Dossier 1 - Leçon 2
-                { type: "translate", phrase: "J'habite au Brésil.", pt: ["Eu", "moro", "no", "Brasil."], pool: ["Eu", "moro", "no", "na", "Brasil.", "França.", "vivo"] },
-                { type: "listen", phrase: "Elle est espagnole.", pt: "Ela é espanhola.", options: ["Il est espagnol.", "Elle est espagnole.", "Je suis espagnole."] }
-            ]
-        };
-
         // Gerador Automático de Joguinhos Baseado na Lição
         function generateActivitiesForLesson(dossierIdx, lessonIdx) {
             const dossier = courseData[dossierIdx];
@@ -1714,22 +1714,28 @@
             const content = lesson.content;
             let generated = [];
 
-            // 1. Adiciona atividades curadas, se existirem (fallback)
-            const curadaKey = `${dossierIdx}-${lessonIdx}`;
-            if (curatedActivities[curadaKey]) {
-                generated = generated.concat(curatedActivities[curadaKey]);
-            }
-
             // Puxar vocabulário da lição
-            let allVocab = [];
-            if(content.nouns) allVocab.push(...content.nouns);
-            if(content.adjectives) allVocab.push(...content.adjectives);
-            if(content.adverbs) allVocab.push(...content.adverbs);
+            let rawVocab = [];
+            if(content.nouns) rawVocab.push(...content.nouns);
+            if(content.adjectives) rawVocab.push(...content.adjectives);
+            if(content.adverbs) rawVocab.push(...content.adverbs);
             
+            // Simplificar vocabulário (separar itens com '/' e escolher um aleatoriamente para o jogo)
+            let allVocab = rawVocab.map(item => {
+                const frParts = item.fr.split('/').map(s => s.trim());
+                const ptParts = item.pt.split('/').map(s => s.trim());
+                
+                const randIndex = Math.floor(Math.random() * frParts.length);
+                const selectedFr = frParts[randIndex];
+                const selectedPt = (ptParts.length === frParts.length) ? ptParts[randIndex] : ptParts[0];
+                
+                return { fr: selectedFr, pt: selectedPt };
+            });
+
             // Embaralha o vocabulário
             allVocab = allVocab.sort(() => 0.5 - Math.random());
 
-            // 2. MATCHING (Gerar 2 telas de combinar pares, se houver palavras suficientes)
+            // 1. MATCHING (Gerar telas de combinar pares)
             if (allVocab.length >= 4) {
                 generated.push({ type: "match", pairs: allVocab.slice(0, 4) });
             }
@@ -1737,19 +1743,18 @@
                 generated.push({ type: "match", pairs: allVocab.slice(4, 8) });
             }
 
-            // 3. TRANSLATE (Blocos de arrastar usando vocabulário da lição)
+            // 2. TRANSLATE (Blocos de arrastar usando vocabulário da lição)
             const itemsToTranslate = allVocab.slice(0, 4); 
             itemsToTranslate.forEach(item => {
-                let cleanPt = item.pt.replace(/\([^)]*\)/g, '').trim(); // Remove ()
-                let ptWords = cleanPt.split(" ").filter(w => w.length > 0);
+                let cleanPt = item.pt.replace(/\([^)]*\)/g, '').trim(); 
+                let ptWords = cleanPt.split(/\s+/).filter(w => w.length > 0);
                 let pool = [...ptWords];
                 
-                // Adicionar palavras falsas (distractors) para enganar
                 let distractors = allVocab
                     .filter(x => x.fr !== item.fr)
                     .sort(() => 0.5 - Math.random())
                     .slice(0, 3)
-                    .map(x => x.pt.replace(/\([^)]*\)/g, '').trim().split(" ")[0]);
+                    .map(x => x.pt.replace(/\([^)]*\)/g, '').trim().split(/\s+/)[0]);
                 
                 pool.push(...distractors);
                 pool = pool.sort(() => 0.5 - Math.random());
@@ -1762,13 +1767,12 @@
                 });
             });
 
-            // 4. LISTEN (Exercício de escutar e selecionar)
+            // 3. LISTEN (Exercício de escutar e selecionar)
             const itemsToListen = allVocab.slice(4, 8); 
             itemsToListen.forEach(item => {
                 if (!item) return;
                 let options = [item.fr];
                 
-                // Puxar 2 palavras incorretas para as opções
                 let dists = allVocab
                     .filter(x => x.fr !== item.fr)
                     .sort(() => 0.5 - Math.random())
@@ -1784,7 +1788,6 @@
                 });
             });
 
-            // Mistura todos os exercícios gerados para essa lição
             return generated.sort(() => 0.5 - Math.random()); 
         }
 
@@ -1809,7 +1812,7 @@
         }
 
         function closePractice() {
-            if(confirm("Tem certeza que deseja sair? O seu progresso será perdido.")) {
+            if(confirm("Voulez-vous vraiment quitter ? (Tem certeza que deseja sair? Seu progresso será perdido.)")) {
                 document.getElementById('practiceModal').classList.add('hidden');
                 document.getElementById('practiceModal').classList.remove('flex');
                 practiceState.active = false;
@@ -1839,21 +1842,22 @@
             container.innerHTML = '';
 
             if (activity.type === 'match') {
-                title.innerText = "Combinar os cartões";
+                title.innerText = "Associez les paires"; // Combine os cartões
                 renderMatch(activity, container);
             } else if (activity.type === 'translate') {
-                title.innerText = "Traduza esta frase";
+                title.innerText = "Traduisez cette phrase"; // Traduza esta frase
                 renderTranslate(activity, container);
             } else if (activity.type === 'listen') {
-                title.innerText = "O que você ouve?";
+                title.innerText = "Qu'entendez-vous ?"; // O que você ouve?
                 renderListen(activity, container);
             }
+            lucide.createIcons();
         }
 
         function renderMatch(activity, container) {
             practiceState.matchSelection = [];
             const grid = document.createElement('div');
-            grid.className = 'grid grid-cols-2 gap-3 md:gap-4 w-full max-w-lg';
+            grid.className = 'grid grid-cols-2 gap-3 md:gap-4 w-full max-w-lg mx-auto';
             
             let cards = [];
             activity.pairs.forEach((pair, index) => {
@@ -1866,7 +1870,7 @@
 
             cards.forEach(card => {
                 const btn = document.createElement('button');
-                btn.className = 'duo-card border-2 border-gray-200 rounded-xl p-3 md:p-4 text-center text-sm md:text-lg font-bold text-gray-700 hover:bg-gray-50 h-20 md:h-24 flex items-center justify-center break-words';
+                btn.className = 'practice-card rounded-2xl p-3 md:p-5 text-center text-sm md:text-lg font-bold text-slate-700 h-20 md:h-28 flex items-center justify-center break-words leading-tight';
                 btn.innerText = card.text;
                 btn.onclick = () => handleMatchClick(btn, card);
                 grid.appendChild(btn);
@@ -1894,13 +1898,14 @@
                         first.el.classList.add('matched');
                         second.el.classList.add('matched');
                         
-                        const remaining = document.querySelectorAll('.duo-card:not(.matched)');
+                        const remaining = document.querySelectorAll('#activityContainer .practice-card:not(.matched)');
                         if (remaining.length === 0) {
+                            practiceState.isChecking = true; // Força permanência no fluxo de verificação
                             showFeedback(true);
                         } else {
                             practiceState.isChecking = false;
                         }
-                    }, 500);
+                    }, 400);
                 } else {
                     first.el.classList.remove('selected');
                     second.el.classList.remove('selected');
@@ -1913,7 +1918,7 @@
                         first.el.classList.remove('error');
                         second.el.classList.remove('error');
                         practiceState.isChecking = false;
-                    }, 800);
+                    }, 600);
                 }
                 practiceState.matchSelection = [];
             }
@@ -1923,26 +1928,26 @@
             practiceState.translateSelection = [];
             
             const phraseBox = document.createElement('div');
-            phraseBox.className = 'w-full p-4 md:p-6 border-2 border-gray-200 rounded-2xl flex items-center gap-4 mb-8';
+            phraseBox.className = 'w-full max-w-2xl mx-auto p-5 md:p-6 bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2rem] shadow-[0_10px_30px_rgba(0,0,0,0.03)] flex items-center gap-4 mb-10';
             phraseBox.innerHTML = `
-                <div class="flex-1 text-lg md:text-xl font-bold text-gray-800">${activity.phrase}</div>
-                <button onclick="window.playAudio('${activity.phrase.replace(/'/g, "\\'")}', event)" class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center hover:bg-blue-100 transition shrink-0">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                <div class="flex-1 text-lg md:text-2xl font-extrabold text-[#1d1d1f] tracking-tight leading-snug">${activity.phrase}</div>
+                <button onclick="window.playAudio('${activity.phrase.replace(/'/g, "\\'")}', event)" class="w-14 h-14 bg-blue-50/80 text-[#0066cc] rounded-2xl flex items-center justify-center hover:bg-blue-100 transition shadow-sm border border-blue-100 shrink-0">
+                    <i data-lucide="volume-2" class="w-6 h-6"></i>
                 </button>
             `;
             container.appendChild(phraseBox);
 
             const dropZone = document.createElement('div');
             dropZone.id = 'dropZone';
-            dropZone.className = 'drop-zone flex flex-wrap gap-2 w-full mb-8 pb-2';
+            dropZone.className = 'drop-zone flex flex-wrap gap-2 w-full max-w-2xl mx-auto mb-10';
             container.appendChild(dropZone);
 
             const poolZone = document.createElement('div');
-            poolZone.className = 'flex flex-wrap justify-center gap-2 w-full max-w-2xl';
+            poolZone.className = 'flex flex-wrap justify-center gap-2.5 w-full max-w-2xl mx-auto';
             
             activity.pool.forEach((word, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'word-block border-2 border-gray-200 rounded-xl py-2 px-4 text-base md:text-lg font-bold text-gray-700 hover:bg-gray-50';
+                btn.className = 'word-block rounded-xl py-2.5 px-5 text-base md:text-lg font-bold text-slate-700';
                 btn.innerText = word;
                 btn.id = `word-${index}`;
                 
@@ -1954,11 +1959,11 @@
                         clone.onclick = () => {
                             if(practiceState.isChecking) return;
                             clone.remove();
-                            btn.classList.remove('used', 'opacity-0');
+                            btn.classList.remove('used');
                             updateTranslateCheckButton();
                         };
                         dropZone.appendChild(clone);
-                        btn.classList.add('used', 'opacity-0');
+                        btn.classList.add('used');
                     }
                     updateTranslateCheckButton();
                 };
@@ -1978,33 +1983,33 @@
             practiceState.listenSelection = null;
             
             const audioBtnContainer = document.createElement('div');
-            audioBtnContainer.className = 'flex justify-center w-full mb-8';
+            audioBtnContainer.className = 'flex justify-center w-full mb-10 mt-4';
             audioBtnContainer.innerHTML = `
-                <button onclick="window.playAudio('${activity.phrase.replace(/'/g, "\\'")}', event)" class="duo-button duo-button-blue w-24 h-24 rounded-2xl flex items-center justify-center shadow-lg">
-                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                <button onclick="window.playAudio('${activity.phrase.replace(/'/g, "\\'")}', event)" class="w-24 h-24 rounded-[2rem] flex items-center justify-center bg-gradient-to-tr from-[#0066cc] to-[#3388ff] text-white shadow-[0_15px_30px_rgba(0,102,204,0.3)] hover:scale-105 active:scale-95 transition-all">
+                    <i data-lucide="volume-2" class="w-10 h-10"></i>
                 </button>
             `;
             container.appendChild(audioBtnContainer);
 
             const optionsGroup = document.createElement('div');
-            optionsGroup.className = 'flex flex-col gap-3 w-full max-w-lg';
+            optionsGroup.className = 'flex flex-col gap-3 w-full max-w-xl mx-auto';
             
             activity.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'duo-card w-full text-left p-4 border-2 border-gray-200 rounded-xl text-base md:text-lg text-gray-700 font-bold flex items-center gap-3';
-                btn.innerHTML = `<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex-shrink-0 flex items-center justify-center"></div> ${opt}`;
+                btn.className = 'practice-card w-full text-left p-4 md:p-5 rounded-2xl text-base md:text-lg text-slate-700 font-bold flex items-center gap-4';
+                btn.innerHTML = `<div class="w-6 h-6 rounded-full border-2 border-slate-300 flex-shrink-0 flex items-center justify-center transition-colors"></div> <span class="leading-tight">${opt}</span>`;
                 
                 btn.onclick = () => {
                     if(practiceState.isChecking) return;
                     Array.from(optionsGroup.children).forEach(child => {
                         child.classList.remove('selected');
-                        child.querySelector('div').classList.remove('bg-blue-500', 'border-blue-500');
-                        child.querySelector('div').classList.add('border-gray-300');
+                        child.querySelector('div').classList.remove('bg-[#0066cc]', 'border-[#0066cc]');
+                        child.querySelector('div').classList.add('border-slate-300');
                     });
                     btn.classList.add('selected');
                     const radio = btn.querySelector('div');
-                    radio.classList.remove('border-gray-300');
-                    radio.classList.add('bg-blue-500', 'border-blue-500');
+                    radio.classList.remove('border-slate-300');
+                    radio.classList.add('bg-[#0066cc]', 'border-[#0066cc]');
                     
                     practiceState.listenSelection = opt;
                     enableCheckButton(true);
@@ -2013,23 +2018,20 @@
             });
             container.appendChild(optionsGroup);
             
-            setTimeout(() => window.playAudio(activity.phrase, null), 300);
+            setTimeout(() => window.playAudio(activity.phrase, null), 400);
         }
 
         function enableCheckButton(enable) {
             const btn = document.getElementById('btnCheck');
             if (enable) {
-                btn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
-                btn.classList.add('duo-button-green');
                 btn.disabled = false;
             } else {
-                btn.classList.add('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
-                btn.classList.remove('duo-button-green');
                 btn.disabled = true;
             }
         }
 
         function checkAnswer() {
+            // Se já estiver no estado de "verificado", avançar para próxima lição
             if (practiceState.isChecking) {
                 practiceState.currentIndex++;
                 loadActivity();
@@ -2042,21 +2044,34 @@
 
             if (activity.type === 'translate') {
                 const dropZone = document.getElementById('dropZone');
-                const userWords = Array.from(dropZone.children).map(btn => btn.innerText);
+                const userWords = Array.from(dropZone.children).map(btn => btn.innerText.trim());
                 isCorrect = userWords.join(" ") === activity.pt.join(" ");
                 correctAnswerText = activity.pt.join(" ");
             } else if (activity.type === 'listen') {
                 isCorrect = practiceState.listenSelection === activity.phrase;
                 correctAnswerText = activity.phrase; 
+            } else if (activity.type === 'match') {
+                // Caso anormal onde o botão "Verificar" tentou ser chamado no jogo de combinar (que não deve acontecer)
+                return; 
             }
 
-            practiceState.isChecking = true;
+            practiceState.isChecking = true; // Trava interações
+            if (!isCorrect) loseHeart();
             showFeedback(isCorrect, correctAnswerText);
         }
 
         function skipActivity() {
             if (practiceState.isChecking) return;
-            showFeedback(false, practiceState.activities[practiceState.currentIndex].pt || practiceState.activities[practiceState.currentIndex].phrase);
+            practiceState.isChecking = true;
+            loseHeart();
+            
+            const activity = practiceState.activities[practiceState.currentIndex];
+            let correctText = "";
+            if (activity.type === 'translate') correctText = activity.pt.join(" ");
+            else if (activity.type === 'match') correctText = "Associe tous les mots. (Associe todos os pares).";
+            else correctText = activity.phrase;
+            
+            showFeedback(false, correctText);
         }
 
         function loseHeart() {
@@ -2071,7 +2086,6 @@
         }
 
         function showFeedback(isCorrect, correctText = "") {
-            const footer = document.getElementById('practiceFooter');
             const feedbackArea = document.getElementById('feedbackArea');
             const feedbackTitle = document.getElementById('feedbackTitle');
             const feedbackText = document.getElementById('feedbackText');
@@ -2079,57 +2093,53 @@
             const btnCheck = document.getElementById('btnCheck');
             const btnSkip = document.getElementById('btnSkip');
 
-            feedbackArea.classList.remove('hidden');
             btnSkip.classList.add('hidden');
             
             btnCheck.innerText = "Continuar";
-            btnCheck.classList.remove('duo-button-green', 'bg-gray-200');
+            btnCheck.classList.remove('practice-btn-primary');
+            btnCheck.disabled = false; // Garante que será clicável
 
             if (isCorrect) {
-                footer.classList.add('bg-[#d7ffb8]'); 
-                feedbackArea.classList.add('bg-[#d7ffb8]', 'text-[#58a700]');
-                feedbackArea.classList.remove('bg-[#ffdfe0]', 'text-[#ea2b2b]');
+                feedbackArea.className = 'absolute left-0 bottom-full w-full p-4 md:px-8 py-6 flex flex-col slide-up bg-teal-50/95 backdrop-blur-xl border-t border-teal-200 shadow-[0_-20px_40px_rgba(20,184,166,0.1)] text-teal-900';
                 
-                feedbackIcon.innerHTML = '✓';
-                feedbackIcon.classList.add('text-[#58a700]');
-                feedbackIcon.classList.remove('text-[#ea2b2b]');
+                feedbackIcon.className = 'w-14 h-14 rounded-full flex items-center justify-center text-white bg-teal-500 shadow-md shrink-0';
+                feedbackIcon.innerHTML = '<i data-lucide="check" class="w-8 h-8"></i>';
                 
-                feedbackTitle.innerText = ["Excellent !", "Incroyable !", "Très bien !"][Math.floor(Math.random() * 3)];
+                feedbackTitle.innerText = ["Excellent !", "Incroyable !", "Très bien !", "Parfait !"][Math.floor(Math.random() * 4)];
                 feedbackText.classList.add('hidden');
                 
-                btnCheck.classList.add('duo-button-green');
+                btnCheck.classList.add('practice-btn-success');
+                btnCheck.classList.remove('practice-btn-danger');
                 
             } else {
-                if(!practiceState.matchSelection.length) loseHeart();
-
-                footer.classList.add('bg-[#ffdfe0]'); 
-                feedbackArea.classList.add('bg-[#ffdfe0]', 'text-[#ea2b2b]');
-                feedbackArea.classList.remove('bg-[#d7ffb8]', 'text-[#58a700]');
+                feedbackArea.className = 'absolute left-0 bottom-full w-full p-4 md:px-8 py-6 flex flex-col slide-up bg-rose-50/95 backdrop-blur-xl border-t border-rose-200 shadow-[0_-20px_40px_rgba(244,63,94,0.1)] text-rose-900';
                 
-                feedbackIcon.innerHTML = '✕';
-                feedbackIcon.classList.add('text-[#ea2b2b]');
-                feedbackIcon.classList.remove('text-[#58a700]');
+                feedbackIcon.className = 'w-14 h-14 rounded-full flex items-center justify-center text-white bg-rose-500 shadow-md shrink-0';
+                feedbackIcon.innerHTML = '<i data-lucide="x" class="w-8 h-8"></i>';
                 
                 feedbackTitle.innerText = "Réponse correcte :";
                 feedbackText.innerText = correctText;
                 feedbackText.classList.remove('hidden');
                 
-                btnCheck.classList.add('duo-button-red');
+                btnCheck.classList.add('practice-btn-danger');
+                btnCheck.classList.remove('practice-btn-success');
             }
+            lucide.createIcons();
         }
 
         function resetFooter() {
-            const footer = document.getElementById('practiceFooter');
             const feedbackArea = document.getElementById('feedbackArea');
             const btnCheck = document.getElementById('btnCheck');
             const btnSkip = document.getElementById('btnSkip');
 
-            footer.classList.remove('bg-[#d7ffb8]', 'bg-[#ffdfe0]');
             feedbackArea.classList.add('hidden');
+            feedbackArea.className = 'hidden absolute left-0 bottom-full w-full p-4 md:px-8 py-6 flex flex-col slide-up';
+            
             btnSkip.classList.remove('hidden');
             
             btnCheck.innerText = "Verificar";
-            btnCheck.classList.remove('duo-button-red', 'duo-button-green');
+            btnCheck.classList.remove('practice-btn-danger', 'practice-btn-success');
+            btnCheck.classList.add('practice-btn-primary');
             enableCheckButton(false);
         }
 
@@ -2140,23 +2150,25 @@
             
             container.innerHTML = `
                 <div class="flex flex-col items-center justify-center text-center animate-bounce mt-12">
-                    <div class="w-32 h-32 bg-yellow-400 rounded-full flex items-center justify-center text-6xl shadow-xl border-4 border-yellow-500 mb-6">
-                        👑
+                    <div class="w-32 h-32 bg-gradient-to-tr from-amber-400 to-yellow-300 rounded-full flex items-center justify-center shadow-[0_15px_35px_rgba(251,191,36,0.4)] border-4 border-white mb-8">
+                        <i data-lucide="crown" class="w-16 h-16 text-white fill-white"></i>
                     </div>
-                    <h2 class="text-3xl font-bold text-yellow-500 mb-2">Leçon Terminée !</h2>
-                    <p class="text-gray-500 text-lg font-bold">Vous avez gagné +10 XP</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[#1d1d1f] mb-3 tracking-tight">Leçon Terminée !</h2>
+                    <p class="text-[#86868b] text-lg font-bold uppercase tracking-widest">Vous avez gagné +10 XP</p>
                 </div>
             `;
+            lucide.createIcons();
             
             const btnCheck = document.getElementById('btnCheck');
             btnCheck.innerText = "Concluir";
-            btnCheck.classList.add('duo-button-green');
-            btnCheck.classList.remove('bg-gray-200', 'cursor-not-allowed', 'text-gray-400');
+            btnCheck.classList.add('practice-btn-success');
+            btnCheck.classList.remove('practice-btn-primary');
             btnCheck.disabled = false;
             
+            // Override the check action temporarily to finish and close
             btnCheck.onclick = () => {
                 closePractice();
-                btnCheck.onclick = checkAnswer;
+                btnCheck.onclick = checkAnswer; // restore normal behavior for future
             };
         }
 
