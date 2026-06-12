@@ -2,7 +2,11 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#cfeaff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Français - App d'Étude (A1)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,20 +24,28 @@
             background-size: 200% 200%;
             animation: tahoeShift 25s ease-in-out infinite alternate;
             margin: 0;
+            min-height: 100vh;
             overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+        * { -webkit-box-sizing: border-box; box-sizing: border-box; }
+        button { -webkit-appearance: none; appearance: none; }
         @keyframes tahoeShift { 0% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } 100% { background-position: 0% 0%; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
         .app-icon { border-radius: 22.5%; box-shadow: 0 15px 30px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1px 2px rgba(0,0,0,0.1); transition: all 0.3s ease; }
         .app-icon:active { transform: scale(0.95); }
-        .glass-folder-icon { background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 100%); backdrop-filter: blur(20px) saturate(180%); border-color: rgba(255,255,255,0.8); }
-        .folder-overlay { background: rgba(255,255,255,0.15); backdrop-filter: blur(50px) saturate(200%); }
+        .glass-folder-icon { background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 100%); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border-color: rgba(255,255,255,0.8); }
+        .folder-overlay { background: rgba(255,255,255,0.15); -webkit-backdrop-filter: blur(50px) saturate(200%); backdrop-filter: blur(50px) saturate(200%); }
         .folder-container { background: rgba(255,255,255,0.4); border-radius: 40px; padding: 5%; border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 32px 64px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,1); max-height: 90vh; overflow-y: auto; }
-        .lesson-card { background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2)); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.8); border-radius: 28px; padding: 24px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25,1,0.5,1); box-shadow: 0 10px 30px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,1); }
+        .lesson-card { background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2)); -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.8); border-radius: 28px; padding: 24px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25,1,0.5,1); box-shadow: 0 10px 30px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,1); }
         .lesson-card:hover { transform: translateY(-4px) scale(1.02); background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4)); box-shadow: 0 20px 40px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255,255,255,1); }
-        .glass-panel { background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%); backdrop-filter: blur(48px) saturate(200%); }
-        .glass-inner { background: linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.2) 100%); backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 8px 32px rgba(0,0,0,0.04), inset 0 1px 1px rgba(255,255,255,0.8); transition: all 0.3s; }
+        .glass-panel { background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%); -webkit-backdrop-filter: blur(48px) saturate(200%); backdrop-filter: blur(48px) saturate(200%); }
+        .glass-inner { background: linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.2) 100%); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 8px 32px rgba(0,0,0,0.04), inset 0 1px 1px rgba(255,255,255,0.8); transition: all 0.3s; }
         .glass-inner:hover { transform: scale(1.02); background: rgba(255,255,255,0.6); box-shadow: 0 15px 30px rgba(0,0,0,0.08), inset 0 1px 1px rgba(255,255,255,0.8); }
         .mode-tab { transition: all 0.3s ease; border: 1px solid transparent; }
         .mode-tab:hover { background: rgba(255,255,255,0.4); }
@@ -43,7 +55,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
         /* ===== PRÁTICA ===== */
-        .practice-btn { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 8px 20px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,1); transition: all 0.2s cubic-bezier(0.25,1,0.5,1); }
+        .practice-btn { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6)); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 8px 20px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,1); transition: all 0.2s cubic-bezier(0.25,1,0.5,1); }
         .practice-btn:active:not(:disabled) { transform: scale(0.96); }
         .practice-btn-primary { background: linear-gradient(135deg, #0066cc, #005bb5); color: white; border: none; box-shadow: 0 8px 20px rgba(0,102,204,0.3); }
         .practice-btn-primary:hover:not(:disabled) { box-shadow: 0 12px 25px rgba(0,102,204,0.4); transform: translateY(-2px); }
@@ -51,13 +63,13 @@
         .practice-btn-success:hover:not(:disabled) { box-shadow: 0 12px 25px rgba(20,184,166,0.4); transform: translateY(-2px); }
         .practice-btn-danger { background: linear-gradient(135deg, #f43f5e, #e11d48); color: white; border: none; box-shadow: 0 8px 20px rgba(244,63,94,0.3); }
         .practice-btn:disabled { background: rgba(255,255,255,0.6); color: rgba(0,0,0,0.3); box-shadow: none; border-color: rgba(255,255,255,0.4); cursor: not-allowed; transform: none; }
-        .practice-card { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 1px 1px rgba(255,255,255,1); transition: all 0.2s cubic-bezier(0.25,1,0.5,1); cursor: pointer; }
+        .practice-card { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5)); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 1px 1px rgba(255,255,255,1); transition: all 0.2s cubic-bezier(0.25,1,0.5,1); cursor: pointer; }
         .practice-card:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(0,0,0,0.08), inset 0 1px 1px rgba(255,255,255,1); }
         .practice-card.selected { border-color: #0066cc; background: rgba(0,102,204,0.05); box-shadow: 0 0 0 2px rgba(0,102,204,0.2); transform: scale(0.98); }
         .practice-card.matched { opacity: 0; pointer-events: none; transform: scale(0.9); }
         .practice-card.error { border-color: #f43f5e; background: rgba(244,63,94,0.05); animation: shake 0.4s; }
         .practice-card.correct { border-color: #14b8a6; background: rgba(20,184,166,0.08); }
-        .word-block { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,1); box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; }
+        .word-block { background: rgba(255,255,255,0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,1); box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; }
         .word-block:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
         .word-block.used { background: rgba(0,0,0,0.04); color: transparent; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); pointer-events: none; border-color: transparent; }
         .drop-zone { min-height: 4rem; border-bottom: 2px dashed rgba(148,163,184,0.5); padding-bottom: 0.5rem; }
@@ -71,6 +83,13 @@
         @keyframes shake { 0%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-5px)}100%{transform:translateX(0)} }
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .slide-up { animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+        /* Painel de conjugação */
+        .conj-panel { transition: max-height .35s ease, opacity .35s ease; overflow: hidden; }
+        .conj-row span { word-break: break-word; }
+        .conj-tab { font-size: 11px; font-weight: 700; padding: .35rem .65rem; border-radius: .6rem; border: 1px solid transparent; color: #64748b; transition: all .2s; white-space: nowrap; cursor: pointer; }
+        .conj-tab:hover { background: rgba(255,255,255,.6); }
+        .conj-tab.active { background: #0066cc; color: #fff; box-shadow: 0 4px 10px rgba(0,102,204,.25); }
+        .conj-row { display: flex; justify-content: space-between; align-items: center; gap: .5rem; background: rgba(255,255,255,.45); padding: .4rem .6rem; border-radius: .55rem; }
     </style>
 </head>
 <body class="min-h-screen text-slate-800">
@@ -1038,7 +1057,7 @@
                     { fr:"explorer (exploré)", pt:"explorar", conjugation:["j'explore","tu explores","il explore","nous explorons","vous explorez","ils explorent"] },
                     { fr:"protéger (protégé)", pt:"proteger", conjugation:["je protège","tu protèges","il protège","nous protégeons","vous protégez","ils protègent"] },
                     { fr:"remplacer (remplacé)", pt:"substituir", conjugation:["je remplace","tu remplaces","il remplace","nous remplaçons","vous remplacez","ils remplacent"] },
-                    { fr:"voyager (futur)", pt:"viajar (futuro: je voyagerai)", conjugation:["je voyagerai","tu voyageras","il voyagera","nous voyagerons","vous voyagerez","ils voyageront"] }
+                    { fr:"voyager (voyagé)", pt:"viajar", conjugation:["je voyage","tu voyages","il voyage","nous voyageons","vous voyagez","ils voyagent"] }
                 ],
                 nouns: [
                     { fr:"l'île", pt:"a ilha" },
@@ -1181,9 +1200,9 @@
             }},
             { title:"Leçon 2", name:"Ville et Campagne (Imparfait)", content: {
                 verbs: [
-                    { fr:"habiter (imparfait)", pt:"morar (j'habitais)", conjugation:["j'habitais","tu habitais","il habitait","nous habitions","vous habitiez","ils habitaient"] },
-                    { fr:"être (imparfait)", pt:"ser/estar (j'étais)", conjugation:["j'étais","tu étais","il était","nous étions","vous étiez","ils étaient"] },
-                    { fr:"avoir (imparfait)", pt:"ter (j'avais)", conjugation:["j'avais","tu avais","il avait","nous avions","vous aviez","ils avaient"] },
+                    { fr:"habiter (habité)", pt:"morar", conjugation:["j'habite","tu habites","il habite","nous habitons","vous habitez","ils habitent"] },
+                    { fr:"être (été)", pt:"ser / estar", conjugation:["je suis","tu es","il est","nous sommes","vous êtes","ils sont"] },
+                    { fr:"avoir (eu)", pt:"ter", conjugation:["j'ai","tu as","il a","nous avons","vous avez","ils ont"] },
                     { fr:"vivre (vécu)", pt:"viver", conjugation:["je vis","tu vis","il vit","nous vivons","vous vivez","ils vivent"] },
                     { fr:"cultiver (cultivé)", pt:"cultivar", conjugation:["je cultive","tu cultives","il cultive","nous cultivons","vous cultivez","ils cultivent"] },
                     { fr:"se disputer (disputé)", pt:"brigar / discutir", conjugation:["je me dispute","tu te disputes","il se dispute","nous nous disputons","vous vous disputez","ils se disputent"] },
@@ -1233,7 +1252,7 @@
                 verbs: [
                     { fr:"se souvenir (souvenu)", pt:"lembrar-se", conjugation:["je me souviens","tu te souviens","il se souvient","nous nous souvenons","vous vous souvenez","ils se souviennent"] },
                     { fr:"se rappeler (rappelé)", pt:"lembrar-se", conjugation:["je me rappelle","tu te rappelles","il se rappelle","nous nous rappelons","vous vous rappelez","ils se rappellent"] },
-                    { fr:"préparer (imparfait)", pt:"preparar (je préparais)", conjugation:["je préparais","tu préparais","il préparait","nous préparions","vous prépariez","ils préparaient"] },
+                    { fr:"préparer (préparé)", pt:"preparar", conjugation:["je prépare","tu prépares","il prépare","nous préparons","vous préparez","ils préparent"] },
                     { fr:"faire la cuisine", pt:"cozinhar", conjugation:["je fais la cuisine","tu fais la cuisine","il fait la cuisine","nous faisons la cuisine","vous faites la cuisine","ils font la cuisine"] },
                     { fr:"faire la vaisselle", pt:"lavar a louça", conjugation:["je fais la vaisselle","tu fais la vaisselle","il fait la vaisselle","nous faisons la vaisselle","vous faites la vaisselle","ils font la vaisselle"] },
                     { fr:"pêcher (pêché)", pt:"pescar", conjugation:["je pêche","tu pêches","il pêche","nous pêchons","vous pêchez","ils pêchent"] }
@@ -1487,8 +1506,8 @@
             }},
             { title:"Leçon 2", name:"Décrire et Chercher un Logement", content: {
                 verbs: [
-                    { fr:"chercher (imparfait)", pt:"procurar (je cherchais)", conjugation:["je cherchais","tu cherchais","il cherchait","nous cherchions","vous cherchiez","ils cherchaient"] },
-                    { fr:"être (imparfait)", pt:"ser/estar (c'était)", conjugation:["j'étais","tu étais","il était","nous étions","vous étiez","ils étaient"] },
+                    { fr:"chercher (cherché)", pt:"procurar", conjugation:["je cherche","tu cherches","il cherche","nous cherchons","vous cherchez","ils cherchent"] },
+                    { fr:"être (été)", pt:"ser / estar", conjugation:["je suis","tu es","il est","nous sommes","vous êtes","ils sont"] },
                     { fr:"servir (servi) à / de", pt:"servir para / de", conjugation:["je sers","tu sers","il sert","nous servons","vous servez","ils servent"] },
                     { fr:"comporter (comporté)", pt:"conter / possuir", conjugation:["je comporte","tu comportes","il comporte","nous comportons","vous comportez","ils comportent"] },
                     { fr:"souhaiter (souhaité)", pt:"desejar", conjugation:["je souhaite","tu souhaites","il souhaite","nous souhaitons","vous souhaitez","ils souhaitent"] },
@@ -1585,43 +1604,344 @@
 
 
     // ==========================================
-    // MOTOR DE ÁUDIO (TEXT-TO-SPEECH) - voz natural
+    // MOTOR DE ÁUDIO — voz neural natural (mesma em qualquer navegador/dispositivo)
+    // Fontes em cascata: voz neural na nuvem -> voz local do sistema (fallback offline)
     // ==========================================
+    const synth = window.speechSynthesis || null;
     let speechVoices = [];
-    const synth = window.speechSynthesis;
-    function loadVoices(){ speechVoices = synth.getVoices(); }
+    function loadVoices(){ if (synth) speechVoices = synth.getVoices() || []; }
     loadVoices();
-    if (synth.onvoiceschanged !== undefined) { synth.onvoiceschanged = loadVoices; }
+    if (synth && synth.onvoiceschanged !== undefined) { synth.onvoiceschanged = loadVoices; }
     let bestFrenchVoice = null;
     function pickBestVoice(){
-        if (!speechVoices.length) speechVoices = synth.getVoices();
+        if (!synth) return null;
+        if (!speechVoices.length) speechVoices = synth.getVoices() || [];
         const fr = speechVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith('fr'));
         if (!fr.length) return null;
-        // Preferir vozes neurais/naturais de alta qualidade
-        const pref = /Natural|Neural|Premium|Enhanced|Google français|Google|Amélie|Thomas|Audrey|Aurélie|Marie|Léa|Hortense|Denise|Eloise|Henri/i;
+        const pref = /Natural|Neural|Premium|Enhanced|Google|Amélie|Thomas|Audrey|Aurélie|Marie|Léa|Hortense|Denise|Eloise|Henri|Siri/i;
         return fr.find(v => pref.test(v.name)) || fr.find(v => /fr-FR/i.test(v.lang)) || fr[0];
     }
+
+    const Speaker = (function(){
+        // Provedores de voz neural (retornam áudio MP3 gerado no servidor — soa igual em todo dispositivo)
+        const PROVIDERS = [
+            t => 'https://api.streamelements.com/kappa/v2/speech?voice=Celine&text=' + encodeURIComponent(t),
+            t => 'https://translate.google.com/translate_tts?ie=UTF-8&tl=fr-FR&client=tw-ob&q=' + encodeURIComponent(t)
+        ];
+        let providerIdx = 0;     // provedor atual (fica fixo após sucesso/falha)
+        let current = null;      // <audio> em reprodução
+        let token = 0;           // identifica a chamada atual (cancela reproduções antigas)
+
+        function clean(text){
+            return (text || '')
+                .replace(/\([^)]*\)/g, ' ')
+                .replace(/\s*\/\s*/g, ', ')
+                .replace(/ - /g, '. ')
+                .replace(/\.\.\.|…/g, '. ')
+                .replace(/_{2,}/g, ' ')
+                .replace(/\s+/g, ' ').trim();
+        }
+        function chunkText(text, max){
+            const words = text.split(' '); const out = []; let cur = '';
+            for (const w of words){
+                if ((cur + ' ' + w).trim().length > max){ if (cur) out.push(cur.trim()); cur = w; }
+                else cur = (cur + ' ' + w).trim();
+            }
+            if (cur) out.push(cur.trim());
+            return out.length ? out : [text];
+        }
+        function stop(){
+            token++;
+            if (current){ try { current.pause(); } catch(e){} current.onended = null; current.onerror = null; current = null; }
+            if (synth) try { synth.cancel(); } catch(e){}
+        }
+        function speakLocal(text){
+            if (!synth){ return; }
+            try { synth.cancel(); } catch(e){}
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'fr-FR'; u.rate = 0.95; u.pitch = 1.0; u.volume = 1;
+            if (!bestFrenchVoice) bestFrenchVoice = pickBestVoice();
+            if (bestFrenchVoice) u.voice = bestFrenchVoice;
+            synth.speak(u);
+        }
+        function playWith(fullText, pIdx, myToken){
+            if (myToken !== token) return;
+            if (pIdx >= PROVIDERS.length){ speakLocal(fullText); return; }
+            providerIdx = pIdx;
+            const chunks = chunkText(fullText, 180);
+            let i = 0;
+            (function next(){
+                if (myToken !== token) return;
+                if (i >= chunks.length){ current = null; return; }
+                const a = new Audio();
+                a.preload = 'auto';
+                current = a;
+                a.onended = () => { if (myToken !== token) return; i++; next(); };
+                a.onerror = () => { if (myToken !== token) return; current = null; playWith(fullText, pIdx + 1, myToken); };
+                a.src = PROVIDERS[pIdx](chunks[i]);
+                const p = a.play();
+                if (p && p.catch) p.catch(() => { /* gesto/autoplay: ignora, onerror cobre falhas de rede */ });
+            })();
+        }
+        function speak(text){
+            const t = clean(text); if (!t) return;
+            stop();
+            const myToken = token;
+            playWith(t, providerIdx, myToken);
+        }
+        return { speak, stop };
+    })();
+
     window.playAudio = (text, event) => {
         if (event) { event.stopPropagation(); event.preventDefault(); }
-        if (!synth) return;
-        let cleanText = text
-            .replace(/\([^)]*\)/g, ' ')
-            .replace(/\s*\/\s*/g, ', ')
-            .replace(/ - /g, '. ')
-            .replace(/\.\.\./g, '. ')
-            .replace(/\s+/g, ' ')
-            .trim();
-        if (!cleanText) return;
-        synth.cancel();
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = 'fr-FR';
-        utterance.rate = 0.9;
-        utterance.pitch = 1.02;
-        utterance.volume = 1;
-        if (!bestFrenchVoice) bestFrenchVoice = pickBestVoice();
-        if (bestFrenchVoice) utterance.voice = bestFrenchVoice;
-        synth.speak(utterance);
+        Speaker.speak(text);
     };
+
+    // ==========================================
+    // ÍCONES REPRESENTATIVOS (lucide) por palavra
+    // ==========================================
+    function imgWord(word){ return cleanWord(word).split('/')[0].replace(/^(le |la |les |l'|l’|un |une |des |du |de la |au )/i,'').trim(); }
+    function _norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim(); }
+    // [ícone, [palavras-chave normalizadas]] — do mais específico ao mais genérico
+    const ICON_MAP = [
+        ['users', ['famille','parents','grands','amis','gens','collegue','collegues','equipe','groupe','colocataire','colocation','relation','rencontre']],
+        ['baby', ['bebe','enfant','enfants','fils','nourrisson']],
+        ['user', ['homme','femme','monsieur','dame','garcon','fille','personne','voisin','voisine','candidat','client','habitant','mari','adulte','jeune','celibataire','locataire','proprietaire']],
+        ['heart-pulse', ['sante','malade','maladie','fievre','rhume','hopital','docteur','patient']],
+        ['stethoscope', ['medecin','infirmier','infirmiere']],
+        ['pill', ['medicament','pharmacie','pharmacien']],
+        ['brain', ['cerveau']],
+        ['eye', ['oeil','yeux']],
+        ['ear', ['oreille']],
+        ['smile', ['bouche','visage','dent','dents','sourire','content','heureux','joyeux','bonheur']],
+        ['frown', ['triste','tristesse','decu','fache','colere','malheureux']],
+        ['hand', ['main','bras','doigt','epaule','salut','bise']],
+        ['footprints', ['pied','jambe','marche','marcher','chaussure','chaussures','botte','bottes','basket']],
+        ['bone', ['dos']],
+        ['utensils', ['repas','plat','dejeuner','diner','restaurant','resto','menu','cuisine','cuisin','vaisselle','manger','fromage','brasserie','gastronom']],
+        ['cup-soda', ['jus','soda']],
+        ['droplets', ['eau']],
+        ['wine', ['vin','aperitif','apero','biere','alcool']],
+        ['coffee', ['cafe']],
+        ['milk', ['lait','yaourt','laitier']],
+        ['egg', ['oeuf','oeufs']],
+        ['fish', ['poisson','poissonnerie','saumon']],
+        ['beef', ['boeuf','viande','steak','boucherie']],
+        ['drumstick', ['poulet','poule','dinde','agneau','porc','jambon']],
+        ['salad', ['salade','legume','laitue']],
+        ['apple', ['fruit','pomme','raisin']],
+        ['banana', ['banane']],
+        ['carrot', ['carotte']],
+        ['croissant', ['pain','boulangerie','baguette','croissant']],
+        ['cake', ['gateau','patisserie','dessert','galette','tarte','anniversaire']],
+        ['ice-cream-cone', ['glace']],
+        ['wheat', ['riz','pates','cereale','farine']],
+        ['candy', ['bonbon','sucre','chocolat']],
+        ['home', ['maison','logement','appartement','studio','domicile','foyer','habitat']],
+        ['building-2', ['immeuble','batiment','bureau','entreprise','mairie','prefecture','hotel','etage','ministere','residence']],
+        ['store', ['magasin','supermarche','epicerie','boutique','commerce','vente']],
+        ['church', ['eglise','cathedrale','messe']],
+        ['hospital', ['hopital']],
+        ['graduation-cap', ['ecole','universite','college','lycee','etude','etudes','etudiant','professeur','enseignant','eleve','classe','matiere','diplome']],
+        ['castle', ['chateau']],
+        ['landmark', ['musee','monument','theatre','remparts','statue','pyramide','palais']],
+        ['library', ['bibliotheque','livre','roman','lecture']],
+        ['banknote', ['banque']],
+        ['mail', ['mail','email','courriel','poste','courrier','lettre','enveloppe','timbre','postale','expediteur','destinataire','facteur']],
+        ['route', ['chemin','itineraire','trajet','rue','avenue','boulevard','parcours']],
+        ['map-pin', ['lieu','endroit','quartier','centre','banlieue','adresse','ville']],
+        ['map', ['carte','plan','guide','region','territoire']],
+        ['flag', ['pays','capitale','nationalite','nation','frontiere']],
+        ['languages', ['langue','bilingue','francais','anglais','espagnol']],
+        ['tree-pine', ['foret','jardin','parc','potager','campagne','village','ferme','nature']],
+        ['mountain', ['montagne','volcan','colline','alpes','sommet']],
+        ['waves', ['mer','ocean','lac','riviere','plage','lagon','cascade','vague','sable']],
+        ['tent', ['camping','cabane','yourte','roulotte','tente']],
+        ['flower', ['fleur','printemps','muguet','rose']],
+        ['leaf', ['automne','feuille','plante']],
+        ['plane', ['avion','aeroport','voyage','depart']],
+        ['train-front', ['train','gare','tramway','metro']],
+        ['bus', ['autobus','bus']],
+        ['car', ['voiture','auto']],
+        ['bike', ['velo','cyclisme','bicyclette']],
+        ['ship', ['bateau','croisiere','port']],
+        ['sailboat', ['voile']],
+        ['luggage', ['valise','bagage']],
+        ['backpack', ['routard']],
+        ['ticket', ['billet','ticket','passeport','visa','entree','vol']],
+        ['compass', ['aventure','exploration','destination','sejour']],
+        ['sun', ['soleil','ensoleille','lumiere','lumineux','clair']],
+        ['cloud', ['nuage','ciel','couvert','meteo']],
+        ['cloud-rain', ['pluie','averse','pleut','pleuvoir','pleuvra']],
+        ['cloud-snow', ['neige','neiger']],
+        ['snowflake', ['gel','geler','hiver','froid']],
+        ['cloud-lightning', ['orage','eclair','tempete','foudre']],
+        ['cloud-fog', ['brouillard','brume']],
+        ['wind', ['vent','souffl']],
+        ['thermometer', ['temperature','canicule','degre','climat','chaleur']],
+        ['umbrella', ['parapluie']],
+        ['flame', ['feu','chaud']],
+        ['clock', ['heure','horaire']],
+        ['calendar', ['jour','semaine','date','agenda','calendrier','annee','planning','emploi','rendez']],
+        ['sunrise', ['matin']],
+        ['sunset', ['soiree']],
+        ['moon', ['nuit','minuit','sombre']],
+        ['alarm-clock', ['reveil']],
+        ['phone', ['telephone','appel']],
+        ['smartphone', ['portable','texto','sms']],
+        ['message-circle', ['message','conversation','parler','dire','forum','commentaire','dispute','malentendu','entretien','interview']],
+        ['globe', ['internet','site','reseau','monde']],
+        ['monitor', ['ordinateur','ecran','logiciel']],
+        ['keyboard', ['clavier']],
+        ['tv', ['television','tele','emission','feuilleton','dessin','serie','chaine']],
+        ['radio', ['radio']],
+        ['camera', ['photo','appareil']],
+        ['film', ['film','cinema','tournage','scenario','scene','acteur','actrice','realisateur','role']],
+        ['music', ['musique','chanson','hymne','concert','danse','danser']],
+        ['headphones', ['ecouteur']],
+        ['wifi', ['wifi','connexion']],
+        ['bed', ['lit','chambre','dormir','sommeil','coucher']],
+        ['bath', ['bain','baignoire','toilette']],
+        ['shower-head', ['douche']],
+        ['sofa', ['canape','salon','sejour']],
+        ['armchair', ['fauteuil']],
+        ['door-open', ['porte','couloir','escalier']],
+        ['key', ['cle','clef','serrure']],
+        ['lamp', ['lampe']],
+        ['refrigerator', ['refrigerateur','frigo']],
+        ['paintbrush', ['peinture','papier peint','decorer','artiste','peintre']],
+        ['hammer', ['bricoler','outil','travaux','renover','reparer','ingenieur','technicien']],
+        ['shirt', ['vetement','chemise','robe','veste','pull','manteau','tailleur','jupe','pantalon','tenue','mode','costume','blouson']],
+        ['glasses', ['lunettes']],
+        ['watch', ['montre']],
+        ['crown', ['roi','couronne','reine']],
+        ['gem', ['bijou','diamant']],
+        ['gift', ['cadeau','present','offrir']],
+        ['briefcase', ['metier','travail','emploi','profession','projet','reunion','carriere','boulot']],
+        ['scissors', ['coiffeur','couturier','couture']],
+        ['pen', ['ecrire','journaliste','ecrivain','signature']],
+        ['scale', ['avocat','justice','tribunal','loi','reglement']],
+        ['shopping-cart', ['courses','panier','achat','achats','commande']],
+        ['credit-card', ['bancaire']],
+        ['coins', ['argent','monnaie','prix','tarif','loyer','budget','espece','liquide','facture','depense']],
+        ['receipt', ['addition','recu']],
+        ['party-popper', ['fete','celebration','carnaval','reveillon','festival','gala']],
+        ['sparkles', ['noel','nouvel','artifice','elegant','magnifique','formidable','genial','merveilleux','joli']],
+        ['heart', ['amour','romantique','valentin','mariage','marier','couple','aimer','passion','coeur']],
+        ['star', ['celebre','connu','succes','etoile','talent','prefere','favori']],
+        ['dog', ['chien']],
+        ['cat', ['chat']],
+        ['bird', ['oiseau']],
+        ['rabbit', ['lapin']],
+        ['hash', ['numero','nombre','chiffre','premier','deuxieme','troisieme']],
+        ['book-open', ['lecon','dossier','cours','document','formulaire']],
+        ['arrow-left', ['gauche']],
+        ['arrow-right', ['droite']],
+        ['arrow-up', ['nord','haut']],
+        ['arrow-down', ['sud','bas']]
+    ];
+    function specificIcon(text){
+        const norm = _norm(text); if (!norm) return null; const toks = norm.split(' ');
+        for (const entry of ICON_MAP){
+            const icon = entry[0], keys = entry[1];
+            for (const k of keys){
+                if (k.indexOf(' ') >= 0){ if (norm.indexOf(k) >= 0) return icon; }
+                else { for (const t of toks){ if (t === k || (k.length >= 4 && t.startsWith(k))) return icon; } }
+            }
+        }
+        return null;
+    }
+    function catDefaultIcon(cat){ return cat==='verbs' ? 'zap' : cat==='adjectives' ? 'palette' : cat==='adverbs' ? 'compass' : 'tag'; }
+    function iconFor(fr, pt, cat){ return specificIcon((fr||'') + ' ' + (pt||'')) || catDefaultIcon(cat); }
+
+    // ==========================================
+    // CONJUGADOR FRANCÊS (gera tempos on the fly)
+    // ==========================================
+    const _SUBJ = ['je','tu','il','nous','vous','ils'];
+    const FUT_STEM = { être:'ser', avoir:'aur', aller:'ir', faire:'fer', venir:'viendr', tenir:'tiendr', devenir:'deviendr', revenir:'reviendr', obtenir:'obtiendr', prévenir:'préviendr', voir:'verr', revoir:'reverr', envoyer:'enverr', pouvoir:'pourr', vouloir:'voudr', devoir:'devr', savoir:'saur', recevoir:'recevr', courir:'courr', mourir:'mourr', falloir:'faudr', pleuvoir:'pleuvr', appeler:'appeller', acheter:'achèter', payer:'paier', essayer:'essaier', employer:'emploier', nettoyer:'nettoier', jeter:'jetter', lever:'lèver', mener:'mèner', amener:'amèner', emmener:'emmèner', peser:'pèser' };
+    const ETRE_VERBS = ['aller','venir','arriver','partir','entrer','sortir','monter','descendre','rester','tomber','naître','mourir','devenir','retourner','rentrer','revenir','passer','apparaître'];
+    const IMPERSONAL = {
+        pleuvoir:{ pc:'il a plu', imp:'il pleuvait', fut:'il pleuvra', cond:'il pleuvrait' },
+        neiger:{ pc:'il a neigé', imp:'il neigeait', fut:'il neigera', cond:'il neigerait' },
+        geler:{ pc:'il a gelé', imp:'il gelait', fut:'il gèlera', cond:'il gèlerait' },
+        falloir:{ pc:'il a fallu', imp:'il fallait', fut:'il faudra', cond:'il faudrait' }
+    };
+    function _vowel(s){ return /^[aeiouéèêàâîïôûùhAEIOUÉÈÊ]/.test(s); }
+    function _je(f){ return _vowel(f) ? "j'"+f : "je "+f; }
+    function _refl(pn,f){ if ((pn==='me'||pn==='te'||pn==='se') && _vowel(f)) return pn[0]+"'"+f; return pn+' '+f; }
+    function _assemble(forms, pron){
+        if (pron){ const r=['me','te','se','nous','vous','se']; return forms.map((f,i)=> _SUBJ[i]+' '+_refl(r[i],f)); }
+        return forms.map((f,i)=> i===0 ? _je(f) : _SUBJ[i]+' '+f);
+    }
+    function parseVerbMeta(verb){
+        let raw = verb.fr; let pm = raw.match(/\(([^)]+)\)/); let part = pm ? pm[1].trim() : null;
+        if (part && /imparfait|futur|présent|present|conditionnel|passé|avoir|être/i.test(part)) part = null;
+        let inf = raw.replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ').trim();
+        let pron = /^se\s|^s'/.test(inf);
+        let toks = inf.replace(/^s'/, "s'|").split(/\s|\|/).filter(Boolean);
+        let base = pron ? ((toks[0]==='se' || toks[0]==="s'") ? toks[1] : toks[0].replace(/^s'/,'')) : toks[0];
+        if (base && /^s'/.test(base)) base = base.replace(/^s'/,'');
+        return { base: base, pron: pron, part: part };
+    }
+    function deriveParticiple(base, given){
+        if (given) return given;
+        if (/er$/.test(base)) return base.slice(0,-2)+'é';
+        if (/ir$/.test(base)) return base.slice(0,-2)+'i';
+        if (/re$/.test(base)) return base.slice(0,-2)+'u';
+        if (/oir$/.test(base)) return base.slice(0,-3)+'u';
+        return base;
+    }
+    function nousStem(nousForm){ let t = nousForm.trim().split(/\s+/); let w = t.find(x=>/ons$/.test(x)) || t[t.length-1]; return w.replace(/ons$/,''); }
+    function generateConjugation(verb){
+        const meta = parseVerbMeta(verb); const base = meta.base; const pron = meta.pron;
+        const pres = (verb.conjugation && verb.conjugation.length) ? verb.conjugation.slice() : [];
+        const isImp = IMPERSONAL[base] || pres.length === 1;
+        let present = pres.slice();
+        let imp, fut, cond, pc;
+        function impEndings(stem){ return ['ais','ais','ait','ions','iez','aient'].map(e=>{ let st=stem; if (/ge$/.test(st) && /^i/.test(e)) st = st.slice(0,-1); else if (/ç$/.test(st) && /^i/.test(e)) st = st.slice(0,-1)+'c'; return st+e; }); }
+        // IMPARFAIT
+        if (IMPERSONAL[base]) imp = [IMPERSONAL[base].imp];
+        else { let stem = base==='être' ? 'ét' : (pres.length>=4 ? nousStem(pres[3]) : base.replace(/(er|ir|re|oir)$/,'')); imp = _assemble(impEndings(stem), pron); }
+        // FUTUR
+        if (IMPERSONAL[base]) fut = [IMPERSONAL[base].fut];
+        else { let stem = FUT_STEM[base] || (/re$/.test(base) ? base.slice(0,-1) : base); let bare = ['ai','as','a','ons','ez','ont'].map(e=>stem+e); fut = _assemble(bare, pron); }
+        // CONDITIONNEL
+        if (IMPERSONAL[base]) cond = [IMPERSONAL[base].cond];
+        else { let stem = FUT_STEM[base] || (/re$/.test(base) ? base.slice(0,-1) : base); let bare = ['ais','ais','ait','ions','iez','aient'].map(e=>stem+e); cond = _assemble(bare, pron); }
+        // PASSÉ COMPOSÉ
+        let p = deriveParticiple(base, meta.part);
+        let ag = [p+'(e)', p+'(e)', p, p+'(e)s', p+'(e)(s)', p+'s'];
+        if (IMPERSONAL[base]) pc = [IMPERSONAL[base].pc];
+        else if (pron) pc = ["je me suis "+ag[0],"tu t'es "+ag[1],"il s'est "+ag[2],"nous nous sommes "+ag[3],"vous vous êtes "+ag[4],"ils se sont "+ag[5]];
+        else if (ETRE_VERBS.indexOf(base) >= 0) pc = ["je suis "+ag[0],"tu es "+ag[1],"il est "+ag[2],"nous sommes "+ag[3],"vous êtes "+ag[4],"ils sont "+ag[5]];
+        else pc = ["j'ai "+p,"tu as "+p,"il a "+p,"nous avons "+p,"vous avez "+p,"ils ont "+p];
+        if (isImp){ present = present.length ? [present[0]] : ['il '+base]; }
+        return { present: present, pc: pc, imp: imp, fut: fut, cond: cond };
+    }
+    // Painel de conjugação (interface de estudo)
+    function buildConjHTML(id, idx, tense){
+        const verb = courseData[state.activeDossierIdx].lessons[state.activeLessonIdx].content.verbs[idx];
+        const c = generateConjugation(verb);
+        const tenses = [['present','Présent'],['pc','Passé composé'],['imp','Imparfait'],['fut','Futur simple'],['cond','Conditionnel']];
+        let tabs = tenses.map(t=>`<button onclick="switchConjTense('${id}',${idx},'${t[0]}')" class="conj-tab ${t[0]===tense?'active':''}">${t[1]}</button>`).join('');
+        let forms = (c[tense]||[]).map(f=>{ let e = f.replace(/'/g,"\\'").replace(/"/g,'&quot;'); return `<div class="conj-row"><span class="text-slate-700 font-mono text-[12px] md:text-sm flex-1 min-w-0">${f}</span><button onclick="window.playAudio('${e}', event)" class="text-[#0066cc] hover:text-white hover:bg-[#0066cc] rounded-full p-1 transition shrink-0 border border-white/60 bg-white/50"><i data-lucide="volume-2" class="w-3 h-3"></i></button></div>`; }).join('');
+        return `<div class="pt-3"><div class="flex flex-wrap gap-1.5 mb-3 bg-white/30 p-1.5 rounded-xl">${tabs}</div><div class="grid grid-cols-1 gap-1.5">${forms}</div></div>`;
+    }
+    function fitConj(el){ lucide.createIcons(); el.style.maxHeight = (el.scrollHeight + 40) + 'px'; }
+    function toggleConj(id, idx){
+        const el = document.getElementById(id); const btn = document.getElementById('btn-'+id);
+        if (el.classList.contains('max-h-0')){
+            el.innerHTML = buildConjHTML(id, idx, 'present');
+            el.classList.remove('max-h-0','opacity-0'); el.classList.add('opacity-100');
+            btn.innerHTML = '<i data-lucide="table-2" class="w-3.5 h-3.5"></i>Cacher les conjugaisons';
+            fitConj(el);
+        } else {
+            el.classList.add('max-h-0','opacity-0'); el.classList.remove('opacity-100'); el.style.maxHeight = '0px'; el.innerHTML = '';
+            btn.innerHTML = '<i data-lucide="table-2" class="w-3.5 h-3.5"></i>Voir les conjugaisons';
+            lucide.createIcons();
+        }
+    }
+    function switchConjTense(id, idx, tense){ const el = document.getElementById(id); el.innerHTML = buildConjHTML(id, idx, tense); fitConj(el); }
 
     // ==========================================
     // ESTADO E NAVEGAÇÃO
@@ -1708,21 +2028,21 @@
         }
         let cardsHTML = data.map((item, idx) => {
             let escapedFr = item.fr.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            let cardIcon = iconFor(item.fr, item.pt, state.activeTab);
             let conjHTML = ''; let conjId = `conj-${state.activeTab}-${idx}`;
             if (item.conjugation) {
-                let conjItems = item.conjugation.map(conj => {
-                    let escapedConj = conj.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                    return `<div class="bg-white/40 px-2 py-1.5 rounded-md flex justify-between items-center group/btn cursor-pointer" onclick="window.playAudio('${escapedConj}', event)"><span class="truncate">${conj}</span><i data-lucide="volume-2" class="w-3 h-3 opacity-0 group-hover/btn:opacity-100 transition-opacity text-[#0066cc]"></i></div>`;
-                }).join('');
                 conjHTML = `<div class="mt-4">
-                    <button id="btn-${conjId}" onclick="toggleConjugation('${conjId}')" class="text-xs w-full bg-white/50 text-slate-700 py-2.5 rounded-xl font-bold hover:bg-white/80 transition-colors border border-white/80 shadow-sm flex items-center justify-center gap-2">Voir la conjugaison</button>
-                    <div id="${conjId}" class="mt-0 pt-0 border-t-0 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px] md:text-xs text-slate-700 font-mono transition-all duration-300 overflow-hidden max-h-0 opacity-0 border-white/40"><div class="col-span-2 h-3"></div>${conjItems}</div>
+                    <button id="btn-${conjId}" onclick="toggleConj('${conjId}', ${idx})" class="text-xs w-full bg-white/50 text-slate-700 py-2.5 rounded-xl font-bold hover:bg-white/80 transition-colors border border-white/80 shadow-sm flex items-center justify-center gap-2"><i data-lucide="table-2" class="w-3.5 h-3.5"></i>Voir les conjugaisons</button>
+                    <div id="${conjId}" class="conj-panel max-h-0 opacity-0" style="max-height:0px"></div>
                 </div>`;
             }
             return `<div class="glass-inner border border-white/60 p-5 rounded-2xl flex flex-col justify-between">
-                <div><div class="flex justify-between items-start mb-2"><h4 class="text-lg md:text-xl font-extrabold text-[#1d1d1f] leading-tight pr-2">${item.fr}</h4>
-                <button onclick="window.playAudio('${escapedFr}', event)" class="p-2 rounded-full bg-white/60 text-[#0066cc] hover:bg-[#0066cc] hover:text-white transition-colors shadow-sm shrink-0 border border-white"><i data-lucide="volume-2" class="w-4 h-4"></i></button></div>
-                <p class="text-[#86868b] font-semibold text-sm md:text-base mb-2 uppercase tracking-wide">${item.pt}</p></div>${conjHTML}</div>`;
+                <div><div class="flex items-start gap-3 mb-2">
+                    <div class="w-10 h-10 rounded-xl bg-white/60 border border-white/80 flex items-center justify-center text-[#0066cc] shrink-0"><i data-lucide="${cardIcon}" class="w-5 h-5"></i></div>
+                    <div class="flex-1 min-w-0"><h4 class="text-lg md:text-xl font-extrabold text-[#1d1d1f] leading-tight">${item.fr}</h4>
+                    <p class="text-[#86868b] font-semibold text-sm md:text-base uppercase tracking-wide mt-0.5">${item.pt}</p></div>
+                    <button onclick="window.playAudio('${escapedFr}', event)" class="p-2 rounded-full bg-white/60 text-[#0066cc] hover:bg-[#0066cc] hover:text-white transition-colors shadow-sm shrink-0 border border-white"><i data-lucide="volume-2" class="w-4 h-4"></i></button>
+                </div></div>${conjHTML}</div>`;
         }).join('');
         return `<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 animate-fade-in">${cardsHTML}</div>`;
     };
@@ -1803,50 +2123,88 @@
     function shuffle(a){ return a.slice().sort(() => 0.5 - Math.random()); }
     function sample(arr, n){ return shuffle(arr).slice(0, n); }
 
+    // Extrai frases francesas das regras de gramática (para formar/completar frases)
+    const _FR_MARK = ['je',"j'",'tu','il','elle','on','nous','vous','ils','elles','le','la','les','un','une','des','du','au','aux','est','sont',"c'est",'ne','pas','mon','ma','mes','ce','cette','à','il','y','a','que','qui'];
+    function extractFrSentence(rule){
+        let s = rule.trim().replace(/^(Ex|Exemple[s]?|Affirmatif|Négatif|Affirmatifs?|Structure)\s*:\s*/i,'');
+        s = s.split('(')[0].split('=')[0].split('→')[0].split(' : ')[0];
+        s = s.replace(/["»«]/g,'').trim().replace(/\s*[.;,]+\s*$/,'').trim();
+        return s;
+    }
+    function frScore(s){ let toks = s.toLowerCase().replace(/[.,;?!:"]/g,'').split(/\s+/); let n=0; toks.forEach(t=>{ if(_FR_MARK.indexOf(t)>=0) n++; }); return n; }
+    function getLessonSentences(content){
+        let out = [];
+        (content.grammar||[]).forEach(g => (g.rules||[]).forEach(r => {
+            if (r.indexOf('/') >= 0) return;
+            let s = extractFrSentence(r);
+            let words = s.split(/\s+/);
+            if (words.length >= 4 && words.length <= 9 && /[A-Za-zÀ-ý]/.test(s[0]||'') && frScore(s) >= 2) out.push(s);
+        }));
+        return [...new Set(out)];
+    }
+    function stripSubject(form){
+        return form.replace(/^(je\s|j'|tu\s|il\s|elle\s|on\s|nous\s|vous\s|ils\s|elles\s)/i,'')
+                   .replace(/^(me\s|m'|te\s|t'|se\s|s'|nous\s|vous\s)/i,'').trim();
+    }
+    function makeConjugate(v){
+        const pres = v.conjugation; const persons = [0,1,3,4];
+        const pidx = persons[Math.floor(Math.random()*persons.length)];
+        const ans = stripSubject(pres[pidx]); if (!ans || ans.indexOf('/') >= 0) return null;
+        let others = [0,1,2,3,4,5].filter(i=>i!==pidx).map(i=>stripSubject(pres[i])).filter(x=>x && x!==ans && x.indexOf('/')<0);
+        others = [...new Set(others)]; if (others.length < 2) return null;
+        const inf = parseVerbMeta(v).base;
+        const frames = {0:"Moi, je ___.",1:"Et toi, tu ___ ?",3:"Nous ___ ensemble.",4:"Vous ___ ?"};
+        const frame = frames[pidx];
+        return { type:'conjugate', display: frame.replace('___','<span class="text-[#0066cc]">_____</span>'), inf: inf, answer: ans, options: shuffle([ans, others[0], others[1]]), speak: frame.replace('___', ans) };
+    }
+    function makeComplete(s, vocab){
+        let words = s.split(/\s+/); if (words.length < 4) return null;
+        let cand = [];
+        for (let i=1;i<words.length;i++){ let w = words[i].replace(/[.,;?!]/g,''); if (w.length>2 && !/^(le|la|les|un|une|des|de|du|et|ou|au|aux|je|tu|il|on|ne|pas|mon|ma|ce)$/i.test(w)) cand.push(i); }
+        if (!cand.length) return null;
+        let i = cand[Math.floor(Math.random()*cand.length)];
+        let ans = words[i].replace(/[.,;?!]/g,'');
+        let display = words.map((w,j)=> j===i ? w.replace(ans,'<span class="text-[#0066cc]">_____</span>') : w).join(' ');
+        let distr = sample(vocab.map(x=>x.fr.split(/\s+/)[0]).filter(w=>w && w.toLowerCase()!==ans.toLowerCase() && w.length>2), 2);
+        if (distr.length < 2) return null;
+        return { type:'completeSentence', display: display, fr: s, answer: ans, options: shuffle([ans, distr[0], distr[1]]), speak: s };
+    }
+
     function generateActivitiesForLesson(dossierIdx, lessonIdx){
         const content = courseData[dossierIdx].lessons[lessonIdx].content;
         let vocab = buildVocabPool(content);
         if (vocab.length < 4) return [];
         let acts = [];
-        let v = shuffle(vocab);
-        let i = 0;
-        const next = (n) => { const s = v.slice(i, i+n); i += n; if (i > v.length-4) { v = shuffle(vocab); i = 0; } return s; };
+        const nouns = (content.nouns||[]).map(n => ({ fr: imgWord(n.fr), pt: cleanWord(n.pt.split('/')[0]) })).filter(n => n.fr.length > 2);
+        const sentences = getLessonSentences(content);
+        const verbs6 = (content.verbs||[]).filter(v => v.conjugation && v.conjugation.length === 6);
 
-        // 1. Aquecimento: repetição (ouça e repita)
-        next(0); sample(vocab,2).forEach(it => acts.push({ type:'repeat', fr:it.fr, pt:it.pt }));
-
-        // 2. Memória (3 pares)
+        const shortVocab = vocab.filter(x => x.fr.split(/\s+/).length <= 3 && x.fr.length <= 24);
+        // Ouça e repita x2
+        sample(vocab,2).forEach(it => acts.push({ type:'repeat', fr:it.fr, pt:it.pt, speak:it.fr }));
+        // Escreva o que você ouviu (ditado) x2
+        sample(shortVocab, Math.min(2,shortVocab.length)).forEach(it => acts.push({ type:'typeListen', fr:it.fr, pt:it.pt, speak:it.fr }));
+        // Escreva a tradução em francês x2
+        sample(shortVocab, Math.min(2,shortVocab.length)).forEach(it => acts.push({ type:'typeTranslateFr', fr:it.fr, pt:it.pt, speak:it.fr }));
+        // Memória
         if (vocab.length >= 3) acts.push({ type:'memory', pairs: sample(vocab,3) });
-
-        // 3. Associar pares (match) x2
+        // Associar pares x2
         if (vocab.length >= 4) acts.push({ type:'match', pairs: sample(vocab,4) });
         if (vocab.length >= 8) acts.push({ type:'match', pairs: sample(vocab,4) });
-
-        // 4. Escolher tradução PT (FR -> PT) x2
-        sample(vocab, Math.min(2,vocab.length)).forEach(it => {
-            let opts = [it.pt, ...sample(vocab.filter(x=>x.fr!==it.fr),2).map(x=>x.pt)];
-            acts.push({ type:'choosePt', fr:it.fr, pt:it.pt, options: shuffle(opts) });
-        });
-
-        // 5. Como se diz em francês (PT -> FR, múltipla escolha) x2
-        sample(vocab, Math.min(2,vocab.length)).forEach(it => {
-            let opts = [it.fr, ...sample(vocab.filter(x=>x.pt!==it.pt),2).map(x=>x.fr)];
-            acts.push({ type:'chooseFr', fr:it.fr, pt:it.pt, options: shuffle(opts) });
-        });
-
-        // 6. Escutar e identificar x2
-        sample(vocab, Math.min(2,vocab.length)).forEach(it => {
-            let opts = [it.fr, ...sample(vocab.filter(x=>x.fr!==it.fr),2).map(x=>x.fr)];
-            acts.push({ type:'listen', fr:it.fr, pt:it.pt, options: shuffle(opts) });
-        });
-
-        // 7. Traduzir PARA o francês (montar com blocos) x3
-        sample(vocab, Math.min(3,vocab.length)).forEach(it => {
-            let answer = it.fr.split(/\s+/).filter(Boolean);
-            let distractors = sample(vocab.filter(x=>x.fr!==it.fr),3).map(x => x.fr.split(/\s+/)[0]);
-            let pool = shuffle([...answer, ...distractors]);
-            acts.push({ type:'translateFr', fr:it.fr, pt:it.pt, answer:answer, pool:pool });
-        });
+        // Tradução PT (com imagem) x2
+        sample(vocab,Math.min(2,vocab.length)).forEach(it => { let opts=[it.pt, ...sample(vocab.filter(x=>x.fr!==it.fr),2).map(x=>x.pt)]; acts.push({ type:'choosePt', fr:it.fr, pt:it.pt, options:shuffle(opts), speak:it.fr }); });
+        // Como se diz em francês x1
+        sample(vocab,Math.min(1,vocab.length)).forEach(it => { let opts=[it.fr, ...sample(vocab.filter(x=>x.pt!==it.pt),2).map(x=>x.fr)]; acts.push({ type:'chooseFr', fr:it.fr, pt:it.pt, options:shuffle(opts), speak:it.fr }); });
+        // Escutar e identificar x2
+        sample(vocab,Math.min(2,vocab.length)).forEach(it => { let opts=[it.fr, ...sample(vocab.filter(x=>x.fr!==it.fr),2).map(x=>x.fr)]; acts.push({ type:'listen', fr:it.fr, pt:it.pt, options:shuffle(opts), speak:it.fr }); });
+        // Traduzir para o francês (blocos) x2
+        sample(vocab,Math.min(2,vocab.length)).forEach(it => { let answer=it.fr.split(/\s+/).filter(Boolean); let distr=sample(vocab.filter(x=>x.fr!==it.fr),3).map(x=>x.fr.split(/\s+/)[0]); acts.push({ type:'translateFr', fr:it.fr, pt:it.pt, answer:answer, pool:shuffle([...answer,...distr]), speak:it.fr }); });
+        // Conjugar / completar com o verbo x2
+        sample(verbs6, Math.min(2,verbs6.length)).forEach(v => { let a = makeConjugate(v); if (a) acts.push(a); });
+        // Completar a frase x2
+        sample(sentences, Math.min(2,sentences.length)).forEach(s => { let a = makeComplete(s, vocab); if (a) acts.push(a); });
+        // Formar a frase (ordenar) x2
+        sample(sentences.filter(s=>s.split(/\s+/).length<=7), Math.min(2,sentences.length)).forEach(s => { let words=s.split(/\s+/); acts.push({ type:'buildSentence', fr:s, answer:words, pool:shuffle(words.slice()), speak:s }); });
 
         return shuffle(acts);
     }
@@ -1879,7 +2237,7 @@
         const container = document.getElementById('activityContainer');
         const title = document.getElementById('activityTitle');
         container.innerHTML = '';
-        const titles = { match:"Associez les paires", memory:"Trouvez les paires (Mémoire)", listen:"Qu'entendez-vous ?", choosePt:"Quelle est la traduction ?", chooseFr:"Comment dit-on en français ?", translateFr:"Traduisez en français", repeat:"Écoutez et répétez" };
+        const titles = { match:"Associez les paires", memory:"Trouvez les paires (Mémoire)", listen:"Qu'entendez-vous ?", choosePt:"Quelle est la traduction ?", chooseFr:"Comment dit-on en français ?", translateFr:"Traduisez en français", repeat:"Écoutez et répétez", typeListen:"Écrivez ce que vous entendez", typeTranslateFr:"Écrivez la traduction en français", conjugate:"Complétez avec le bon verbe", completeSentence:"Complétez la phrase", buildSentence:"Formez la phrase" };
         title.innerText = titles[activity.type] || '';
         if (activity.type==='match') renderMatch(activity, container);
         else if (activity.type==='memory') renderMemory(activity, container);
@@ -1887,7 +2245,12 @@
         else if (activity.type==='choosePt') renderChoose(activity, container, 'pt');
         else if (activity.type==='chooseFr') renderChoose(activity, container, 'fr');
         else if (activity.type==='translateFr') renderTranslateFr(activity, container);
+        else if (activity.type==='buildSentence') renderBuild(activity, container);
         else if (activity.type==='repeat') renderRepeat(activity, container);
+        else if (activity.type==='typeListen') renderType(activity, container, 'listen');
+        else if (activity.type==='typeTranslateFr') renderType(activity, container, 'translate');
+        else if (activity.type==='conjugate') renderTextChoose(activity, container);
+        else if (activity.type==='completeSentence') renderTextChoose(activity, container);
         lucide.createIcons();
     }
 
@@ -2045,14 +2408,81 @@
     // ----- REPEAT -----
     function renderRepeat(activity, container){
         const box = document.createElement('div');
-        box.className = 'w-full max-w-xl mx-auto flex flex-col items-center gap-6 mt-6';
+        box.className = 'w-full max-w-xl mx-auto flex flex-col items-center gap-5 mt-2';
         box.innerHTML = `
-            <button onclick="window.playAudio('${activity.fr.replace(/'/g,"\\'")}', event)" class="w-28 h-28 rounded-[2.2rem] flex items-center justify-center bg-gradient-to-tr from-[#0066cc] to-[#3388ff] text-white shadow-[0_15px_30px_rgba(0,102,204,0.3)] hover:scale-105 active:scale-95 transition-all"><i data-lucide="volume-2" class="w-12 h-12"></i></button>
-            <div class="text-center"><div class="text-3xl md:text-4xl font-extrabold text-[#1d1d1f] tracking-tight">${activity.fr}</div>
-            <p class="text-[#86868b] font-semibold text-lg mt-2 uppercase tracking-wide">${activity.pt}</p></div>
-            <p class="text-sm text-slate-400 font-medium">Toque no botão e repita em voz alta 🔊</p>`;
+            <button onclick="window.playAudio('${activity.fr.replace(/'/g,"\\'")}', event)" class="w-24 h-24 rounded-[2rem] flex items-center justify-center bg-gradient-to-tr from-[#0066cc] to-[#3388ff] text-white shadow-[0_15px_30px_rgba(0,102,204,0.3)] hover:scale-105 active:scale-95 transition-all"><i data-lucide="volume-2" class="w-10 h-10"></i></button>
+            <div class="text-center"><div class="text-2xl md:text-3xl font-extrabold text-[#1d1d1f] tracking-tight">${activity.fr}</div>
+            <p class="text-[#86868b] font-semibold text-base mt-1 uppercase tracking-wide">${activity.pt}</p></div>
+            <p class="text-sm text-slate-400 font-medium flex items-center gap-2"><i data-lucide="mic" class="w-4 h-4"></i> Touchez le bouton et répétez à voix haute</p>`;
         container.appendChild(box);
         enableCheckButton(true);
+        setTimeout(() => window.playAudio(activity.fr, null), 300);
+    }
+
+    // ----- TYPE (escrever em francês: ditado ou tradução) -----
+    function _accless(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+    function _normType(s){ return (s||'').toLowerCase().replace(/[.,;:!?¿¡"»«]/g,'').replace(/\s+/g,' ').trim(); }
+    function typeMatch(val, ans){ const a=_normType(val), b=_normType(ans); return a===b || _accless(a)===_accless(b); }
+    function renderType(activity, container, mode){
+        practiceState.listenSelection = null;
+        const box = document.createElement('div');
+        box.className = 'w-full max-w-xl mx-auto flex flex-col items-center gap-6 mt-2';
+        let head;
+        if (mode === 'listen'){
+            head = `<button onclick="window.playAudio('${activity.fr.replace(/'/g,"\\'")}', event)" class="w-24 h-24 rounded-[2rem] flex items-center justify-center bg-gradient-to-tr from-[#0066cc] to-[#3388ff] text-white shadow-[0_15px_30px_rgba(0,102,204,0.3)] hover:scale-105 active:scale-95 transition-all"><i data-lucide="volume-2" class="w-10 h-10"></i></button>
+            <p class="text-sm text-slate-500 font-bold">Écoutez, puis écrivez en français</p>`;
+        } else {
+            head = `<div class="w-full p-6 bg-white/60 border border-white/80 rounded-[2rem] text-center shadow-sm"><p class="text-[10px] uppercase tracking-widest text-[#86868b] font-bold mb-1">Em português</p><div class="text-2xl md:text-3xl font-extrabold text-[#1d1d1f] tracking-tight">${activity.pt}</div></div>
+            <p class="text-sm text-slate-500 font-bold">Écrivez la traduction en français</p>`;
+        }
+        box.innerHTML = head + `<input id="typeInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Tapez ici…" class="w-full text-center text-xl md:text-2xl font-bold text-[#1d1d1f] bg-white/70 border-2 border-white/90 focus:border-[#0066cc] rounded-2xl py-4 px-5 outline-none shadow-sm transition-colors">`;
+        container.appendChild(box);
+        const input = box.querySelector('#typeInput');
+        input.addEventListener('input', () => enableCheckButton(input.value.trim().length > 0));
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !document.getElementById('btnCheck').disabled){ e.preventDefault(); checkAnswer(); } });
+        if (mode === 'listen') setTimeout(() => window.playAudio(activity.fr, null), 350);
+    }
+
+    // ----- TEXT CHOOSE (conjugaison / compléter la phrase) -----
+    function renderTextChoose(activity, container){
+        practiceState.listenSelection = null;
+        const box = document.createElement('div');
+        box.className = 'w-full max-w-2xl mx-auto p-6 md:p-8 bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2rem] shadow-sm mb-8 text-center';
+        const hint = activity.inf ? `<p class="text-[11px] uppercase tracking-widest text-[#86868b] font-bold mb-2">verbe : ${activity.inf}</p>` : '';
+        box.innerHTML = hint + `<div class="text-xl md:text-2xl font-extrabold text-[#1d1d1f] tracking-tight leading-snug">${activity.display}</div>`;
+        container.appendChild(box);
+        const group = document.createElement('div'); group.className = 'flex flex-col gap-3 w-full max-w-xl mx-auto';
+        activity.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'practice-card w-full text-left p-4 md:p-5 rounded-2xl text-base md:text-lg text-slate-700 font-bold flex items-center gap-4';
+            btn.innerHTML = `<div class="w-6 h-6 rounded-full border-2 border-slate-300 flex-shrink-0"></div><span class="leading-tight">${opt}</span>`;
+            btn.onclick = () => { selectOption(group, btn, opt); practiceState.listenSelection = opt; window.playAudio(opt, null); };
+            group.appendChild(btn);
+        });
+        container.appendChild(group);
+    }
+
+    // ----- BUILD SENTENCE (ordenar a frase) -----
+    function renderBuild(activity, container){
+        const head = document.createElement('div'); head.className = 'w-full max-w-2xl mx-auto flex items-center justify-center gap-4 mb-6';
+        head.innerHTML = `<p class="text-sm text-slate-500 font-bold uppercase tracking-widest">Écoutez et reconstituez</p><button onclick="window.playAudio('${activity.fr.replace(/'/g,"\\'")}', event)" class="w-12 h-12 bg-blue-50/80 text-[#0066cc] rounded-xl flex items-center justify-center hover:bg-blue-100 transition shadow-sm border border-blue-100 shrink-0"><i data-lucide="volume-2" class="w-5 h-5"></i></button>`;
+        container.appendChild(head);
+        const dropZone = document.createElement('div'); dropZone.id = 'dropZone'; dropZone.className = 'drop-zone flex flex-wrap gap-2 w-full max-w-2xl mx-auto mb-10 justify-center'; container.appendChild(dropZone);
+        const poolZone = document.createElement('div'); poolZone.className = 'flex flex-wrap justify-center gap-2.5 w-full max-w-2xl mx-auto';
+        activity.pool.forEach((word, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'word-block rounded-xl py-2.5 px-5 text-base md:text-lg font-bold text-slate-700';
+            btn.innerText = word; btn.id = `bw-${index}`;
+            btn.onclick = () => {
+                if (practiceState.isChecking) return;
+                const clone = btn.cloneNode(true);
+                clone.onclick = () => { if (practiceState.isChecking) return; clone.remove(); btn.classList.remove('used'); updateTranslateCheckButton(); };
+                dropZone.appendChild(clone); btn.classList.add('used'); window.playAudio(word, null); updateTranslateCheckButton();
+            };
+            poolZone.appendChild(btn);
+        });
+        container.appendChild(poolZone);
+        updateTranslateCheckButton();
         setTimeout(() => window.playAudio(activity.fr, null), 350);
     }
 
@@ -2062,20 +2492,24 @@
         if (practiceState.isChecking){ practiceState.currentIndex++; loadActivity(); return; }
         const activity = practiceState.activities[practiceState.currentIndex];
         let isCorrect = false; let correctAnswerText = "";
-        if (activity.type === 'translateFr'){
+        if (activity.type === 'translateFr' || activity.type === 'buildSentence'){
             const dropZone = document.getElementById('dropZone');
             const userWords = Array.from(dropZone.children).map(b => b.innerText.trim());
             isCorrect = userWords.join(' ').toLowerCase() === activity.answer.join(' ').toLowerCase();
             correctAnswerText = activity.fr;
         } else if (activity.type === 'listen' || activity.type === 'chooseFr'){
             isCorrect = practiceState.listenSelection === activity.fr; correctAnswerText = activity.fr;
+        } else if (activity.type === 'typeListen' || activity.type === 'typeTranslateFr'){
+            const el = document.getElementById('typeInput'); isCorrect = typeMatch(el ? el.value : '', activity.fr); correctAnswerText = activity.fr;
         } else if (activity.type === 'choosePt'){
             isCorrect = practiceState.listenSelection === activity.pt; correctAnswerText = activity.pt;
+        } else if (activity.type === 'conjugate' || activity.type === 'completeSentence'){
+            isCorrect = practiceState.listenSelection === activity.answer; correctAnswerText = activity.answer;
         } else if (activity.type === 'repeat'){ isCorrect = true; correctAnswerText = activity.fr; }
         else if (activity.type === 'match' || activity.type === 'memory') return;
         practiceState.isChecking = true;
         if (!isCorrect) loseHeart();
-        if (correctAnswerText && (activity.type!=='repeat')) window.playAudio(activity.fr || correctAnswerText, null);
+        if (activity.speak) window.playAudio(activity.speak, null);
         showFeedback(isCorrect, correctAnswerText);
     }
     function skipActivity(){
@@ -2083,6 +2517,7 @@
         const activity = practiceState.activities[practiceState.currentIndex];
         let correctText = activity.fr || "";
         if (activity.type === 'choosePt') correctText = activity.pt;
+        if (activity.type === 'conjugate' || activity.type === 'completeSentence') correctText = activity.answer;
         if (activity.type === 'match') correctText = "Associez tous les mots.";
         if (activity.type === 'memory') correctText = "Trouvez toutes les paires.";
         showFeedback(false, correctText);
