@@ -1629,8 +1629,15 @@
             t => 'https://translate.google.com/translate_tts?ie=UTF-8&tl=fr-FR&client=tw-ob&q=' + encodeURIComponent(t)
         ];
         let lastGood = 0;        // último provedor que tocou de verdade (começa por ele)
-        let current = null;      // <audio> em reprodução
         let token = 0;           // identifica a chamada atual (cancela reproduções antigas)
+        let unlocked = false;
+        // UM ÚNICO elemento de áudio, reutilizado e desbloqueado por um gesto do usuário.
+        // É a única forma de o áudio tocar em navegadores de celular (iOS/Android).
+        const el = new Audio();
+        el.preload = 'auto';
+        try { el.setAttribute('playsinline', ''); el.setAttribute('webkit-playsinline', ''); } catch(e){}
+        // WAV silencioso (curto) usado só para "destravar" o áudio no primeiro toque
+        const SILENT = 'data:audio/wav;base64,UklGRjQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YRAAAACAgICAgICAgICAgICAgICA';
 
         function clean(text){
             return (text || '')
@@ -1650,9 +1657,17 @@
             if (cur) out.push(cur.trim());
             return out.length ? out : [text];
         }
+        function clearHandlers(){ el.onplaying = null; el.oncanplay = null; el.onended = null; el.onerror = null; }
+        // Destrava o áudio no celular: tocar um som silencioso dentro de um gesto
+        function unlock(){
+            if (unlocked) return; unlocked = true;
+            try { clearHandlers(); el.muted = false; el.src = SILENT; const p = el.play(); if (p && p.catch) p.catch(()=>{}); } catch(e){}
+            if (synth){ try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; synth.speak(u); } catch(e){} }
+        }
         function stop(){
             token++;
-            if (current){ try { current.pause(); } catch(e){} current.onended = null; current.onerror = null; current.oncanplay = null; current = null; }
+            clearHandlers();
+            try { el.pause(); } catch(e){}
             if (synth) try { synth.cancel(); } catch(e){}
         }
         function speakLocal(text){
@@ -1673,28 +1688,33 @@
             let i = 0;
             (function playChunk(){
                 if (myToken !== token) return;
-                if (i >= chunks.length){ current = null; return; }
-                const a = new Audio();
-                a.preload = 'auto';
-                current = a;
+                if (i >= chunks.length) return;
                 let settled = false;
-                function toNext(){ if (settled || myToken !== token) return; settled = true; clearTimeout(watchdog); try { a.pause(); } catch(e){} playWith(fullText, pIdx + 1, myToken); }
-                function onPlaying(){ if (myToken !== token) return; settled = true; clearTimeout(watchdog); lastGood = pIdx; }
-                // se o provedor não começar a tocar em 4,5s, troca para o próximo
-                const watchdog = setTimeout(() => { if (!settled && (a.paused || a.readyState < 2)) toNext(); }, 4500);
-                a.addEventListener('playing', onPlaying, { once: true });
-                a.addEventListener('canplay', onPlaying, { once: true });
-                a.onended = () => { if (myToken !== token) return; i++; playChunk(); };
-                a.onerror = toNext;
-                a.src = PROVIDERS[pIdx](chunks[i]);
-                const pr = a.play();
-                if (pr && pr.catch) pr.catch(() => toNext());
+                const advance = () => { if (settled || myToken !== token) return; settled = true; clearTimeout(watchdog); playWith(fullText, pIdx + 1, myToken); };
+                const watchdog = setTimeout(() => { if (!settled && (el.paused || el.readyState < 2)) advance(); }, 6000);
+                el.onplaying = () => { if (myToken !== token) return; settled = true; clearTimeout(watchdog); lastGood = pIdx; };
+                el.oncanplay = el.onplaying;
+                el.onended = () => { if (myToken !== token) return; clearTimeout(watchdog); i++; playChunk(); };
+                el.onerror = () => { if (el.error && el.error.code === 1) return; advance(); }; // ignora aborts ao trocar de fonte
+                try {
+                    el.muted = false; el.src = PROVIDERS[pIdx](chunks[i]);
+                    const pr = el.play();
+                    if (pr && pr.catch) pr.catch(() => { /* deixa o watchdog/erro decidir */ });
+                } catch(e){ advance(); }
             })();
         }
         function speak(text){
             const t = clean(text); if (!t) return;
+            unlock();   // garante o destravamento se este clique for o primeiro gesto
             stop();
             playWith(t, lastGood, token);
+        }
+        // Destrava no primeiro toque/clique em qualquer lugar (cobre os áudios automáticos pós-render)
+        if (typeof document !== 'undefined'){
+            const u = () => { unlock(); };
+            document.addEventListener('touchend', u, { capture: true, passive: true });
+            document.addEventListener('pointerdown', u, { capture: true, passive: true });
+            document.addEventListener('click', u, { capture: true });
         }
         return { speak, stop };
     })();
