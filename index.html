@@ -1628,7 +1628,7 @@
             t => 'https://api.streamelements.com/kappa/v2/speech?voice=Celine&text=' + encodeURIComponent(t),
             t => 'https://translate.google.com/translate_tts?ie=UTF-8&tl=fr-FR&client=tw-ob&q=' + encodeURIComponent(t)
         ];
-        let providerIdx = 0;     // provedor atual (fica fixo após sucesso/falha)
+        let lastGood = 0;        // último provedor que tocou de verdade (começa por ele)
         let current = null;      // <audio> em reprodução
         let token = 0;           // identifica a chamada atual (cancela reproduções antigas)
 
@@ -1652,12 +1652,14 @@
         }
         function stop(){
             token++;
-            if (current){ try { current.pause(); } catch(e){} current.onended = null; current.onerror = null; current = null; }
+            if (current){ try { current.pause(); } catch(e){} current.onended = null; current.onerror = null; current.oncanplay = null; current = null; }
             if (synth) try { synth.cancel(); } catch(e){}
         }
         function speakLocal(text){
             if (!synth){ return; }
             try { synth.cancel(); } catch(e){}
+            try { synth.resume(); } catch(e){}
+            if (!speechVoices.length) loadVoices();
             const u = new SpeechSynthesisUtterance(text);
             u.lang = 'fr-FR'; u.rate = 0.95; u.pitch = 1.0; u.volume = 1;
             if (!bestFrenchVoice) bestFrenchVoice = pickBestVoice();
@@ -1667,27 +1669,32 @@
         function playWith(fullText, pIdx, myToken){
             if (myToken !== token) return;
             if (pIdx >= PROVIDERS.length){ speakLocal(fullText); return; }
-            providerIdx = pIdx;
             const chunks = chunkText(fullText, 180);
             let i = 0;
-            (function next(){
+            (function playChunk(){
                 if (myToken !== token) return;
                 if (i >= chunks.length){ current = null; return; }
                 const a = new Audio();
                 a.preload = 'auto';
                 current = a;
-                a.onended = () => { if (myToken !== token) return; i++; next(); };
-                a.onerror = () => { if (myToken !== token) return; current = null; playWith(fullText, pIdx + 1, myToken); };
+                let settled = false;
+                function toNext(){ if (settled || myToken !== token) return; settled = true; clearTimeout(watchdog); try { a.pause(); } catch(e){} playWith(fullText, pIdx + 1, myToken); }
+                function onPlaying(){ if (myToken !== token) return; settled = true; clearTimeout(watchdog); lastGood = pIdx; }
+                // se o provedor não começar a tocar em 4,5s, troca para o próximo
+                const watchdog = setTimeout(() => { if (!settled && (a.paused || a.readyState < 2)) toNext(); }, 4500);
+                a.addEventListener('playing', onPlaying, { once: true });
+                a.addEventListener('canplay', onPlaying, { once: true });
+                a.onended = () => { if (myToken !== token) return; i++; playChunk(); };
+                a.onerror = toNext;
                 a.src = PROVIDERS[pIdx](chunks[i]);
-                const p = a.play();
-                if (p && p.catch) p.catch(() => { /* gesto/autoplay: ignora, onerror cobre falhas de rede */ });
+                const pr = a.play();
+                if (pr && pr.catch) pr.catch(() => toNext());
             })();
         }
         function speak(text){
             const t = clean(text); if (!t) return;
             stop();
-            const myToken = token;
-            playWith(t, providerIdx, myToken);
+            playWith(t, lastGood, token);
         }
         return { speak, stop };
     })();
