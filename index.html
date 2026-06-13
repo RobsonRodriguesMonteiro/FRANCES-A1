@@ -1638,6 +1638,11 @@
         try { el.setAttribute('playsinline', ''); el.setAttribute('webkit-playsinline', ''); } catch(e){}
         // WAV silencioso (curto) usado só para "destravar" o áudio no primeiro toque
         const SILENT = 'data:audio/wav;base64,UklGRjQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YRAAAACAgICAgICAgICAgICAgICA';
+        // Detecção de celular/tablet: nesses aparelhos o som SÓ toca se a voz nativa
+        // for chamada de forma síncrona, dentro do próprio toque (gesto do usuário).
+        const _UA = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+        const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Silk/i.test(_UA)
+            || (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1 && /Macintosh/.test(_UA));
 
         function clean(text){
             return (text || '')
@@ -1661,8 +1666,8 @@
         // Destrava o áudio no celular: tocar um som silencioso dentro de um gesto
         function unlock(){
             if (unlocked) return; unlocked = true;
-            try { clearHandlers(); el.muted = false; el.src = SILENT; const p = el.play(); if (p && p.catch) p.catch(()=>{}); } catch(e){}
-            if (synth){ try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; synth.speak(u); } catch(e){} }
+            if (!IS_MOBILE){ try { clearHandlers(); el.muted = false; el.src = SILENT; const p = el.play(); if (p && p.catch) p.catch(()=>{}); } catch(e){} }
+            if (synth && !IS_MOBILE){ try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; synth.speak(u); } catch(e){} }
         }
         function stop(){
             token++;
@@ -1705,7 +1710,14 @@
         }
         function speak(text){
             const t = clean(text); if (!t) return;
-            unlock();   // garante o destravamento se este clique for o primeiro gesto
+            if (IS_MOBILE){
+                // CELULAR: voz nativa do aparelho, chamada AGORA, dentro do gesto (único método sempre permitido).
+                token++;
+                try { el.pause(); } catch(e){}
+                speakLocal(t);
+                return;
+            }
+            unlock();   // computador: destrava e usa a voz neural da nuvem
             stop();
             playWith(t, lastGood, token);
         }
