@@ -2092,7 +2092,8 @@
             <button onclick="goHome()" class="absolute top-4 md:top-6 left-4 md:left-6 p-3 rounded-full bg-white/40 backdrop-blur-md border border-white/60 text-slate-700 hover:bg-white/60 transition shadow-sm z-50"><i data-lucide="x" class="w-6 h-6"></i></button>
             <div class="folder-container flex flex-col items-center w-full max-w-5xl">
                 <div class="text-center mb-10 mt-8 md:mt-0"><h2 class="text-3xl md:text-4xl font-extrabold text-[#1d1d1f] tracking-tight mb-2">${dossier.title}</h2>
-                <span class="px-4 py-1.5 bg-white/50 text-[#1d1d1f] text-sm font-bold rounded-full uppercase tracking-widest border border-white/80 shadow-sm inline-block">${dossier.subtitle}</span></div>
+                <span class="px-4 py-1.5 bg-white/50 text-[#1d1d1f] text-sm font-bold rounded-full uppercase tracking-widest border border-white/80 shadow-sm inline-block">${dossier.subtitle}</span>
+                <div class="mt-5"><button onclick="startDossierPractice(${state.activeDossierIdx})" class="practice-btn practice-btn-primary px-5 py-2.5 rounded-xl text-sm font-bold inline-flex items-center gap-2"><i data-lucide="gamepad-2" class="w-4 h-4 text-white"></i><span class="text-white">Pratiquer tout le Dossier</span></button></div></div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-2 md:px-4 pb-8">${lessonsHTML}</div>
             </div>
         </div>`;
@@ -2263,6 +2264,636 @@
         return { type:'completeSentence', display: display, fr: s, answer: ans, options: shuffle([ans, distr[0], distr[1]]), speak: s };
     }
 
+    // ==========================================
+    // FRASES DE PRÁTICA POR LIÇÃO (10 afirmativas, 5 negativas, 5 interrogativas)
+    // ==========================================
+    const LSENT = {};
+    LSENT['1-1'] = [
+        {f:"Bonjour, je m'appelle Marie.",p:"Bom dia, eu me chamo Marie.",t:"a"},
+        {f:"J'ai vingt-trois ans.",p:"Eu tenho vinte e três anos.",t:"a"},
+        {f:"Je suis étudiant à l'université.",p:"Sou estudante na universidade.",t:"a"},
+        {f:"Nous étudions la médecine ensemble.",p:"Estudamos medicina juntos.",t:"a"},
+        {f:"Elle est bilingue en français.",p:"Ela é bilíngue em francês.",t:"a"},
+        {f:"Je donne mon mot de passe.",p:"Eu forneço minha senha.",t:"a"},
+        {f:"Tu pratiques le français le matin.",p:"Você pratica francês de manhã.",t:"a"},
+        {f:"On se salue avec une bise.",p:"A gente se cumprimenta com um beijo.",t:"a"},
+        {f:"Vous avez un nouveau contact.",p:"Vocês têm um novo contato.",t:"a"},
+        {f:"J'apprends le français à l'école.",p:"Aprendo francês na escola.",t:"a"},
+        {f:"Je ne parle pas bien anglais.",p:"Eu não falo bem inglês.",t:"n"},
+        {f:"Elle n'a pas mon numéro.",p:"Ela não tem meu número.",t:"n"},
+        {f:"Nous ne sommes pas en retard.",p:"Não estamos atrasados.",t:"n"},
+        {f:"Tu n'étudies pas l'économie.",p:"Você não estuda economia.",t:"n"},
+        {f:"Je ne confirme pas mon inscription.",p:"Eu não confirmo minha inscrição.",t:"n"},
+        {f:"Comment vous appelez-vous ?",p:"Como você se chama?",t:"i"},
+        {f:"Quel est votre prénom ?",p:"Qual é o seu nome?",t:"i"},
+        {f:"Quelle est votre langue maternelle ?",p:"Qual é a sua língua materna?",t:"i"},
+        {f:"Est-ce que tu étudies le français ?",p:"Você estuda francês?",t:"i"},
+        {f:"Avez-vous une adresse mail ?",p:"Você tem um e-mail?",t:"i"}
+    ];
+    LSENT['1-2'] = [
+        {f:"J'habite au Brésil, à Rio.",p:"Moro no Brasil, no Rio.",t:"a"},
+        {f:"Elle vient de France.",p:"Ela vem da França.",t:"a"},
+        {f:"Nous voyageons en Italie cet été.",p:"Viajamos para a Itália neste verão.",t:"a"},
+        {f:"Je suis brésilien et je parle portugais.",p:"Sou brasileiro e falo português.",t:"a"},
+        {f:"Mon rêve, c'est de visiter Paris.",p:"Meu sonho é visitar Paris.",t:"a"},
+        {f:"Ils participent à un jeu-concours.",p:"Eles participam de um concurso.",t:"a"},
+        {f:"Tu regardes l'émission en direct.",p:"Você assiste ao programa ao vivo.",t:"a"},
+        {f:"Vous adorez la musique française.",p:"Vocês adoram a música francesa.",t:"a"},
+        {f:"Je rêve d'aller au Canada.",p:"Sonho em ir ao Canadá.",t:"a"},
+        {f:"Elle habite à Montréal aujourd'hui.",p:"Ela mora em Montreal hoje.",t:"a"},
+        {f:"Je ne vis pas en Chine.",p:"Eu não vivo na China.",t:"n"},
+        {f:"Elle n'est pas espagnole.",p:"Ela não é espanhola.",t:"n"},
+        {f:"Nous n'habitons pas à Madrid.",p:"Não moramos em Madri.",t:"n"},
+        {f:"Tu ne participes pas au concours.",p:"Você não participa do concurso.",t:"n"},
+        {f:"Ils ne voyagent pas aux États-Unis.",p:"Eles não viajam aos Estados Unidos.",t:"n"},
+        {f:"Est-ce qu'il habite au Maroc ?",p:"Será que ele mora no Marrocos?",t:"i"},
+        {f:"De quel pays venez-vous ?",p:"De que país você vem?",t:"i"},
+        {f:"Quelle est ta nationalité ?",p:"Qual é a sua nacionalidade?",t:"i"},
+        {f:"Tu parles anglais ou français ?",p:"Você fala inglês ou francês?",t:"i"},
+        {f:"Où est-ce que vous voyagez cette année ?",p:"Para onde vocês viajam este ano?",t:"i"}
+    ];
+    LSENT['1-3'] = [
+        {f:"Je suis ingénieur en informatique.",p:"Sou engenheiro de informática.",t:"a"},
+        {f:"Je travaille dans un bureau en ville.",p:"Trabalho num escritório na cidade.",t:"a"},
+        {f:"Elle prend des notes pendant le cours.",p:"Ela faz anotações durante a aula.",t:"a"},
+        {f:"Nous avons cours au lycée le matin.",p:"Temos aula no ensino médio de manhã.",t:"a"},
+        {f:"Je me repose le week-end.",p:"Eu descanso no fim de semana.",t:"a"},
+        {f:"Il y a un magasin près d'ici.",p:"Há uma loja perto daqui.",t:"a"},
+        {f:"Tu échanges ton document à l'accueil.",p:"Você troca seu documento na recepção.",t:"a"},
+        {f:"On note l'adresse sur le formulaire.",p:"A gente anota o endereço no formulário.",t:"a"},
+        {f:"Vous voulez parler au professeur.",p:"Vocês querem falar com o professor.",t:"a"},
+        {f:"Je veux acheter un livre aujourd'hui.",p:"Quero comprar um livro hoje.",t:"a"},
+        {f:"Je ne travaille pas le dimanche.",p:"Eu não trabalho aos domingos.",t:"n"},
+        {f:"Nous n'avons pas cours le mardi.",p:"Não temos aula às terças.",t:"n"},
+        {f:"Il ne se sent pas fatigué.",p:"Ele não se sente cansado.",t:"n"},
+        {f:"Tu ne veux pas rester ici.",p:"Você não quer ficar aqui.",t:"n"},
+        {f:"Elle ne prend pas le bus le soir.",p:"Ela não pega o ônibus à noite.",t:"n"},
+        {f:"Est-ce que tu travailles ici ?",p:"Você trabalha aqui?",t:"i"},
+        {f:"Combien ça coûte, ce livre ?",p:"Quanto custa este livro?",t:"i"},
+        {f:"Quelle est ta profession ?",p:"Qual é a sua profissão?",t:"i"},
+        {f:"Où est-ce que vous étudiez ?",p:"Onde vocês estudam?",t:"i"},
+        {f:"À quelle heure commence le cours ?",p:"A que horas começa a aula?",t:"i"}
+    ];
+    LSENT['2-1'] = [
+        {f:"Il y a une cathédrale au centre-ville.",p:"Há uma catedral no centro da cidade.",t:"a"},
+        {f:"Le musée est à côté de la mairie.",p:"O museu fica ao lado da prefeitura.",t:"a"},
+        {f:"J'aime me promener au bord de la rivière.",p:"Gosto de passear à beira do rio.",t:"a"},
+        {f:"La pharmacie se trouve près de la banque.",p:"A farmácia fica perto do banco.",t:"a"},
+        {f:"Nous achetons du pain à la boulangerie.",p:"Compramos pão na padaria.",t:"a"},
+        {f:"Le restaurant est en face du parc.",p:"O restaurante fica em frente ao parque.",t:"a"},
+        {f:"Je vais au marché à pied.",p:"Vou ao mercado a pé.",t:"a"},
+        {f:"On trouve une galerie d'art dans ce quartier.",p:"Encontra-se uma galeria de arte neste bairro.",t:"a"},
+        {f:"Il y a beaucoup de monde sur la place.",p:"Há muita gente na praça.",t:"a"},
+        {f:"Mon lieu préféré, c'est le jardin.",p:"Meu lugar preferido é o jardim.",t:"a"},
+        {f:"Il n'y a pas de parking ici.",p:"Não há estacionamento aqui.",t:"n"},
+        {f:"Ce n'est pas loin du théâtre.",p:"Não é longe do teatro.",t:"n"},
+        {f:"Je n'aime pas les rues bruyantes.",p:"Não gosto de ruas barulhentas.",t:"n"},
+        {f:"Elle ne va pas souvent au cinéma.",p:"Ela não vai ao cinema com frequência.",t:"n"},
+        {f:"Nous ne prenons pas la voiture en ville.",p:"Não pegamos o carro na cidade.",t:"n"},
+        {f:"Où se trouve l'hôpital ?",p:"Onde fica o hospital?",t:"i"},
+        {f:"Pourquoi aimez-vous ce lieu ?",p:"Por que você gosta deste lugar?",t:"i"},
+        {f:"Est-ce qu'il y a une poste près d'ici ?",p:"Há um correio perto daqui?",t:"i"},
+        {f:"Quel est ton quartier préféré ?",p:"Qual é o seu bairro preferido?",t:"i"},
+        {f:"Combien de musées y a-t-il dans la ville ?",p:"Quantos museus há na cidade?",t:"i"}
+    ];
+    LSENT['2-2'] = [
+        {f:"Prenez la première rue à droite.",p:"Pegue a primeira rua à direita.",t:"a"},
+        {f:"Continuez tout droit jusqu'au pont.",p:"Continue reto até a ponte.",t:"a"},
+        {f:"Je prends le métro pour aller à la gare.",p:"Pego o metrô para ir à estação.",t:"a"},
+        {f:"Tu traverses la rue après le feu.",p:"Você atravessa a rua depois do sinal.",t:"a"},
+        {f:"Nous tournons à gauche à l'arrêt de bus.",p:"Viramos à esquerda no ponto de ônibus.",t:"a"},
+        {f:"On descend à la deuxième station.",p:"A gente desce na segunda estação.",t:"a"},
+        {f:"Le train arrive dans cinq minutes.",p:"O trem chega em cinco minutos.",t:"a"},
+        {f:"Je cherche le chemin vers le château.",p:"Procuro o caminho para o castelo.",t:"a"},
+        {f:"Vous montez l'avenue jusqu'à la place.",p:"Vocês sobem a avenida até a praça.",t:"a"},
+        {f:"Elle achète un billet de train.",p:"Ela compra uma passagem de trem.",t:"a"},
+        {f:"Je ne sais pas où est l'avenue.",p:"Não sei onde fica a avenida.",t:"n"},
+        {f:"Ce n'est pas la bonne direction.",p:"Não é a direção certa.",t:"n"},
+        {f:"Nous ne prenons pas l'avion demain.",p:"Não pegamos o avião amanhã.",t:"n"},
+        {f:"Tu ne tournes pas à droite ici.",p:"Você não vira à direita aqui.",t:"n"},
+        {f:"Il ne descend pas à cet arrêt.",p:"Ele não desce neste ponto.",t:"n"},
+        {f:"Pardon, pour aller à la gare ?",p:"Com licença, para ir à estação?",t:"i"},
+        {f:"Quel est l'itinéraire le plus court ?",p:"Qual é o caminho mais curto?",t:"i"},
+        {f:"Est-ce que le métro passe par ici ?",p:"O metrô passa por aqui?",t:"i"},
+        {f:"Tu achètes les billets de train ?",p:"Você compra as passagens de trem?",t:"i"},
+        {f:"Vous allez vers où, exactement ?",p:"Vocês vão para onde, exatamente?",t:"i"}
+    ];
+    LSENT['2-3'] = [
+        {f:"Je réserve une chambre double pour deux nuits.",p:"Reservo um quarto de casal por duas noites.",t:"a"},
+        {f:"Le petit déjeuner est inclus dans le prix.",p:"O café da manhã está incluso no preço.",t:"a"},
+        {f:"L'auberge de jeunesse est près de la plage.",p:"O hostel fica perto da praia.",t:"a"},
+        {f:"Nous restons trois nuits à l'hôtel.",p:"Ficamos três noites no hotel.",t:"a"},
+        {f:"J'envoie une carte postale à ma mère.",p:"Envio um cartão postal para minha mãe.",t:"a"},
+        {f:"Il fait beau, je vais à la plage.",p:"Está bom tempo, vou à praia.",t:"a"},
+        {f:"Cet hôtel a une piscine et le wifi.",p:"Este hotel tem piscina e wifi.",t:"a"},
+        {f:"Je préfère une chambre avec salle de bain.",p:"Prefiro um quarto com banheiro.",t:"a"},
+        {f:"On se baigne dans le lac le matin.",p:"A gente toma banho no lago de manhã.",t:"a"},
+        {f:"Je passe des vacances merveilleuses ici.",p:"Passo férias maravilhosas aqui.",t:"a"},
+        {f:"Il n'y a pas de chambre libre ce soir.",p:"Não há quarto livre esta noite.",t:"n"},
+        {f:"Le petit déjeuner n'est pas inclus.",p:"O café da manhã não está incluso.",t:"n"},
+        {f:"Nous n'acceptons pas les animaux.",p:"Não aceitamos animais.",t:"n"},
+        {f:"Je ne reste pas après samedi.",p:"Não fico depois de sábado.",t:"n"},
+        {f:"Il ne fait pas froid à la montagne.",p:"Não faz frio na montanha.",t:"n"},
+        {f:"Avez-vous des chambres doubles ?",p:"Vocês têm quartos de casal?",t:"i"},
+        {f:"Quel est le prix par nuit ?",p:"Qual é o preço por noite?",t:"i"},
+        {f:"Est-ce que le petit déjeuner est inclus ?",p:"O café da manhã está incluso?",t:"i"},
+        {f:"C'est possible de faire la cuisine ?",p:"É possível cozinhar?",t:"i"},
+        {f:"Y a-t-il de la place pour samedi prochain ?",p:"Há vaga para o próximo sábado?",t:"i"}
+    ];
+    LSENT['3-1'] = [
+        {f:"Ma famille habite à la campagne.",p:"Minha família mora no campo.",t:"a"},
+        {f:"J'ai un frère et deux sœurs.",p:"Tenho um irmão e duas irmãs.",t:"a"},
+        {f:"Mon père est généreux et patient.",p:"Meu pai é generoso e paciente.",t:"a"},
+        {f:"Elle ressemble à sa grand-mère.",p:"Ela se parece com a avó.",t:"a"},
+        {f:"Nous célébrons le mariage de mon cousin.",p:"Comemoramos o casamento do meu primo.",t:"a"},
+        {f:"Je m'intéresse à l'art et à la musique.",p:"Eu me interesso por arte e música.",t:"a"},
+        {f:"Mes parents sont très organisés.",p:"Meus pais são muito organizados.",t:"a"},
+        {f:"On annonce une bonne nouvelle ce soir.",p:"Anunciamos uma boa notícia esta noite.",t:"a"},
+        {f:"Toi aussi, tu es romantique.",p:"Você também é romântico.",t:"a"},
+        {f:"Lui, il adore les chiens.",p:"Ele adora cachorros.",t:"a"},
+        {f:"Je ne suis pas timide avec mes amis.",p:"Não sou tímido com meus amigos.",t:"n"},
+        {f:"Elle n'a pas de sœur.",p:"Ela não tem irmã.",t:"n"},
+        {f:"Nous ne sommes pas d'accord avec lui.",p:"Não concordamos com ele.",t:"n"},
+        {f:"Il ne ressemble pas à son père.",p:"Ele não se parece com o pai.",t:"n"},
+        {f:"Je n'aime pas les gens menteurs.",p:"Não gosto de pessoas mentirosas.",t:"n"},
+        {f:"Quel est ton signe du zodiaque ?",p:"Qual é o seu signo?",t:"i"},
+        {f:"Est-ce que tu as des frères et sœurs ?",p:"Você tem irmãos?",t:"i"},
+        {f:"Comment est ta famille ?",p:"Como é a sua família?",t:"i"},
+        {f:"À votre avis, elle est sérieuse ?",p:"Na sua opinião, ela é séria?",t:"i"},
+        {f:"Qui parle dans cette annonce ?",p:"Quem fala neste anúncio?",t:"i"}
+    ];
+    LSENT['3-2'] = [
+        {f:"J'ai mal à la tête aujourd'hui.",p:"Estou com dor de cabeça hoje.",t:"a"},
+        {f:"Il a mal au dos depuis hier.",p:"Ele está com dor nas costas desde ontem.",t:"a"},
+        {f:"Je suis malade, je reste à la maison.",p:"Estou doente, fico em casa.",t:"a"},
+        {f:"Elle a les yeux verts et les cheveux bruns.",p:"Ela tem olhos verdes e cabelos castanhos.",t:"a"},
+        {f:"Nous avons mal aux jambes après la marche.",p:"Estamos com dor nas pernas depois da caminhada.",t:"a"},
+        {f:"Tu as l'air fatigué ce matin.",p:"Você parece cansado esta manhã.",t:"a"},
+        {f:"Le médecin soigne les patients à l'hôpital.",p:"O médico cuida dos pacientes no hospital.",t:"a"},
+        {f:"Je me repose parce que je suis épuisé.",p:"Descanso porque estou exausto.",t:"a"},
+        {f:"Il faut prendre ce médicament le soir.",p:"É preciso tomar este remédio à noite.",t:"a"},
+        {f:"Je voyage en France en avion.",p:"Viajo para a França de avião.",t:"a"},
+        {f:"Je n'ai pas mal au ventre.",p:"Não estou com dor de barriga.",t:"n"},
+        {f:"Elle n'est pas en bonne santé.",p:"Ela não está com boa saúde.",t:"n"},
+        {f:"Nous ne sommes pas fatigués ce soir.",p:"Não estamos cansados esta noite.",t:"n"},
+        {f:"Il ne tousse pas beaucoup.",p:"Ele não tosse muito.",t:"n"},
+        {f:"Tu n'as pas de fièvre.",p:"Você não está com febre.",t:"n"},
+        {f:"Où as-tu mal ?",p:"Onde você está com dor?",t:"i"},
+        {f:"Est-ce que tu es malade ?",p:"Você está doente?",t:"i"},
+        {f:"Comment vas-tu aujourd'hui ?",p:"Como você está hoje?",t:"i"},
+        {f:"De quelle couleur sont ses yeux ?",p:"De que cor são os olhos dele?",t:"i"},
+        {f:"Avez-vous mal à la tête ?",p:"Você está com dor de cabeça?",t:"i"}
+    ];
+    LSENT['3-3'] = [
+        {f:"Je me réveille à sept heures du matin.",p:"Acordo às sete da manhã.",t:"a"},
+        {f:"Elle se douche et se brosse les dents.",p:"Ela toma banho e escova os dentes.",t:"a"},
+        {f:"Nous nous couchons tôt en semaine.",p:"Deitamos cedo durante a semana.",t:"a"},
+        {f:"D'abord, je prépare le petit déjeuner.",p:"Primeiro, preparo o café da manhã.",t:"a"},
+        {f:"Tu te connectes à Internet le soir.",p:"Você se conecta à internet à noite.",t:"a"},
+        {f:"Il est huit heures et demie.",p:"São oito e meia.",t:"a"},
+        {f:"Je dois aller à la poste ce matin.",p:"Devo ir ao correio esta manhã.",t:"a"},
+        {f:"On regarde le journal après le dîner.",p:"A gente assiste ao jornal depois do jantar.",t:"a"},
+        {f:"Elle s'habille avant de partir au travail.",p:"Ela se veste antes de ir ao trabalho.",t:"a"},
+        {f:"Il faut acheter du pain aujourd'hui.",p:"É preciso comprar pão hoje.",t:"a"},
+        {f:"Je ne me lève pas tard le dimanche.",p:"Não me levanto tarde aos domingos.",t:"n"},
+        {f:"Nous ne dînons pas devant la télé.",p:"Não jantamos na frente da TV.",t:"n"},
+        {f:"Elle ne se maquille pas le matin.",p:"Ela não se maquia de manhã.",t:"n"},
+        {f:"Je ne télécharge jamais de films.",p:"Eu nunca baixo filmes.",t:"n"},
+        {f:"Tu ne te couches pas avant minuit.",p:"Você não se deita antes da meia-noite.",t:"n"},
+        {f:"À quelle heure te lèves-tu ?",p:"A que horas você se levanta?",t:"i"},
+        {f:"Quelle heure est-il ?",p:"Que horas são?",t:"i"},
+        {f:"Est-ce que tu te couches tard ?",p:"Você se deita tarde?",t:"i"},
+        {f:"Que fais-tu après le dîner ?",p:"O que você faz depois do jantar?",t:"i"},
+        {f:"À quelle heure ouvre la poste ?",p:"A que horas o correio abre?",t:"i"}
+    ];
+    LSENT['4-1'] = [
+        {f:"Je t'invite à une fête surprise.",p:"Eu te convido para uma festa surpresa.",t:"a"},
+        {f:"On va danser à la soirée demain.",p:"A gente vai dançar na festa amanhã.",t:"a"},
+        {f:"Je vais faire un gâteau ce soir.",p:"Vou fazer um bolo hoje à noite.",t:"a"},
+        {f:"Tu apportes une bouteille de jus.",p:"Você traz uma garrafa de suco.",t:"a"},
+        {f:"Nous allons prendre un verre au bar.",p:"Vamos tomar um drink no bar.",t:"a"},
+        {f:"Oui, d'accord, jeudi ça me va.",p:"Sim, combinado, quinta está bom para mim.",t:"a"},
+        {f:"Mes voisins viennent à l'apéritif.",p:"Meus vizinhos vêm ao aperitivo.",t:"a"},
+        {f:"On se retrouve devant le cinéma.",p:"A gente se encontra na frente do cinema.",t:"a"},
+        {f:"Je veux bien venir avec mes amis.",p:"Eu topo ir com meus amigos.",t:"a"},
+        {f:"Elle propose une sortie au restaurant.",p:"Ela propõe uma saída ao restaurante.",t:"a"},
+        {f:"Je ne vais pas rester très longtemps.",p:"Não vou ficar muito tempo.",t:"n"},
+        {f:"Désolé, je ne peux pas ce soir.",p:"Desculpe, não posso hoje à noite.",t:"n"},
+        {f:"Nous n'allons pas en boîte ce week-end.",p:"Não vamos à boate neste fim de semana.",t:"n"},
+        {f:"Il ne veut pas sortir aujourd'hui.",p:"Ele não quer sair hoje.",t:"n"},
+        {f:"Je ne suis pas libre demain.",p:"Não estou livre amanhã.",t:"n"},
+        {f:"Tu veux sortir ce soir ?",p:"Você quer sair hoje à noite?",t:"i"},
+        {f:"On peut aller au resto ?",p:"Podemos ir ao restaurante?",t:"i"},
+        {f:"Est-ce que tu viens à la fête ?",p:"Você vem à festa?",t:"i"},
+        {f:"On se retrouve où et à quelle heure ?",p:"A gente se encontra onde e a que horas?",t:"i"},
+        {f:"Pourquoi pas un film ce soir ?",p:"Por que não um filme hoje à noite?",t:"i"}
+    ];
+    LSENT['4-2'] = [
+        {f:"Hier, j'ai fait les courses au marché.",p:"Ontem, fiz as compras no mercado.",t:"a"},
+        {f:"Nous avons dansé toute la soirée.",p:"Dançamos a noite toda.",t:"a"},
+        {f:"Je suis allé dans un petit restaurant.",p:"Fui a um pequeno restaurante.",t:"a"},
+        {f:"Elle est arrivée hier en vacances.",p:"Ela chegou ontem de férias.",t:"a"},
+        {f:"J'ai pris des photos pendant le voyage.",p:"Tirei fotos durante a viagem.",t:"a"},
+        {f:"Nous sommes restés au lit ce matin.",p:"Ficamos na cama esta manhã.",t:"a"},
+        {f:"Il a écrit une carte à sa mère.",p:"Ele escreveu um cartão para a mãe.",t:"a"},
+        {f:"J'ai acheté un roman policier.",p:"Comprei um romance policial.",t:"a"},
+        {f:"Elles sont venues en train hier soir.",p:"Elas vieram de trem ontem à noite.",t:"a"},
+        {f:"On a visité les musées de la ville.",p:"A gente visitou os museus da cidade.",t:"a"},
+        {f:"Je n'ai pas fait les courses hier.",p:"Não fiz as compras ontem.",t:"n"},
+        {f:"Nous n'avons pas couru ce matin.",p:"Não corremos esta manhã.",t:"n"},
+        {f:"Il n'a pas dormi cette nuit.",p:"Ele não dormiu esta noite.",t:"n"},
+        {f:"Elle n'est pas sortie de l'hôtel.",p:"Ela não saiu do hotel.",t:"n"},
+        {f:"Je ne suis pas allé au travail lundi.",p:"Não fui ao trabalho na segunda.",t:"n"},
+        {f:"Est-ce que tu as dormi cette nuit ?",p:"Você dormiu esta noite?",t:"i"},
+        {f:"Qu'est-ce que tu as fait hier ?",p:"O que você fez ontem?",t:"i"},
+        {f:"Où es-tu allé le week-end dernier ?",p:"Aonde você foi no fim de semana passado?",t:"i"},
+        {f:"As-tu pris des photos en vacances ?",p:"Você tirou fotos nas férias?",t:"i"},
+        {f:"Avez-vous mangé au restaurant hier ?",p:"Vocês comeram no restaurante ontem?",t:"i"}
+    ];
+    LSENT['4-3'] = [
+        {f:"À Noël, on décore le sapin ensemble.",p:"No Natal, decoramos a árvore juntos.",t:"a"},
+        {f:"Pour Pâques, les enfants cherchent les œufs.",p:"Na Páscoa, as crianças procuram os ovos.",t:"a"},
+        {f:"Le 14 juillet, il y a un feu d'artifice.",p:"No 14 de julho, há fogos de artifício.",t:"a"},
+        {f:"Au Nouvel An, on s'embrasse à minuit.",p:"No Ano-Novo, a gente se beija à meia-noite.",t:"a"},
+        {f:"Nous offrons des fleurs à la fête des Mères.",p:"Damos flores no Dia das Mães.",t:"a"},
+        {f:"On partage la galette des rois en janvier.",p:"Partilhamos o bolo de reis em janeiro.",t:"a"},
+        {f:"Je célèbre mon anniversaire avec des amis.",p:"Comemoro meu aniversário com amigos.",t:"a"},
+        {f:"Elle prépare un grand repas de fête.",p:"Ela prepara uma grande refeição de festa.",t:"a"},
+        {f:"Ma fête préférée, c'est le Nouvel An.",p:"Minha festa preferida é o Ano-Novo.",t:"a"},
+        {f:"Nous mangeons des crêpes à la Chandeleur.",p:"Comemos crepes na Candelária.",t:"a"},
+        {f:"Je n'aime pas beaucoup les grandes fêtes.",p:"Não gosto muito de festas grandes.",t:"n"},
+        {f:"On ne travaille pas le jour de Noël.",p:"Não se trabalha no dia de Natal.",t:"n"},
+        {f:"Elle ne reste pas à la maison ce soir.",p:"Ela não fica em casa esta noite.",t:"n"},
+        {f:"Nous n'offrons pas de cadeaux cette année.",p:"Não damos presentes este ano.",t:"n"},
+        {f:"Je ne passe pas Noël en famille.",p:"Não passo o Natal em família.",t:"n"},
+        {f:"Quelle est ta fête préférée ?",p:"Qual é a sua festa preferida?",t:"i"},
+        {f:"Où passez-vous le Nouvel An ?",p:"Onde vocês passam o Ano-Novo?",t:"i"},
+        {f:"Avec qui passes-tu cette fête ?",p:"Com quem você passa essa festa?",t:"i"},
+        {f:"Y a-t-il un rituel spécial chez toi ?",p:"Há um ritual especial na sua casa?",t:"i"},
+        {f:"Que faites-vous à cette occasion ?",p:"O que vocês fazem nessa ocasião?",t:"i"}
+    ];
+    LSENT['5-1'] = [
+        {f:"Je prépare ma valise pour le voyage.",p:"Preparo minha mala para a viagem.",t:"a"},
+        {f:"Je viens de réserver l'hôtel.",p:"Acabei de reservar o hotel.",t:"a"},
+        {f:"Nous allons faire le tour du monde.",p:"Vamos dar a volta ao mundo.",t:"a"},
+        {f:"Emporte un guide touristique avec toi.",p:"Leve um guia turístico com você.",t:"a"},
+        {f:"Elle vient de préparer ses bagages.",p:"Ela acabou de preparar as malas.",t:"a"},
+        {f:"Je profite de chaque moment du séjour.",p:"Aproveito cada momento da estadia.",t:"a"},
+        {f:"Il faut préparer le voyage à l'avance.",p:"É preciso preparar a viagem com antecedência.",t:"a"},
+        {f:"On découvre une nouvelle culture là-bas.",p:"Descobrimos uma nova cultura lá.",t:"a"},
+        {f:"Repose-toi avant le grand départ.",p:"Descanse antes da grande partida.",t:"a"},
+        {f:"Je vais comparer les prix des billets.",p:"Vou comparar os preços das passagens.",t:"a"},
+        {f:"Ne prends pas trop de bagages.",p:"Não leve muita bagagem.",t:"n"},
+        {f:"Je ne pars pas sans mon passeport.",p:"Não viajo sem meu passaporte.",t:"n"},
+        {f:"Ne vous inquiétez pas pour le vol.",p:"Não se preocupem com o voo.",t:"n"},
+        {f:"Nous n'avons pas encore le budget.",p:"Ainda não temos o orçamento.",t:"n"},
+        {f:"Il ne voyage pas seul cette fois.",p:"Ele não viaja sozinho desta vez.",t:"n"},
+        {f:"Est-ce que tu as réservé l'hôtel ?",p:"Você reservou o hotel?",t:"i"},
+        {f:"Quelle est ta destination cet été ?",p:"Qual é o seu destino neste verão?",t:"i"},
+        {f:"Allô, c'est de la part de qui ?",p:"Alô, de parte de quem?",t:"i"},
+        {f:"Tu veux laisser un message ?",p:"Você quer deixar um recado?",t:"i"},
+        {f:"Combien de temps dure le séjour ?",p:"Quanto tempo dura a estadia?",t:"i"}
+    ];
+    LSENT['5-2'] = [
+        {f:"Cet acteur a tourné un grand film.",p:"Esse ator filmou um grande filme.",t:"a"},
+        {f:"Elle a remporté un prix au festival.",p:"Ela ganhou um prêmio no festival.",t:"a"},
+        {f:"Il a les cheveux bruns et bouclés.",p:"Ele tem cabelos castanhos e cacheados.",t:"a"},
+        {f:"Ils se sont rencontrés en deux mille trois.",p:"Eles se conheceram em 2003.",t:"a"},
+        {f:"Elle ressemble à son père.",p:"Ela se parece com o pai.",t:"a"},
+        {f:"Le réalisateur a commencé au théâtre.",p:"O diretor começou no teatro.",t:"a"},
+        {f:"Ils se sont mariés en secret.",p:"Eles se casaram em segredo.",t:"a"},
+        {f:"Cette actrice est très célèbre en France.",p:"Essa atriz é muito famosa na França.",t:"a"},
+        {f:"Il a une allure sportive.",p:"Ele tem um porte esportivo.",t:"a"},
+        {f:"Elle a gagné le César cette année.",p:"Ela ganhou o César este ano.",t:"a"},
+        {f:"Il n'est pas très grand.",p:"Ele não é muito alto.",t:"n"},
+        {f:"Elle n'a pas les yeux bleus.",p:"Ela não tem olhos azuis.",t:"n"},
+        {f:"Ils ne se sont pas séparés.",p:"Eles não se separaram.",t:"n"},
+        {f:"Ce film n'a pas eu de succès.",p:"Esse filme não fez sucesso.",t:"n"},
+        {f:"Il ne joue pas dans ce film.",p:"Ele não atua nesse filme.",t:"n"},
+        {f:"Comment est cet acteur physiquement ?",p:"Como é esse ator fisicamente?",t:"i"},
+        {f:"De quelle couleur sont ses cheveux ?",p:"De que cor são os cabelos dele?",t:"i"},
+        {f:"Est-ce qu'ils sont en couple ?",p:"Eles estão namorando?",t:"i"},
+        {f:"Quand a-t-elle commencé sa carrière ?",p:"Quando ela começou a carreira?",t:"i"},
+        {f:"Qui a réalisé ce film ?",p:"Quem dirigiu esse filme?",t:"i"}
+    ];
+    LSENT['5-3'] = [
+        {f:"Il fait beau et chaud aujourd'hui.",p:"Está bom tempo e quente hoje.",t:"a"},
+        {f:"Il pleut beaucoup au printemps.",p:"Chove muito na primavera.",t:"a"},
+        {f:"En hiver, il fait très froid ici.",p:"No inverno, faz muito frio aqui.",t:"a"},
+        {f:"Je pense que tu as raison.",p:"Acho que você tem razão.",t:"a"},
+        {f:"Je me suis trompé, je suis désolé.",p:"Eu me enganei, sinto muito.",t:"a"},
+        {f:"À mon avis, c'est un malentendu.",p:"Na minha opinião, é um mal-entendido.",t:"a"},
+        {f:"Il y a du vent et des nuages.",p:"Há vento e nuvens.",t:"a"},
+        {f:"Je suis content pour toi.",p:"Estou feliz por você.",t:"a"},
+        {f:"On est triste quand un ami part.",p:"Ficamos tristes quando um amigo vai embora.",t:"a"},
+        {f:"Je vais lui parler calmement demain.",p:"Vou falar com ele com calma amanhã.",t:"a"},
+        {f:"Il ne fait pas beau ce matin.",p:"Não está bom tempo esta manhã.",t:"n"},
+        {f:"Je ne suis pas en colère contre toi.",p:"Não estou com raiva de você.",t:"n"},
+        {f:"Ce n'est pas grave, ne t'inquiète pas.",p:"Não é grave, não se preocupe.",t:"n"},
+        {f:"Il n'y a pas de vent aujourd'hui.",p:"Não há vento hoje.",t:"n"},
+        {f:"Elle ne répond pas au téléphone.",p:"Ela não atende o telefone.",t:"n"},
+        {f:"Quel temps fait-il aujourd'hui ?",p:"Que tempo faz hoje?",t:"i"},
+        {f:"Est-ce qu'il va pleuvoir demain ?",p:"Será que vai chover amanhã?",t:"i"},
+        {f:"Pourquoi es-tu fâché contre moi ?",p:"Por que você está zangado comigo?",t:"i"},
+        {f:"Qu'est-ce que tu penses de cette situation ?",p:"O que você acha desta situação?",t:"i"},
+        {f:"Quelle est la température aujourd'hui ?",p:"Qual é a temperatura hoje?",t:"i"}
+    ];
+    LSENT['6-1'] = [
+        {f:"Cette île se trouve dans l'océan Indien.",p:"Esta ilha fica no oceano Índico.",t:"a"},
+        {f:"On admire le volcan au centre de l'île.",p:"Admiramos o vulcão no centro da ilha.",t:"a"},
+        {f:"Le paysage est magnifique et varié.",p:"A paisagem é magnífica e variada.",t:"a"},
+        {f:"Nous faisons de la randonnée en plein air.",p:"Fazemos trilha ao ar livre.",t:"a"},
+        {f:"Je découvre une cascade derrière la forêt.",p:"Descubro uma cachoeira atrás da floresta.",t:"a"},
+        {f:"On pratique la plongée près du lagon.",p:"Praticamos mergulho perto da lagoa.",t:"a"},
+        {f:"La capitale est au sud de l'île.",p:"A capital fica ao sul da ilha.",t:"a"},
+        {f:"Ce lieu est vraiment inoubliable.",p:"Este lugar é realmente inesquecível.",t:"a"},
+        {f:"J'aime la nature sauvage et tranquille.",p:"Gosto da natureza selvagem e tranquila.",t:"a"},
+        {f:"Le guide touristique propose des activités.",p:"O guia turístico propõe atividades.",t:"a"},
+        {f:"Il n'y a pas de plage au nord.",p:"Não há praia ao norte.",t:"n"},
+        {f:"Cette région n'est pas montagneuse.",p:"Esta região não é montanhosa.",t:"n"},
+        {f:"Nous ne faisons pas de surf ici.",p:"Não fazemos surfe aqui.",t:"n"},
+        {f:"Le sentier n'est pas difficile.",p:"A trilha não é difícil.",t:"n"},
+        {f:"Je ne connais pas cet archipel.",p:"Não conheço este arquipélago.",t:"n"},
+        {f:"Où se trouve cette île ?",p:"Onde fica esta ilha?",t:"i"},
+        {f:"Quel est le degré de difficulté ?",p:"Qual é o grau de dificuldade?",t:"i"},
+        {f:"Est-ce qu'on peut faire de la plongée ?",p:"Dá para mergulhar?",t:"i"},
+        {f:"Quelles activités proposez-vous ?",p:"Quais atividades vocês oferecem?",t:"i"},
+        {f:"Pourquoi ce paysage est-il célèbre ?",p:"Por que essa paisagem é famosa?",t:"i"}
+    ];
+    LSENT['6-2'] = [
+        {f:"L'été prochain, je voyagerai en Belgique.",p:"No próximo verão, viajarei para a Bélgica.",t:"a"},
+        {f:"Nous visiterons les Beaux-Arts à Bruxelles.",p:"Visitaremos as Belas-Artes em Bruxelas.",t:"a"},
+        {f:"Tu prendras le métro pour aller au centre.",p:"Você pegará o metrô para ir ao centro.",t:"a"},
+        {f:"On goûtera des moules-frites au restaurant.",p:"Provaremos mexilhões com fritas no restaurante.",t:"a"},
+        {f:"Je suis en train d'explorer la ville.",p:"Estou explorando a cidade.",t:"a"},
+        {f:"Elle achètera un objet rare au marché.",p:"Ela comprará um objeto raro no mercado.",t:"a"},
+        {f:"Les façades de la place sont élégantes.",p:"As fachadas da praça são elegantes.",t:"a"},
+        {f:"À mon retour, je ferai les magasins.",p:"Quando eu voltar, farei compras.",t:"a"},
+        {f:"On nous a conseillé une bonne brasserie.",p:"Nos recomendaram uma boa cervejaria.",t:"a"},
+        {f:"Nous comprendrons mieux après la visite.",p:"Entenderemos melhor depois da visita.",t:"a"},
+        {f:"Je n'irai pas seul cette fois.",p:"Não irei sozinho desta vez.",t:"n"},
+        {f:"Elle ne prendra pas le bus demain.",p:"Ela não pegará o ônibus amanhã.",t:"n"},
+        {f:"Nous ne resterons pas longtemps ici.",p:"Não ficaremos muito tempo aqui.",t:"n"},
+        {f:"Tu ne verras pas le musée ce soir.",p:"Você não verá o museu hoje à noite.",t:"n"},
+        {f:"Ce quartier n'est pas loin du centre.",p:"Este bairro não é longe do centro.",t:"n"},
+        {f:"Quand est-ce que tu voyageras ?",p:"Quando você vai viajar?",t:"i"},
+        {f:"Qu'est-ce que tu visiteras à Bruxelles ?",p:"O que você vai visitar em Bruxelas?",t:"i"},
+        {f:"Est-ce que tu es en train de manger ?",p:"Você está comendo agora?",t:"i"},
+        {f:"Où prendras-tu le métro ?",p:"Onde você vai pegar o metrô?",t:"i"},
+        {f:"Pourquoi cette ville est-elle moderne ?",p:"Por que esta cidade é moderna?",t:"i"}
+    ];
+    LSENT['6-3'] = [
+        {f:"On travaille mieux quand on divise les tâches.",p:"Trabalhamos melhor quando dividimos as tarefas.",t:"a"},
+        {f:"Je dois organiser ma journée de demain.",p:"Devo organizar o meu dia de amanhã.",t:"a"},
+        {f:"Il faut répartir les tâches dans l'équipe.",p:"É preciso distribuir as tarefas na equipe.",t:"a"},
+        {f:"Je mange des légumes à chaque repas.",p:"Como legumes em cada refeição.",t:"a"},
+        {f:"Une alimentation équilibrée est importante.",p:"Uma alimentação equilibrada é importante.",t:"a"},
+        {f:"Nous préparons le menu pour la semaine.",p:"Preparamos o cardápio para a semana.",t:"a"},
+        {f:"Au printemps, on peut faire un pique-nique.",p:"Na primavera, podemos fazer um piquenique.",t:"a"},
+        {f:"Je bois de l'eau et je mange des fruits.",p:"Bebo água e como frutas.",t:"a"},
+        {f:"Tu as besoin de te reposer le week-end.",p:"Você precisa descansar no fim de semana.",t:"a"},
+        {f:"On avance plus vite avec un bon planning.",p:"Avançamos mais rápido com um bom cronograma.",t:"a"},
+        {f:"Je ne mange pas beaucoup de sucre.",p:"Não como muito açúcar.",t:"n"},
+        {f:"Nous n'avons pas le temps aujourd'hui.",p:"Não temos tempo hoje.",t:"n"},
+        {f:"Il ne faut pas tout faire seul.",p:"Não se deve fazer tudo sozinho.",t:"n"},
+        {f:"Elle ne consomme pas de viande.",p:"Ela não consome carne.",t:"n"},
+        {f:"On n'annule pas la réunion de jeudi.",p:"Não cancelamos a reunião de quinta.",t:"n"},
+        {f:"Quel est ton plat préféré ?",p:"Qual é o seu prato preferido?",t:"i"},
+        {f:"Est-ce que tu manges équilibré ?",p:"Você se alimenta de forma equilibrada?",t:"i"},
+        {f:"Comment organises-tu ta semaine ?",p:"Como você organiza a sua semana?",t:"i"},
+        {f:"Quelle activité proposes-tu pour le week-end ?",p:"Que atividade você propõe para o fim de semana?",t:"i"},
+        {f:"As-tu regardé le planning de l'équipe ?",p:"Você olhou o cronograma da equipe?",t:"i"}
+    ];
+    LSENT['7-1'] = [
+        {f:"Je voudrais réserver une table pour deux.",p:"Eu gostaria de reservar uma mesa para dois.",t:"a"},
+        {f:"Je prends la formule entrée-plat-dessert.",p:"Eu pego o combo entrada-prato-sobremesa.",t:"a"},
+        {f:"Le serveur apporte la carte des vins.",p:"O garçom traz a carta de vinhos.",t:"a"},
+        {f:"Je voudrais la viande bien cuite.",p:"Eu queria a carne bem passada.",t:"a"},
+        {f:"Nous payons l'addition par carte.",p:"Pagamos a conta com cartão.",t:"a"},
+        {f:"Ce restaurant a un bon rapport qualité-prix.",p:"Este restaurante tem boa relação custo-benefício.",t:"a"},
+        {f:"Je prends de l'eau gazeuse, s'il vous plaît.",p:"Eu quero água com gás, por favor.",t:"a"},
+        {f:"Le dessert est délicieux et copieux.",p:"A sobremesa é deliciosa e farta.",t:"a"},
+        {f:"On déguste une spécialité de la région.",p:"Degustamos uma especialidade da região.",t:"a"},
+        {f:"La terrasse est près de la rivière.",p:"O terraço fica perto do rio.",t:"a"},
+        {f:"Je ne voudrais que de l'eau plate.",p:"Eu só queria água sem gás.",t:"n"},
+        {f:"Je n'aime pas les lieux bruyants.",p:"Não gosto de lugares barulhentos.",t:"n"},
+        {f:"Nous ne prenons pas de dessert ce soir.",p:"Não pegamos sobremesa hoje à noite.",t:"n"},
+        {f:"Il n'y a plus de table libre.",p:"Não há mais mesa livre.",t:"n"},
+        {f:"Ce plat n'est pas trop salé.",p:"Este prato não está salgado demais.",t:"n"},
+        {f:"On s'occupe de vous ?",p:"Já estão atendendo você?",t:"i"},
+        {f:"Ça fait combien, s'il vous plaît ?",p:"Quanto é, por favor?",t:"i"},
+        {f:"Est-ce que vous avez un menu végétarien ?",p:"Vocês têm um cardápio vegetariano?",t:"i"},
+        {f:"Quelle est la spécialité de la maison ?",p:"Qual é a especialidade da casa?",t:"i"},
+        {f:"Vous voulez la viande saignante ou à point ?",p:"Você quer a carne mal passada ou ao ponto?",t:"i"}
+    ];
+    LSENT['7-2'] = [
+        {f:"Avant, nous habitions à la campagne.",p:"Antes, morávamos no campo.",t:"a"},
+        {f:"Quand j'étais petit, je jouais au foot.",p:"Quando eu era pequeno, jogava futebol.",t:"a"},
+        {f:"La vie en ville est plus rapide.",p:"A vida na cidade é mais rápida.",t:"a"},
+        {f:"À la campagne, l'air est plus pur.",p:"No campo, o ar é mais puro.",t:"a"},
+        {f:"Le village était calme et tranquille.",p:"A vila era calma e tranquila.",t:"a"},
+        {f:"Mes grands-parents cultivaient un potager.",p:"Meus avós cultivavam uma horta.",t:"a"},
+        {f:"En ville, il y a plus d'activités.",p:"Na cidade, há mais atividades.",t:"a"},
+        {f:"J'en ai marre du métro-boulot-dodo.",p:"Estou de saco cheio da rotina.",t:"a"},
+        {f:"La campagne est plus calme que la ville.",p:"O campo é mais calmo que a cidade.",t:"a"},
+        {f:"Nous voulons nous mettre au vert.",p:"Queremos ir descansar no campo.",t:"a"},
+        {f:"Je n'aime pas la pollution de la ville.",p:"Não gosto da poluição da cidade.",t:"n"},
+        {f:"Il n'y avait pas de bruit au village.",p:"Não havia barulho na vila.",t:"n"},
+        {f:"Nous n'avions pas de voiture autrefois.",p:"Não tínhamos carro antigamente.",t:"n"},
+        {f:"Elle ne prenait pas le métro.",p:"Ela não pegava o metrô.",t:"n"},
+        {f:"La campagne n'est pas ennuyeuse.",p:"O campo não é entediante.",t:"n"},
+        {f:"Où habitais-tu quand tu étais jeune ?",p:"Onde você morava quando era jovem?",t:"i"},
+        {f:"Préfères-tu la ville ou la campagne ?",p:"Você prefere a cidade ou o campo?",t:"i"},
+        {f:"Est-ce que la vie était plus calme avant ?",p:"A vida era mais calma antes?",t:"i"},
+        {f:"Comment était ton village ?",p:"Como era a sua vila?",t:"i"},
+        {f:"Pourquoi veux-tu déménager à la campagne ?",p:"Por que você quer se mudar para o campo?",t:"i"}
+    ];
+    LSENT['7-3'] = [
+        {f:"Quand j'étais enfant, j'allais à la pêche.",p:"Quando eu era criança, ia pescar.",t:"a"},
+        {f:"Hier, j'ai fait des exercices de français.",p:"Ontem, fiz exercícios de francês.",t:"a"},
+        {f:"Avant, je préparais le dîner tous les soirs.",p:"Antes, eu preparava o jantar todas as noites.",t:"a"},
+        {f:"Je me souviens de ma ville natale.",p:"Eu me lembro da minha cidade natal.",t:"a"},
+        {f:"Pendant que je cuisinais, il regardait la télé.",p:"Enquanto eu cozinhava, ele assistia à TV.",t:"a"},
+        {f:"À l'école, je mangeais à la cantine.",p:"Na escola, eu comia na cantina.",t:"a"},
+        {f:"L'année dernière, j'ai changé de ville.",p:"No ano passado, mudei de cidade.",t:"a"},
+        {f:"Le week-end, nous faisions du vélo.",p:"Nos fins de semana, andávamos de bicicleta.",t:"a"},
+        {f:"Je suis rendu très heureux par ce souvenir.",p:"Fico muito feliz com essa lembrança.",t:"a"},
+        {f:"Autrefois, ils habitaient près de la mer.",p:"Antigamente, eles moravam perto do mar.",t:"a"},
+        {f:"Je ne me souviens pas de ce jour.",p:"Não me lembro daquele dia.",t:"n"},
+        {f:"Nous n'allions pas souvent au cinéma.",p:"Não íamos muito ao cinema.",t:"n"},
+        {f:"Elle n'aimait pas le camembert.",p:"Ela não gostava de camembert.",t:"n"},
+        {f:"Je n'ai pas fini mes exercices hier.",p:"Não terminei meus exercícios ontem.",t:"n"},
+        {f:"Il ne mangeait pas à la cantine.",p:"Ele não comia na cantina.",t:"n"},
+        {f:"As-tu toujours vécu dans ta ville natale ?",p:"Você sempre morou na sua cidade natal?",t:"i"},
+        {f:"Qu'est-ce que tu faisais le week-end ?",p:"O que você fazia nos fins de semana?",t:"i"},
+        {f:"Où mangeais-tu à midi à l'école ?",p:"Onde você almoçava na escola?",t:"i"},
+        {f:"Est-ce que tu allais souvent à la pêche ?",p:"Você ia pescar com frequência?",t:"i"},
+        {f:"Pourquoi as-tu changé de ville ?",p:"Por que você mudou de cidade?",t:"i"}
+    ];
+    LSENT['8-1'] = [
+        {f:"Je mange du poisson avec du riz.",p:"Como peixe com arroz.",t:"a"},
+        {f:"Il y a du pain sur la table.",p:"Há pão na mesa.",t:"a"},
+        {f:"Au petit déjeuner, je bois du café.",p:"No café da manhã, bebo café.",t:"a"},
+        {f:"Nous préparons le dîner ensemble.",p:"Preparamos o jantar juntos.",t:"a"},
+        {f:"Je préfère le poulet au poisson.",p:"Prefiro frango a peixe.",t:"a"},
+        {f:"Elle porte une chemise à rayures.",p:"Ela usa uma camisa listrada.",t:"a"},
+        {f:"Ce pull en laine est très chaud.",p:"Este suéter de lã é bem quente.",t:"a"},
+        {f:"Je connais ce plat, je l'adore.",p:"Conheço este prato, eu o adoro.",t:"a"},
+        {f:"Le repas est léger et équilibré.",p:"A refeição é leve e equilibrada.",t:"a"},
+        {f:"Je bois de l'eau à chaque repas.",p:"Bebo água em cada refeição.",t:"a"},
+        {f:"Je ne mange pas de viande le soir.",p:"Não como carne à noite.",t:"n"},
+        {f:"Il n'y a pas de dessert aujourd'hui.",p:"Não há sobremesa hoje.",t:"n"},
+        {f:"Je n'aime pas les plats trop lourds.",p:"Não gosto de pratos pesados demais.",t:"n"},
+        {f:"Elle ne boit pas de café le soir.",p:"Ela não bebe café à noite.",t:"n"},
+        {f:"Ce pantalon n'est pas en coton.",p:"Esta calça não é de algodão.",t:"n"},
+        {f:"Quelle est votre taille ?",p:"Qual é o seu tamanho?",t:"i"},
+        {f:"Est-ce que tu aimes ce plat ?",p:"Você gosta deste prato?",t:"i"},
+        {f:"Qu'est-ce que tu prends au petit déjeuner ?",p:"O que você toma no café da manhã?",t:"i"},
+        {f:"Est-ce qu'il y a du pain à la maison ?",p:"Há pão em casa?",t:"i"},
+        {f:"Tu préfères le poisson ou le poulet ?",p:"Você prefere peixe ou frango?",t:"i"}
+    ];
+    LSENT['8-2'] = [
+        {f:"J'offre un cadeau à mon amie.",p:"Dou um presente para a minha amiga.",t:"a"},
+        {f:"Je lui offre une écharpe en soie.",p:"Eu lhe dou um cachecol de seda.",t:"a"},
+        {f:"Cette robe rouge est très élégante.",p:"Este vestido vermelho é muito elegante.",t:"a"},
+        {f:"Le mannequin porte une veste à pois.",p:"O modelo usa uma jaqueta de bolinhas.",t:"a"},
+        {f:"Nous avons trouvé ce modèle au défilé.",p:"Encontramos este modelo no desfile.",t:"a"},
+        {f:"Je mets un pull à col roulé en hiver.",p:"Visto um suéter de gola alta no inverno.",t:"a"},
+        {f:"Je valide la commande sur le site.",p:"Finalizo o pedido no site.",t:"a"},
+        {f:"Ce cadeau lui fait vraiment plaisir.",p:"Este presente realmente a agrada.",t:"a"},
+        {f:"Le livre que j'aime est sur la table.",p:"O livro que eu gosto está na mesa.",t:"a"},
+        {f:"Je leur ai envoyé une invitation.",p:"Enviei a eles um convite.",t:"a"},
+        {f:"Je ne lui offre pas de bijou cette fois.",p:"Não lhe dou joia desta vez.",t:"n"},
+        {f:"Je ne l'ai pas trouvé au magasin.",p:"Não o encontrei na loja.",t:"n"},
+        {f:"Cette veste n'est pas à ma taille.",p:"Esta jaqueta não é do meu tamanho.",t:"n"},
+        {f:"Nous ne leur avons pas offert ce coffret.",p:"Não demos a eles este estojo.",t:"n"},
+        {f:"Elle ne met pas cette robe au travail.",p:"Ela não usa este vestido no trabalho.",t:"n"},
+        {f:"Pour quelle occasion offres-tu ce cadeau ?",p:"Para qual ocasião você dá este presente?",t:"i"},
+        {f:"Est-ce que tu lui as offert ce bijou ?",p:"Você deu a ela essa joia?",t:"i"},
+        {f:"Comment tu trouves cette robe ?",p:"O que você acha deste vestido?",t:"i"},
+        {f:"Quel cadeau vas-tu lui offrir ?",p:"Que presente você vai dar a ela?",t:"i"},
+        {f:"Es-tu en train de chercher un cadeau ?",p:"Você está procurando um presente?",t:"i"}
+    ];
+    LSENT['8-3'] = [
+        {f:"Je vais à la boulangerie acheter du pain.",p:"Vou à padaria comprar pão.",t:"a"},
+        {f:"J'achète un kilo de pommes au marché.",p:"Compro um quilo de maçãs no mercado.",t:"a"},
+        {f:"Le poisson coûte dix euros le kilo.",p:"O peixe custa dez euros o quilo.",t:"a"},
+        {f:"Je prends une tranche de jambon.",p:"Pego uma fatia de presunto.",t:"a"},
+        {f:"Nous payons en espèces à la caisse.",p:"Pagamos em dinheiro no caixa.",t:"a"},
+        {f:"Chez le boucher, j'achète de la viande.",p:"No açougue, compro carne.",t:"a"},
+        {f:"Des pommes ? Oui, j'en prends trois.",p:"Maçãs? Sim, pego três.",t:"a"},
+        {f:"La fraise est mûre et parfumée.",p:"O morango está maduro e perfumado.",t:"a"},
+        {f:"Je fais les courses le samedi matin.",p:"Faço as compras no sábado de manhã.",t:"a"},
+        {f:"Le marchand vend des fruits frais.",p:"O comerciante vende frutas frescas.",t:"a"},
+        {f:"Je n'ai pas de monnaie sur moi.",p:"Não tenho trocado comigo.",t:"n"},
+        {f:"Ce melon n'est pas du tout mûr.",p:"Este melão não está nada maduro.",t:"n"},
+        {f:"Nous ne payons pas par chèque ici.",p:"Não pagamos com cheque aqui.",t:"n"},
+        {f:"Il n'y a plus de pain à la boulangerie.",p:"Não há mais pão na padaria.",t:"n"},
+        {f:"Je n'achète pas de viande surgelée.",p:"Não compro carne congelada.",t:"n"},
+        {f:"Ça fait combien en tout ?",p:"Quanto dá no total?",t:"i"},
+        {f:"Vous désirez autre chose ?",p:"Deseja mais alguma coisa?",t:"i"},
+        {f:"Est-ce que je peux payer par carte ?",p:"Posso pagar com cartão?",t:"i"},
+        {f:"Combien coûte un kilo de tomates ?",p:"Quanto custa um quilo de tomates?",t:"i"},
+        {f:"Où se trouve la poissonnerie ?",p:"Onde fica a peixaria?",t:"i"}
+    ];
+    LSENT['9-1'] = [
+        {f:"Je cherche un appartement avec un balcon.",p:"Procuro um apartamento com varanda.",t:"a"},
+        {f:"Cet immeuble a un ascenseur et un parking.",p:"Este prédio tem elevador e estacionamento.",t:"a"},
+        {f:"Le loyer est de huit cents euros par mois.",p:"O aluguel é de oitocentos euros por mês.",t:"a"},
+        {f:"De plus en plus de gens louent un studio.",p:"Cada vez mais gente aluga uma quitinete.",t:"a"},
+        {f:"L'appartement est refait à neuf.",p:"O apartamento está reformado como novo.",t:"a"},
+        {f:"La cabane est en pleine nature.",p:"A cabana fica em plena natureza.",t:"a"},
+        {f:"Cette maison est lumineuse et spacieuse.",p:"Esta casa é iluminada e espaçosa.",t:"a"},
+        {f:"Le studio est à deux pas du centre-ville.",p:"A quitinete fica a dois passos do centro.",t:"a"},
+        {f:"Les charges sont comprises dans le loyer.",p:"As taxas estão incluídas no aluguel.",t:"a"},
+        {f:"J'aime ce quartier calme et sécurisé.",p:"Gosto deste bairro calmo e seguro.",t:"a"},
+        {f:"Cet appartement n'a pas d'ascenseur.",p:"Este apartamento não tem elevador.",t:"n"},
+        {f:"Le loyer n'est pas trop cher.",p:"O aluguel não é caro demais.",t:"n"},
+        {f:"Il n'y a pas de balcon dans le studio.",p:"Não há varanda na quitinete.",t:"n"},
+        {f:"Cette chambre n'est pas très lumineuse.",p:"Este quarto não é muito iluminado.",t:"n"},
+        {f:"Nous ne cherchons pas une grande maison.",p:"Não procuramos uma casa grande.",t:"n"},
+        {f:"Quel est le loyer par mois ?",p:"Qual é o aluguel por mês?",t:"i"},
+        {f:"Est-ce que les charges sont comprises ?",p:"As taxas estão incluídas?",t:"i"},
+        {f:"Combien de pièces a l'appartement ?",p:"Quantos cômodos tem o apartamento?",t:"i"},
+        {f:"Y a-t-il un ascenseur dans l'immeuble ?",p:"Há elevador no prédio?",t:"i"},
+        {f:"Le studio est-il proche du centre ?",p:"A quitinete fica perto do centro?",t:"i"}
+    ];
+    LSENT['9-2'] = [
+        {f:"Autrefois, nous habitions un grand séjour.",p:"Antigamente, morávamos numa sala grande.",t:"a"},
+        {f:"La cuisine est aménagée et équipée.",p:"A cozinha é planejada e equipada.",t:"a"},
+        {f:"L'appartement comporte deux chambres.",p:"O apartamento tem dois quartos.",t:"a"},
+        {f:"Il y a un lave-linge dans la salle d'eau.",p:"Há uma máquina de lavar no banheiro.",t:"a"},
+        {f:"Le chauffage électrique est individuel.",p:"O aquecimento elétrico é individual.",t:"a"},
+        {f:"On va repeindre les murs du salon.",p:"Vamos repintar as paredes da sala.",t:"a"},
+        {f:"Je veux installer un bureau dans la pièce.",p:"Quero instalar um escritório no cômodo.",t:"a"},
+        {f:"À l'avenir, il achètera un appartement neuf.",p:"No futuro, ele comprará um apartamento novo.",t:"a"},
+        {f:"Cet immeuble est calme et bien situé.",p:"Este prédio é calmo e bem localizado.",t:"a"},
+        {f:"Nous cherchions un logement spacieux.",p:"Procurávamos uma moradia espaçosa.",t:"a"},
+        {f:"Le wc n'est pas séparé de la douche.",p:"O sanitário não é separado do chuveiro.",t:"n"},
+        {f:"Cet appartement n'est pas meublé.",p:"Este apartamento não é mobiliado.",t:"n"},
+        {f:"Il n'y a pas de parquet dans la chambre.",p:"Não há piso de madeira no quarto.",t:"n"},
+        {f:"Nous ne voulons pas un studio sombre.",p:"Não queremos uma quitinete escura.",t:"n"},
+        {f:"Je ne cherche pas un logement bruyant.",p:"Não procuro uma moradia barulhenta.",t:"n"},
+        {f:"Est-ce que la cuisine est équipée ?",p:"A cozinha é equipada?",t:"i"},
+        {f:"Combien de chambres comporte l'appartement ?",p:"Quantos quartos tem o apartamento?",t:"i"},
+        {f:"Le chauffage est-il compris ?",p:"O aquecimento está incluído?",t:"i"},
+        {f:"Quelle était la surface de l'ancien logement ?",p:"Qual era a área da antiga moradia?",t:"i"},
+        {f:"Y a-t-il un balcon et un parking ?",p:"Há varanda e estacionamento?",t:"i"}
+    ];
+    LSENT['9-3'] = [
+        {f:"Je partage un appartement avec deux amis.",p:"Divido um apartamento com dois amigos.",t:"a"},
+        {f:"En colocation, on partage les factures.",p:"Na república, dividimos as contas.",t:"a"},
+        {f:"Je lui donne le loyer chaque mois.",p:"Eu lhe dou o aluguel todo mês.",t:"a"},
+        {f:"Chacun nettoie la cuisine à son tour.",p:"Cada um limpa a cozinha na sua vez.",t:"a"},
+        {f:"Nous nous entendons très bien.",p:"Nós nos damos muito bem.",t:"a"},
+        {f:"Le règlement protège la tranquillité.",p:"O regulamento protege a tranquilidade.",t:"a"},
+        {f:"Je leur dis de respecter la propreté.",p:"Digo a eles para respeitar a limpeza.",t:"a"},
+        {f:"On partage les tâches ménagères équitablement.",p:"Dividimos as tarefas domésticas de forma justa.",t:"a"},
+        {f:"Les bons comptes font les bons amis.",p:"Contas em dia preservam as amizades.",t:"a"},
+        {f:"Mes colocataires sont calmes et gentils.",p:"Meus colegas de casa são calmos e gentis.",t:"a"},
+        {f:"Il ne faut pas fumer dans l'appartement.",p:"Não se deve fumar no apartamento.",t:"n"},
+        {f:"Je ne paie pas les factures en retard.",p:"Não pago as contas em atraso.",t:"n"},
+        {f:"Nous ne nettoyons pas la salle de bain le matin.",p:"Não limpamos o banheiro de manhã.",t:"n"},
+        {f:"Elle ne respecte pas le règlement.",p:"Ela não respeita o regulamento.",t:"n"},
+        {f:"Je ne donne pas les clés à un inconnu.",p:"Não dou as chaves a um desconhecido.",t:"n"},
+        {f:"Comment est l'ambiance dans la colocation ?",p:"Como é o clima na república?",t:"i"},
+        {f:"Est-ce que vous partagez le loyer ?",p:"Vocês dividem o aluguel?",t:"i"},
+        {f:"Qui nettoie la cuisine cette semaine ?",p:"Quem limpa a cozinha esta semana?",t:"i"},
+        {f:"Est-ce qu'on peut fumer dans l'appartement ?",p:"Pode-se fumar no apartamento?",t:"i"},
+        {f:"Pourquoi choisis-tu la colocation ?",p:"Por que você escolhe a república?",t:"i"}
+    ];
+    /* LSENT_DATA */
+    const _KIND = { a:'Affirmative', n:'Négative', i:'Interrogative' };
+    function phraseActs(list){ return (list || []).map(s => { const w = s.f.split(/\s+/).filter(Boolean); return { type:'phrase', fr:s.f, pt:s.p, kind:_KIND[s.t] || '', answer:w, pool:shuffle(w.slice()), speak:s.f }; }); }
+    function lessonSentences(di, li){ return LSENT[(di+1) + '-' + (li+1)] || []; }
+    function dossierSentences(di){
+        let all = []; for (let l = 0; l < 3; l++) all = all.concat(lessonSentences(di, l));
+        const a = shuffle(all.filter(s => s.t === 'a')).slice(0, 10);
+        const n = shuffle(all.filter(s => s.t === 'n')).slice(0, 5);
+        const q = shuffle(all.filter(s => s.t === 'i')).slice(0, 5);
+        return a.concat(n, q);
+    }
+    function startDossierPractice(dossierIdx){
+        let acts = phraseActs(dossierSentences(dossierIdx));
+        let vocabAll = [];
+        for (const l of courseData[dossierIdx].lessons) vocabAll = vocabAll.concat(buildVocabPool(l.content));
+        const seen = new Set(); vocabAll = vocabAll.filter(x => x.fr && !seen.has(x.fr) && seen.add(x.fr));
+        if (vocabAll.length >= 4){
+            sample(vocabAll, 4).forEach(it => { let opts = [it.pt, ...sample(vocabAll.filter(x => x.fr !== it.fr), 2).map(x => x.pt)]; acts.push({ type:'choosePt', fr:it.fr, pt:it.pt, options:shuffle(opts), speak:it.fr }); });
+            sample(vocabAll, 3).forEach(it => acts.push({ type:'repeat', fr:it.fr, pt:it.pt, speak:it.fr }));
+            acts.push({ type:'match', pairs: sample(vocabAll, 4) });
+            acts.push({ type:'memory', pairs: sample(vocabAll, 3) });
+        }
+        practiceState.activities = shuffle(acts);
+        if (!practiceState.activities.length){ alert("Conteúdo insuficiente para o dossier."); return; }
+        practiceState.active = true; practiceState.currentIndex = 0; practiceState.hearts = 8;
+        document.getElementById('heartsCount').innerText = practiceState.hearts;
+        document.getElementById('practiceProgress').style.width = '0%';
+        document.getElementById('practiceModal').classList.remove('hidden');
+        document.getElementById('practiceModal').classList.add('flex');
+        loadActivity();
+    }
+
     function generateActivitiesForLesson(dossierIdx, lessonIdx){
         const content = courseData[dossierIdx].lessons[lessonIdx].content;
         let vocab = buildVocabPool(content);
@@ -2299,13 +2930,15 @@
         // Formar a frase (ordenar) x2
         sample(sentences.filter(s=>s.split(/\s+/).length<=7), Math.min(2,sentences.length)).forEach(s => { let words=s.split(/\s+/); acts.push({ type:'buildSentence', fr:s, answer:words, pool:shuffle(words.slice()), speak:s }); });
 
+        // 20 frases da lição (10 afirmativas + 5 negativas + 5 interrogativas), com contexto real
+        acts = acts.concat(phraseActs(lessonSentences(dossierIdx, lessonIdx)));
         return shuffle(acts);
     }
 
     function startPractice(dossierIdx, lessonIdx){
         practiceState.activities = generateActivitiesForLesson(dossierIdx, lessonIdx);
         if (practiceState.activities.length === 0){ alert("Conteúdo insuficiente para gerar atividades nesta lição."); return; }
-        practiceState.active = true; practiceState.currentIndex = 0; practiceState.hearts = 5;
+        practiceState.active = true; practiceState.currentIndex = 0; practiceState.hearts = 8;
         document.getElementById('heartsCount').innerText = practiceState.hearts;
         document.getElementById('practiceProgress').style.width = '0%';
         document.getElementById('practiceModal').classList.remove('hidden');
@@ -2330,7 +2963,7 @@
         const container = document.getElementById('activityContainer');
         const title = document.getElementById('activityTitle');
         container.innerHTML = '';
-        const titles = { match:"Associez les paires", memory:"Trouvez les paires (Mémoire)", listen:"Qu'entendez-vous ?", choosePt:"Quelle est la traduction ?", chooseFr:"Comment dit-on en français ?", translateFr:"Traduisez en français", repeat:"Écoutez et répétez", typeListen:"Écrivez ce que vous entendez", typeTranslateFr:"Écrivez la traduction en français", conjugate:"Complétez avec le bon verbe", completeSentence:"Complétez la phrase", buildSentence:"Formez la phrase" };
+        const titles = { match:"Associez les paires", memory:"Trouvez les paires (Mémoire)", listen:"Qu'entendez-vous ?", choosePt:"Quelle est la traduction ?", chooseFr:"Comment dit-on en français ?", translateFr:"Traduisez en français", repeat:"Écoutez et répétez", typeListen:"Écrivez ce que vous entendez", typeTranslateFr:"Écrivez la traduction en français", conjugate:"Complétez avec le bon verbe", completeSentence:"Complétez la phrase", buildSentence:"Formez la phrase", phrase:"Construisez la phrase" };
         title.innerText = titles[activity.type] || '';
         if (activity.type==='match') renderMatch(activity, container);
         else if (activity.type==='memory') renderMemory(activity, container);
@@ -2339,6 +2972,7 @@
         else if (activity.type==='chooseFr') renderChoose(activity, container, 'fr');
         else if (activity.type==='translateFr') renderTranslateFr(activity, container);
         else if (activity.type==='buildSentence') renderBuild(activity, container);
+        else if (activity.type==='phrase') renderPhrase(activity, container);
         else if (activity.type==='repeat') renderRepeat(activity, container);
         else if (activity.type==='typeListen') renderType(activity, container, 'listen');
         else if (activity.type==='typeTranslateFr') renderType(activity, container, 'translate');
@@ -2579,13 +3213,39 @@
         setTimeout(() => window.playAudio(activity.fr, null), 350);
     }
 
+    // ----- PHRASE (frase com contexto: afirmativa / negativa / interrogativa) -----
+    function renderPhrase(activity, container){
+        const badge = { 'Affirmative':'bg-teal-100 text-teal-700', 'Négative':'bg-rose-100 text-rose-700', 'Interrogative':'bg-amber-100 text-amber-700' }[activity.kind] || 'bg-slate-100 text-slate-600';
+        const head = document.createElement('div'); head.className = 'w-full max-w-2xl mx-auto flex flex-col items-center gap-3 mb-5';
+        head.innerHTML = `<div class="flex items-center gap-3"><span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider ${badge}">${activity.kind || ''}</span>
+            <button onclick="window.playAudio('${activity.fr.replace(/'/g,"\\'")}', event)" class="w-11 h-11 bg-blue-50/80 text-[#0066cc] rounded-xl flex items-center justify-center hover:bg-blue-100 transition shadow-sm border border-blue-100 shrink-0"><i data-lucide="volume-2" class="w-5 h-5"></i></button></div>
+            <div class="w-full p-4 md:p-5 bg-white/60 border border-white/80 rounded-[1.5rem] text-center shadow-sm"><p class="text-[10px] uppercase tracking-widest text-[#86868b] font-bold mb-1">Em português — monte a frase em francês</p><div class="text-lg md:text-xl font-extrabold text-[#1d1d1f] leading-snug">${activity.pt}</div></div>`;
+        container.appendChild(head);
+        const dropZone = document.createElement('div'); dropZone.id = 'dropZone'; dropZone.className = 'drop-zone flex flex-wrap gap-2 w-full max-w-2xl mx-auto mb-8 justify-center'; container.appendChild(dropZone);
+        const poolZone = document.createElement('div'); poolZone.className = 'flex flex-wrap justify-center gap-2.5 w-full max-w-2xl mx-auto';
+        activity.pool.forEach((word, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'word-block rounded-xl py-2.5 px-5 text-base md:text-lg font-bold text-slate-700';
+            btn.innerText = word; btn.id = `pw-${index}`;
+            btn.onclick = () => {
+                if (practiceState.isChecking) return;
+                const clone = btn.cloneNode(true);
+                clone.onclick = () => { if (practiceState.isChecking) return; clone.remove(); btn.classList.remove('used'); updateTranslateCheckButton(); };
+                dropZone.appendChild(clone); btn.classList.add('used'); window.playAudio(word, null); updateTranslateCheckButton();
+            };
+            poolZone.appendChild(btn);
+        });
+        container.appendChild(poolZone);
+        updateTranslateCheckButton();
+    }
+
     function enableCheckButton(enable){ document.getElementById('btnCheck').disabled = !enable; }
 
     function checkAnswer(){
         if (practiceState.isChecking){ practiceState.currentIndex++; loadActivity(); return; }
         const activity = practiceState.activities[practiceState.currentIndex];
         let isCorrect = false; let correctAnswerText = "";
-        if (activity.type === 'translateFr' || activity.type === 'buildSentence'){
+        if (activity.type === 'translateFr' || activity.type === 'buildSentence' || activity.type === 'phrase'){
             const dropZone = document.getElementById('dropZone');
             const userWords = Array.from(dropZone.children).map(b => b.innerText.trim());
             isCorrect = userWords.join(' ').toLowerCase() === activity.answer.join(' ').toLowerCase();
